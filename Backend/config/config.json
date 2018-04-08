@@ -1,0 +1,17 @@
+{
+    "development": {
+      "username": "root",
+      "password": null,
+      "database": "devicedb",
+      "host": "localhost",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "root",
+      "password": null,
+      "database": "devicedb",
+      "host": "localhost",
+      "dialect": "mysql"
+    }
+
+}

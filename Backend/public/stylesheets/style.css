@@ -1,0 +1,21 @@
+body {
+  padding: 50px;
+  background-color: #e5e5e5;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+p.available {
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+p.notavailable {
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+}
