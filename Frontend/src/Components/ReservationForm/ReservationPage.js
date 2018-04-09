@@ -1,15 +1,18 @@
 import React ,{Component} from 'react'
-import ReservationForm from './ReservationForm'
+import ReservationForm2 from './ReservationForm'
 import axios from 'axios';
+import Dnd from './Calendar';
 
 class ReservationPage extends Component {
   constructor(props){
     super(props);
     this.state = {
       data:[],
-      devicedata: [],
+      showCalendar: true,
     }
     this.handleReservationSubmit = this.handleReservationSubmit.bind(this);
+    this.handleStartDateSelect = this.handleStartDateSelect.bind(this);
+    this.handleEndDateSelect = this.handleEndDateSelect.bind(this);
   }
 
   handleReservationSubmit(reservation){
@@ -24,12 +27,37 @@ class ReservationPage extends Component {
     });
   }
 
+  handleStartDateSelect(e) {
+    this.setState({startDate: e.target.value})
+  }
+  handleEndDateSelect(e) {
+    this.setState({endDate: e.target.value})
+  }
+
+  handleRenderChange(e){
+    console.log(this.state.showCalendar)
+    this.setState({showCalendar: !this.state.showCalendar})
+    console.log(this.state.showCalendar)
+    
+  }
+
   render() {
     return (
       <div>
-        <ReservationForm
-          onReservationSubmit={this.handleReservationSubmit}
-        />
+        {this.state.showCalendar
+          ? (
+            <Dnd
+              onStartDateSelect={this.handleStartDateSelect}
+              onEndDateSelect={this.handleEndDateSelect}
+              onRenderChange={this.handleRenderChange.bind(this)}
+            />
+          )
+          : (
+            <ReservationForm2
+              onReservationSubmit={this.handleReservationSubmit}
+            />
+          )
+        }
       </div>
     )
   }
