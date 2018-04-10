@@ -5,8 +5,8 @@ services:
   - mongodb
 before_script:
   - mongo reservation-system --eval 'db.createUser({user:"travis", pwd:"test",roles:["readWrite"]});'
-  - cd Backend && npm install
-  - cd Frontend && npm install
+  - cd Backend && npm install;
+  - cd Frontend && npm install;
 script:
-  - cd Backend && npm start
-  - cd Fronend && npm start
+  - cd Backend && npm start;
+  - cd Fronend && npm start;
