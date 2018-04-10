@@ -28,17 +28,21 @@ class ReservationPage extends Component {
   }
 
   handleStartDateSelect(e) {
-    this.setState({startDate: e.target.value})
-  }
-  handleEndDateSelect(e) {
-    this.setState({endDate: e.target.value})
+    this.setState({startDate: e.slotInfo.start})
+    console.log(this.state.startDate)
   }
 
-  handleRenderChange(e){
-    console.log(this.state.showCalendar)
+  handleEndDateSelect(e) {
+    this.setState({endDate: e.slotInfo.end})
+    console.log(this.state.endDate)
+  }
+
+  handleRenderChange(e) {
+    this.setState({startDate: e.start})
+    this.setState({endDate: e.end})
+    console.log(this.state.startDate)
+    console.log(this.state.endDate)
     this.setState({showCalendar: !this.state.showCalendar})
-    console.log(this.state.showCalendar)
-    
   }
 
   render() {
@@ -54,6 +58,7 @@ class ReservationPage extends Component {
           )
           : (
             <ReservationForm2
+              startDate={this.state.startDate}
               onReservationSubmit={this.handleReservationSubmit}
             />
           )

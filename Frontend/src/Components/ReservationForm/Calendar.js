@@ -8,12 +8,6 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop/'
 import moment from 'moment'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.less'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import {
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom';
-import Radium from 'radium';
 
 let testEvents = [
     {
@@ -62,14 +56,22 @@ class Dnd extends React.Component {
     })
   }
 
-  handleSlotSelection(slotInfo){
-    let startDateSelected = new Date(slotInfo.start)
-    let endDateSelected = new Date(slotInfo.end)
-    console.log(startDateSelected)
-    console.log(startDateSelected)
-    this.setState({startDate: startDateSelected})
-    this.setState({endDate: endDateSelected})
+  handleStartDateSelection(slotInfo){
+    this.setState({startDate: new Date(slotInfo.start)})
+    //console.log(this.state.startDate)
   }
+
+  handleEndDateSelection(slotInfo){
+    this.setState({endDate: new Date(slotInfo.end)})
+    //console.log(this.state.endDate)
+  }
+
+  handleSlotSelection(slotInfo){
+    this.setState({startDate: new Date(slotInfo.start)})
+    this.setState({endDate: new Date(slotInfo.end)})
+    //this.setState({showCalendar: false})
+  }
+
 
   resizeEvent = (resizeType, { event, start, end }) => {
     const { events } = this.state
@@ -84,6 +86,7 @@ class Dnd extends React.Component {
       events: nextEvents,
     })
   }
+
   render() {
     return (
         <DragAndDropCalendar
@@ -93,11 +96,12 @@ class Dnd extends React.Component {
           defaultView="week"
           defaultDate={new Date()}
           onSelectSlot={
-            this.handleSlotSelection.bind(this),
-            this.props.onRenderChange,
-            this.props.onStartDateSelect,
-            this.props.onEndDateSelect}
-        />
+              this.props.onRenderChange
+
+            }
+            //this.handleSlotSelection.bind(this),
+
+         />
     )
   }
 }
