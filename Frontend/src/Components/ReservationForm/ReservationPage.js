@@ -2,6 +2,10 @@ import React ,{Component} from 'react'
 import ReservationForm2 from './ReservationForm'
 import axios from 'axios';
 import Dnd from './Calendar';
+import Dialog from 'material-ui/Dialog'
+import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import FlatButton from 'material-ui/FlatButton';
 
 class ReservationPage extends Component {
   constructor(props){
@@ -25,6 +29,10 @@ class ReservationPage extends Component {
     .catch(err => {
       console.error(err);
     });
+  }
+
+  handleClose = () => {
+    this.setState({showCalendar: true})
   }
 
   handleStartDateSelect(e) {
@@ -57,10 +65,12 @@ class ReservationPage extends Component {
             />
           )
           : (
-            <ReservationForm2
-              startDate={this.state.startDate}
-              onReservationSubmit={this.handleReservationSubmit}
-            />
+            <div>
+              <ReservationForm2
+                startDate={this.state.startDate}
+                onReservationSubmit={this.handleReservationSubmit}
+              />
+            </div>
           )
         }
       </div>

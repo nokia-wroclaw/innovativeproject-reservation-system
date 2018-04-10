@@ -5,7 +5,6 @@ import {List, ListItem} from 'material-ui/List';
 import {
   Table,
   TableBody,
-  TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,

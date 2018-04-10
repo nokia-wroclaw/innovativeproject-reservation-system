@@ -5,7 +5,11 @@ import NumOfPeopleTextField from './NumOfPeopleTextField'
 import SelectRoomField from './SelectRoomField';
 import DeviceTable from './DeviceTable';
 import {Link} from 'react-router-dom';
-import axios from 'axios'
+import DataTextField from './DataTextField'
+import {List, ListItem} from 'material-ui/List';
+import PersonNameTextField from './PersonNameTextField'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton';
 
 
 class ReservationForm2 extends Component {
@@ -14,7 +18,11 @@ class ReservationForm2 extends Component {
     this.state ={
       deviceData: [],
       value: 'WholeSpace',
+      startDate: '',
+      endDate: '',
       numOfPeople: '',
+      open: false,
+      personName: '',
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,8 +34,14 @@ class ReservationForm2 extends Component {
     e.preventDefault();
     let numOfPeople = this.state.numOfPeople.trim();
     let option = this.state.value;
-
-    this.props.onReservationSubmit({ numOfPeople: numOfPeople, option: option});
+    let startDate = this.state.startDate;
+    let endDate = this.state.endDate;
+    let personName = this.state.personName;
+    this.props.onReservationSubmit({ numOfPeople: numOfPeople,
+                                    option: option,
+                                    startDate: startDate,
+                                    endDate: endDate,
+                                    personName: personName});
     this.setState({numOfPeople: '', option: ''});
   }
 
@@ -39,48 +53,52 @@ class ReservationForm2 extends Component {
     this.setState({value});
   }
 
-  componentDidMount() {
-    axios.get('/api/devices')
-      .then(res => {
-        this.setState({devicedata: res.data});
-      })
+  handlePersonNameChange(e){
+    this.setState({personName: e.target.value})
   }
 
   render(){
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.props.onRenderChange}
+      />,
+      <RaisedButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleSubmit}
+      />,
+    ];
     return (
-      <div>
+      <MuiThemeProvider>
+        <Dialog
+          title="Reservation form"
+          modal={false}
+          actions={actions}
+          open={!this.props.showCalendar}
+          onRequestClose={this.handleClose}
+        >
         <form onSubmit={this.handleSubmit}>
-          <NumOfPeopleTextField
-            numOfPeople={this.state.numOfPeople}
-            onChangeNumOfPeople={this.handleNumOfPeopleChange}
-          />
           <SelectRoomField
             value={this.state.value}
             onRoomSelectChange={this.handleSelectRoomChange}
           />
+          <NumOfPeopleTextField
+            numOfPeople={this.state.numOfPeople}
+            onChangeNumOfPeople={this.handleNumOfPeopleChange}
+          />
+          <PersonNameTextField
+            personName={this.state.personName}
+            onChangePersonName={this.handlePersonNameChange.bind(this)}
+          />
           <DeviceTable
             onFormOpen={this.state.deviceData}
           />
-
-          <MuiThemeProvider>
-            <Link to='/'>
-              <RaisedButton
-                label="cancel"
-                type="submit"
-                primary={false}
-                style={{float: 'left', margin: '10px 0px 0px 0px'}}
-                />
-            </Link>
-            <RaisedButton
-                label="Submit"
-                type="submit"
-                primary={true}
-                style={{margin: '10px 0px 0px 50px'}}
-            />
-          </MuiThemeProvider>
-          </form>
-
-         </div>
+        </form>
+        </Dialog>
+        </MuiThemeProvider>
     )
   }
 }
