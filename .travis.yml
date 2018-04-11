@@ -16,5 +16,8 @@ after_success:
  - cd Frontend && npm run deploy
  - cd ../Backend && npm run deploy
  deploy:
+    provider: npm
+    email: "226242@student.pwr.wroc.pl"
+    api_key: "1d3a90f10adb1d78754f790bda3056830db2de86"
     on:
      branch: develop
