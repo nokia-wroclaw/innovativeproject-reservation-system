@@ -13,4 +13,8 @@ after_success:
  - git config --global user.email "226242@student.pwr.wroc.pl"
  - git remote rm origin
  - git remote add origin "https://github.com/MaciejJaskolski/reservation_form.git"
+deploy:
  - cd Frontend && npm run deploy
+ - cd ../Backend && npm run deploy
+ on:
+  - branch: develop
