@@ -7,7 +7,7 @@ before_script:
  - sleep 15
  - mongo nokia-reservation --eval 'db.createUser({user:"root",pwd:"qwerty123",roles:["readWrite"]});'
  - cd Backend && npm install
- - cd Frontend && npm install
+ - cd ../Frontend && npm install
 after_success:
  - git config --global user.name "maciejjaskolski"
  - git config --global user.email "226242@student.pwr.wroc.pl"
