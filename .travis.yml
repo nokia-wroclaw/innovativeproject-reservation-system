@@ -15,3 +15,6 @@ after_success:
  - git remote add origin "https://github.com/MaciejJaskolski/reservation_form.git"
  - cd Frontend && npm run deploy
  - cd ../Backend && npm run deploy
+ deploy:
+    on:
+     branch: develop
