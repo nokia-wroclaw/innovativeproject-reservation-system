@@ -1,0 +1,1 @@
+https://travis-ci.org/MaciejJaskolski/reservation_form.svg?branch=master
