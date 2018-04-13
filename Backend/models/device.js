@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var DeviceSchema = new Schema ( {
-  _id: mongoose.Schema.Types.ObjectId,
   name: {
     type: String,
     required: true,
@@ -15,15 +14,9 @@ var DeviceSchema = new Schema ( {
      min: 0,
      required: true
   },
+  deviceImage: { type: String, required: false, },
+  description: {type: String, required: false,},
 
-  deviceImage: {
-    type: String,
-    required: true
- },
-  description: {
-    type: String,
-   required: true
- }
 
 });
 

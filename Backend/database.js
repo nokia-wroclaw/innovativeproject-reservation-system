@@ -39,11 +39,11 @@ var ReservationItem = require('./models/reservations.js');
   DeviceItem.remove({}, ()=>{
     seedDevices.forEach(function(item){
       new DeviceItem(item).save();
-    })
-  })
+    });
+  });
 
   ReservationItem.remove({}, ()=>{
     seedReservations.forEach(function(item){
       new ReservationItem(item).save();
-    })
-  })
+    });
+  });
