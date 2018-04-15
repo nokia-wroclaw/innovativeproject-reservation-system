@@ -15,7 +15,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 import Avatar from 'material-ui/Avatar';
 
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 class Device extends Component {
   constructor(props){
@@ -25,7 +25,8 @@ class Device extends Component {
       toBeDeleted: false,
       toBeAdded: true,
       name: '',
-      numLeft: ''
+      numLeft: '',
+      redirect: false
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -45,7 +46,7 @@ class Device extends Component {
 
   editDevice(e) {
     e.preventDefault()
-    this.setState({toBeUpdated: !this.state.toBeUpdated});
+    this.setState({redirect: true});
   }
 
   handleEditDevice(e) {
@@ -76,6 +77,9 @@ class Device extends Component {
   }
 
   render() {
+    if(this.state.redirect){
+      return  <Redirect to={`/devices/${this.props.uniqueID}/edit`} />
+    }
     return (
       <div>
         <MuiThemeProvider>
@@ -87,7 +91,7 @@ class Device extends Component {
                   <IconMenu
                     iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   >
-                    <MenuItem primaryText="Edit" leftIcon={<EditIcon/>} onClick={this.editDevice}/>
+                    <MenuItem leftIcon={<EditIcon/>} primaryText="Edit" onClick={this.editDevice}/>
                     <MenuItem primaryText="Delete" leftIcon={<DeleteIcon/>} onClick={this.deleteDevice}/>
                   </IconMenu>
                 }

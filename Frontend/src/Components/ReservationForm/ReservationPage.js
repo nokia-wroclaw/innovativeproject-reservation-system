@@ -19,7 +19,7 @@ class ReservationPage extends Component {
           return {
             start: new Date(item.startDate),
             end: new Date(item.endDate),
-            title: item.option
+            title: item.option + " " + item.personName
           }
         })});
       })

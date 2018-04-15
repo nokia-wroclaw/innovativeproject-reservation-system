@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+ - "node"
+services:
+ - mongodb
+stages:
+- build
+- name: deploy
+  if: branch = master
+jobs:
+  include:
+    - stage: build
+      before_script: 
+        - mongo nokia-reservation --eval 'db.createUser({user:"root",pwd:"qwerty123",roles:["readWrite"]});'
+        - cd Backend
+      script: npm install
+    -
+      before_script: cd Frontend
+      script: 
+        - npm install
+        - npm build
+    - stage: deploy
+      before_script: cd Backend 
+      script: npm run deploy
+    -
+      before_script: cd Frontend 
+      script: npm run deploy

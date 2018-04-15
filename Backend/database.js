@@ -25,15 +25,17 @@ var ReservationItem = require('./models/reservations.js');
   }];
 
   var seedReservations = [{
-    startDate: '2018-03-25T23:10:15.000Z',
-    endDate: '2018-03-25T23:11:00.000Z',
+    startDate: '2018-04-15T10:00:05.000Z',
+    endDate: '2018-04-15T12:00:05.000Z',
     numOfPeople: 3,
-    option: 'WholeSpace'
+    option: 'WholeSpace',
+    personName: 'Smith'
   },{
-    startDate: '2018-03-25T23:11:05.000Z',
-    endDate: '2018-03-25T23:18:00.000Z',
+    startDate: '2018-04-16T08:00:00.000Z',
+    endDate: '2018-04-16T15:00:00.000Z',
     numOfPeople: 10,
-    option: 'MakerSpace'
+    option: 'MakerSpace',
+    personName: 'Mill'
   }];
 
   DeviceItem.remove({}, ()=>{
