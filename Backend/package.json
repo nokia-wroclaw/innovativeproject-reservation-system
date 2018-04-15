@@ -1,26 +1,26 @@
 {
-  "name": "new-app",
+  "name": "reservation-system",
+  "homepage": "https://github.com/nokia-wroclaw/innovativeproject-reservation-system.git",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "build": "npm run build",
+	"test": "npm run test",
+	"eject": "npm run eject",
+	"predeploy": "npm run build",
+	"deploy": "gh-pages -d build"
   },
   "dependencies": {
-    "async": "^2.6.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "^4.16.3",
     "express-generator": "^4.15.5",
     "express-validator": "^5.0.3",
-    "jade": "~1.11.0",
+    "mongoose": "^5.0.10",
     "morgan": "~1.9.0",
-    "mysql": "^2.15.0",
-    "mysql2": "^1.5.2",
     "nodemon": "^1.17.1",
-    "sequelize": "^4.36.0",
-    "sequelize-cli": "^4.0.0",
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
