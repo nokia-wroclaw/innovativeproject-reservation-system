@@ -69,7 +69,6 @@ class ReservationForm2 extends Component {
         onClick={this.handleSubmit}
       />,
     ];
-    console.log("?" + this.props.errData)
     return (
       <MuiThemeProvider>
         <Dialog
@@ -100,12 +99,7 @@ class ReservationForm2 extends Component {
 
         </form>
         </Dialog>
-        <Snackbar
-          open={this.state.showErrors}
-          message={this.props.errData}
-          style={{textAlign: 'center'}}
-          autoHideDuration={4000}
-        />
+      
         </MuiThemeProvider>
     )
   }
