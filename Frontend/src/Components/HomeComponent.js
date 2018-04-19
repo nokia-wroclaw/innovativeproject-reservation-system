@@ -49,27 +49,27 @@ class HomeComponent extends Component{
           </li>
 		      <li style={style.list}>
             <RadiatingLink
-             to="/reservations" style={style.link}>
-             Reservations
+             to="/reservations_list" style={style.link}>
+             Reservation List
             </RadiatingLink>
           </li>
           <li style={style.list}>
             <RadiatingLink
-             to="/reservation_form" style={style.link}>
-             Form
+             to="/reservation" style={style.link}>
+             Reservation
             </RadiatingLink>
           </li>
         </ul>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/devices" component={() => <DeviceBlock url='http://localhost:3001/api/devices'/>}/>
-		      <Route path="/reservations" component={()=> <ReservationBlock url='http://localhost:3001/api/reservations'/>}/>
+		      <Route path="/reservations_list" component={()=> <ReservationBlock url='http://localhost:3001/api/reservations'/>}/>
           <Route exact path={'/devices/:id'} component={DeviceDetails} />
-          <Route path={'/reservation_form'} component={() => <ReservationPage url='http://localhost:3001/api/reservations'/>} />
+          <Route path={'/reservation'} component={() => <ReservationPage url='http://localhost:3001/api/reservations'/>} />
           <Route path={'/devices/:id/edit'} component={DeviceEdit}/>
         </Switch>
         <footer style={style.footer}>
-          This is footer
+          Nokia- Innovative project 2018- Nokia Garage
         </footer>
       </div>
     );

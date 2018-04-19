@@ -1,6 +1,7 @@
 const style = {
   body: {
-    margin: '1% 6% 1% 6%'
+    margin: '1% 6% 1% 6%',
+    fontFamily:'Helvetica, sans-serif',
   },
   footer: {
     fontSize: '10px',

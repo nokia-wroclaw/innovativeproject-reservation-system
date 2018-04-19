@@ -8,13 +8,15 @@ import DataTextField from './DataTextField'
 import PersonNameTextField from './PersonNameTextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
+import axios from 'axios'
 
 
 class ReservationForm2 extends Component {
   constructor(props){
     super(props);
     this.state ={
-      deviceData: [],
+      data: [],
       value: 'WholeSpace',
       numOfPeople: '',
       personName: '',
@@ -26,7 +28,7 @@ class ReservationForm2 extends Component {
     let numOfPeople = this.state.numOfPeople.trim();
     let option = this.state.value;
     let startDate = this.props.startDate;
-    let endDate = this.props.endDate;
+    let endDate = this.props.endDate;;
     let personName = this.state.personName;
     this.props.onReservationSubmit({ numOfPeople: numOfPeople,
                                     option: option,
@@ -34,6 +36,7 @@ class ReservationForm2 extends Component {
                                     endDate: endDate,
                                     personName: personName});
     this.setState({numOfPeople: '', option: '', personName: ''})
+
   }
 
   handleNumOfPeopleChange = (e)=> {
@@ -66,7 +69,7 @@ class ReservationForm2 extends Component {
         onClick={this.handleSubmit}
       />,
     ];
-
+    console.log("?" + this.props.errData)
     return (
       <MuiThemeProvider>
         <Dialog
@@ -94,11 +97,15 @@ class ReservationForm2 extends Component {
             personName={this.state.personName}
             onChangePersonName={this.handlePersonNameChange.bind(this)}
           />
-          <DeviceTable
-            onFormOpen={this.state.deviceData}
-          />
+
         </form>
         </Dialog>
+        <Snackbar
+          open={this.state.showErrors}
+          message={this.props.errData}
+          style={{textAlign: 'center'}}
+          autoHideDuration={4000}
+        />
         </MuiThemeProvider>
     )
   }

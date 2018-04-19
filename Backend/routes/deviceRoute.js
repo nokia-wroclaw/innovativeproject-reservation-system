@@ -1,16 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-var Device = require('../models/device');
-//var device_controller = require('../controllers/deviceController.js');
+//var Device = require('../models/device');
+var device_controller = require('../controllers/deviceController.js');
+
+router.get('/', device_controller.device_get);
+router.get('/:device_id', device_controller.device_details_get)
+
+//router.delete('/:device_id', device_controller.device_delete)
 
 router.route('/')
-.get(function(req, res){
-  Device.find(function(err, devices){
-    if(err){res.send(err)}
-    res.json(devices)
-  });
-})
 .post(function(req, res){
 console.log(req.body);
   var device = new Device();
@@ -24,12 +23,6 @@ console.log(req.body);
 });
 
 router.route('/:device_id')
-  .get(function(req, res) {
-    Device.findById(req.params.device_id, function(err, device){
-      if(err) return res.send(err);
-      res.json(device);
-    });
-  })
   .put(function(req, res) {
     console.log(req.body);
     Device.findById(req.params.device_id, function(err, device) {
@@ -48,6 +41,6 @@ router.route('/:device_id')
         res.send(err);
       res.json({ message: 'device has been deleted' })
     })
-});
+  })
 
 module.exports = router;

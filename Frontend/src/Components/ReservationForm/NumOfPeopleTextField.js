@@ -8,7 +8,7 @@ class NumOfPeopleTextField extends Component {
     super(props);
     this.state= {
       numOfPeople: '',
-      disabled: 'false',
+      disabled: true,
       hoverColor: '#ffffff',
     }
 
@@ -24,7 +24,6 @@ class NumOfPeopleTextField extends Component {
       <MuiThemeProvider>
         <List>
           <ListItem
-            hoverColor={this.state.hoverColor}
             disabled={this.state.disabled}
             primaryText="Enter number of people: "
             rightIconButton={
@@ -32,7 +31,7 @@ class NumOfPeopleTextField extends Component {
                 id="formNumOfPeople"
                 placeholder="ex. 3"
                 onChange={this.props.onChangeNumOfPeople}
-                numOfPeople={this.props.numOfPeople}
+                value={this.props.numOfPeople}
               />
             }
           >

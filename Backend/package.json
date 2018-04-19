@@ -6,12 +6,13 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "build": "npm run build",
-	"test": "npm run test",
-	"eject": "npm run eject",
-	"predeploy": "npm run build",
-	"deploy": "gh-pages -d build"
+    "test": "npm run test",
+    "eject": "npm run eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",

@@ -3,12 +3,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import {List, ListItem} from 'material-ui/List';
 
-class NumOfPeopleTextField extends Component {
+class PersonNameTextField extends Component {
   constructor(props){
     super(props);
     this.state= {
       personName: '',
-      disabled: 'false',
+      disabled: true,
       hoverColor: '#ffffff',
     }
 
@@ -24,7 +24,6 @@ class NumOfPeopleTextField extends Component {
       <MuiThemeProvider>
         <List>
           <ListItem
-            hoverColor={this.state.hoverColor}
             disabled={this.state.disabled}
             primaryText="Enter your name: "
             rightIconButton={
@@ -32,7 +31,7 @@ class NumOfPeopleTextField extends Component {
                 id="formPersonName"
                 placeholder="ex. John Smith"
                 onChange={this.props.onChangePersonName}
-                numOfPeople={this.props.personName}
+                value={this.props.personName}
               />
             }
           >
@@ -43,4 +42,4 @@ class NumOfPeopleTextField extends Component {
   }
 }
 
-export default NumOfPeopleTextField;
+export default PersonNameTextField;

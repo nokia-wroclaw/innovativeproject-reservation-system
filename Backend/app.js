@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 var Device = require('./models/device');
 var secrets = require('./secrets');
 
-var deviceRoute = require('./routes/device');
-var reservationRoute = require('./routes/reservations');
-
+var deviceRoute = require('./routes/deviceRoute');
+var reservationRoute = require('./routes/reservationsRoute');
+var reservationMiddleware = require('./controllers/Middleware/reservationMiddleware')
 
 var app = express();
 var router = express.Router();
@@ -26,6 +26,10 @@ app.use(function(req, res, next) {
   res.setHeader('Cache-Control', 'no-cache');
   next();
 });
+
+app.use(reservationMiddleware.CheckTime)
+//app.use(reservationMiddleware.ReturnEndReservations)
+//app.use(reservationMiddleware.SaveEndCondition)
 
 router.get('/', function(req, res) {
   res.json({ message: 'API Initialized!'});

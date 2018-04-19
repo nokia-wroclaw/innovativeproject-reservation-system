@@ -6,7 +6,7 @@ class DataTextField extends Component {
   constructor(props){
     super(props);
     this.state= {
-      disabled: 'false',
+      disabled: false,
       hoverColor: '#ffffff',
     }
 

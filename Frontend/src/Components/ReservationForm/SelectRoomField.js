@@ -8,7 +8,7 @@ class SelectRoomField extends Component {
   constructor(props){
     super(props);
     this.state ={
-      disabled: 'true',
+      disabled: true,
       primaryText: 'Select room:',
     }
     //this.handleSelectFieldChangeChange = this.handleSelectFieldChangeChange.bind(this);
