@@ -3,13 +3,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import NumOfPeopleTextField from './NumOfPeopleTextField'
 import SelectRoomField from './SelectRoomField';
-import DeviceTable from './DeviceTable';
 import DataTextField from './DataTextField'
 import PersonNameTextField from './PersonNameTextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
-import Snackbar from 'material-ui/Snackbar';
-import axios from 'axios'
+
+import style from '../../style'
 
 
 class ReservationForm2 extends Component {
@@ -36,7 +35,6 @@ class ReservationForm2 extends Component {
                                     endDate: endDate,
                                     personName: personName});
     this.setState({numOfPeople: '', option: '', personName: ''})
-
   }
 
   handleNumOfPeopleChange = (e)=> {
@@ -79,6 +77,22 @@ class ReservationForm2 extends Component {
           onRequestClose={this.handleClose.bind(this)}
           autoScrollBodyContent={true}
         >
+        {(this.props.anyErrors)
+          ?
+          (
+            <p style={style.errorValidation}>
+              {this.props.errData1}
+            </p>
+          )
+        : null}
+          {(this.props.anyErrors)
+            ?
+            (
+              <p style={style.errorValidation}>
+                {this.props.errData2}
+              </p>
+            )
+          : null}
         <form onSubmit={this.handleSubmit}>
           <DataTextField
             startDate={this.props.startDate}
@@ -99,7 +113,7 @@ class ReservationForm2 extends Component {
 
         </form>
         </Dialog>
-      
+
         </MuiThemeProvider>
     )
   }

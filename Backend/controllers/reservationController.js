@@ -26,7 +26,7 @@ exports.reservation_post = function(req, res, reservationMiddleware){
   (req.body.numOfPeople) ? reservation.numOfPeople = req.body.numOfPeople : null;
   (req.body.option) ? reservation.option = req.body.option : null;
   (req.body.personName) ? reservation.personName = req.body.personName : null;
-  
+
   var queries = [
     //end condition - ✓
     {$lt: reservation.startDate},
@@ -53,7 +53,7 @@ exports.reservation_post = function(req, res, reservationMiddleware){
     const maxnumberofpeople = Math.max(...numberofpeople)
 
     if( maxnumberofpeople + reservation.numOfPeople > maxGuests){
-      return 'too many people'
+      return 'Reservation cannot be submited because there are more than ' + maxGuests + ' people (There would be ' + (maxnumberofpeople+reservation.numOfPeople) + ')'
     }
     return ''
   }
@@ -61,7 +61,7 @@ exports.reservation_post = function(req, res, reservationMiddleware){
   function isOver8Hours(results, reservation){
     const timeDifference = Math.abs(reservation.endDate - reservation.startDate)/3600000;
     if(timeDifference > maxHours){
-      return 'reservation too long'
+      return 'Single reservation cannot be longer than 8 hours. Currently ' + timeDifference + 'h'
     }
     return ''
   }

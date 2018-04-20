@@ -16,6 +16,7 @@ class DeviceList extends Component {
             onDeviceEdit={this.props.onDeviceEdit}
             key={ device._id }>
           </Device>
+          
         )
       })
       return (

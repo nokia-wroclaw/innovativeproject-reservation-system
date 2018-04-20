@@ -122,6 +122,10 @@ const style = {
     fontWeight: 'bold',
     fontSize: '16px',
     margin: '0px 100px 20px 0px'
+  },
+  errorValidation: {
+    color: 'red',
+    fontSize: '14px',
   }
 }
 

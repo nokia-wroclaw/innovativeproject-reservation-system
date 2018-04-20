@@ -76,37 +76,25 @@ class Dnd extends Component {
     if(event.title == 'WholeSpace'){
       return {
         className: 'wholeSpaceStyle',
-        style: {
-          backgroundColor: '#cc4350',
-          border: '2px solid #c9646e'
-        }
+        style: calendarStyles.wholeSpaceStyle
       }
     }
     else if(event.title == 'MakerSpace'){
       return{
         className: 'makerSpaceStyle',
-        style: {
-          backgroundColor: '#d19812',
-          border: '2px solid #ceac5c'
-        }
+        style: calendarStyles.makerSpaceStyle
       }
     }
     else if(event.title == 'Lab'){
       return {
         className: 'labSpaceStyle',
-        style: {
-          backgroundColor: '#7dc93a',
-          border: '1px solid #8ac458'
-        }
+        style: calendarStyles.labSpaceStyle
       }
     }
     else if(event.title == 'OpenSpace'){
       return {
         className: 'openSpaceStyle',
-        style: {
-          backgroundColor: '#38a8c4',
-          border: '1px solid #80bece'
-        }
+        style: calendarStyles.openSpaceStyle
       }
     }
     else {
@@ -123,8 +111,8 @@ class Dnd extends Component {
     return (
         <DragAndDropCalendar
           selectable
-          min={this.handleDateBoundaries(7)}
-          max={this.handleDateBoundaries(19)}
+          min={this.handleDateBoundaries(6)}
+          max={this.handleDateBoundaries(20)}
           startAccessor='start'
           endAccessor='end'
           events={this.props.data}

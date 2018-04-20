@@ -17,6 +17,7 @@ import Avatar from 'material-ui/Avatar';
 
 import {Link, Redirect} from 'react-router-dom';
 
+
 class Device extends Component {
   constructor(props){
     super(props);
