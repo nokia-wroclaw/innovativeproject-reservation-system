@@ -73,25 +73,25 @@ class Dnd extends Component {
   }
 
   customRoomGetter = (event) => {
-    if(event.title == 'WholeSpace'){
+    if(event.title === 'WholeSpace'){
       return {
         className: 'wholeSpaceStyle',
         style: calendarStyles.wholeSpaceStyle
       }
     }
-    else if(event.title == 'MakerSpace'){
+    else if(event.title === 'MakerSpace'){
       return{
         className: 'makerSpaceStyle',
         style: calendarStyles.makerSpaceStyle
       }
     }
-    else if(event.title == 'Lab'){
+    else if(event.title === 'Lab'){
       return {
         className: 'labSpaceStyle',
         style: calendarStyles.labSpaceStyle
       }
     }
-    else if(event.title == 'OpenSpace'){
+    else if(event.title === 'OpenSpace'){
       return {
         className: 'openSpaceStyle',
         style: calendarStyles.openSpaceStyle
@@ -111,10 +111,11 @@ class Dnd extends Component {
     return (
         <DragAndDropCalendar
           selectable
-          min={this.handleDateBoundaries(6)}
-          max={this.handleDateBoundaries(20)}
+          min={this.handleDateBoundaries(7)}
+          max={this.handleDateBoundaries(19.5)}
           startAccessor='start'
           endAccessor='end'
+          step={30}
           events={this.props.data}
           onEventDrop={this.moveEvent}
           defaultView="week"

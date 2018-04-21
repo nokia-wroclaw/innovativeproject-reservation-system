@@ -7,8 +7,12 @@ import DataTextField from './DataTextField'
 import PersonNameTextField from './PersonNameTextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
+import moment from 'moment'
+
 
 import style from '../../style'
+
+moment().format('MMMM Do YYYY, h:mm:ss a');
 
 
 class ReservationForm2 extends Component {

@@ -8,6 +8,8 @@ import {Card, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card
 import ArduinoLogo from '../../../images/ArduinoAPP-01.svg'
 import Description from './Description'
 
+import arduino from '../../../images/arduino_mkr1000_front-1.jpg'
+
 class DeviceDetails extends Component {
   constructor(props){
     super(props);
@@ -42,7 +44,7 @@ class DeviceDetails extends Component {
     console.log(this.props);
     return (
         <MuiThemeProvider>
-          <Card style={{backgroundSize: "60% 100%, contain", margin: 'auto', padding: '3px'}}>
+          <Card style={{maxWidth: "80%", backgroundSize: "60% 100%, contain", margin: 'auto', padding: '3px'}}>
             <CardHeader
               title={this.state.name}
               subtitle={this.state.numLeft + " devices"}
@@ -56,7 +58,7 @@ class DeviceDetails extends Component {
             <CardMedia
               overlay={<CardTitle title={this.state.name}/>}
             >
-              <img src="https://store-cdn.arduino.cc/uni/catalog/product/cache/1/image/520x330/604a3538c15e081937dbfbd20aa60aad/a/b/abx00004_featured_1.jpg" alt={this.state.name} style={{backgroundSize: "75% 50% inherit", maxHeight: "500px", maxWidth: '500px'}}/>
+              <img src={arduino} alt={this.state.name} style={{backgroundSize: "75% 50% inherit", maxHeight: "500px", maxWidth: '500px'}}/>
             </CardMedia>
             <CardTitle title="Description" />
             <CardText>

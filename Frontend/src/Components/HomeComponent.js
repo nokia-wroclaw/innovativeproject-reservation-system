@@ -47,12 +47,6 @@ class HomeComponent extends Component{
              Devices
             </RadiatingLink>
           </li>
-		      <li style={style.list}>
-            <RadiatingLink
-             to="/reservations_list" style={style.link}>
-             Reservation List
-            </RadiatingLink>
-          </li>
           <li style={style.list}>
             <RadiatingLink
              to="/reservation" style={style.link}>

@@ -1,19 +1,23 @@
 const calendarStyles = {
   wholeSpaceStyle:{
-    backgroundColor: '#cc4350',
-    border: '2px solid #c9646e'
+    backgroundColor: '#f6f7a6',
+    border: '2px solid #f0e22a',
+    color: 'rgb(40, 38, 4)'
   },
   labSpaceStyle:{
-    backgroundColor: '#7dc93a',
-    border: '1px solid #8ac458'
+    backgroundColor: '#c5f0a1',
+    border: '2px solid #88d04c',
+    color: 'rgb(5, 34, 5)'
   },
   makerSpaceStyle:{
-    backgroundColor: '#d19812',
-    border: '2px solid #ceac5c'
+    backgroundColor: '#f1b7aa',
+    border: '2px solid #f07e85',
+    color: 'rgb(40, 5, 5)'
   },
   openSpaceStyle:{
-    backgroundColor: '#38a8c4',
-    border: '1px solid #80bece'
+    backgroundColor: '#c6e6ee',
+    border: '2px solid #37cdf4',
+    color: 'rgb(7, 18, 48)'
   }
 }
 

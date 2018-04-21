@@ -6,14 +6,13 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-
 class DeviceEdit extends Component{
   constructor(props){
     super(props);
     this.state = {
       data: [],
       description: '',
-      redirect: false
+      redirect: false,
     }
   }
 
@@ -61,7 +60,9 @@ class DeviceEdit extends Component{
       return <Redirect to={`/devices/${this.state._id}`}/>
     }
     return (
+
       <MuiThemeProvider>
+        <form onSubmit={this.handleDeviceEdit}>
       <h1>Device edit page</h1>
       <List>
         <ListItem
@@ -95,7 +96,6 @@ class DeviceEdit extends Component{
           disabled={true}
           rightIconButton={
             <textarea rows="4" cols="100">
-              {this.state.description}
             </textarea>
           }
         >
@@ -108,12 +108,12 @@ class DeviceEdit extends Component{
               label="Confirm"
               primary={true}
               type="submit"
-              onClick={this.handleDeviceEdit}
             />
           }
         >
         </ListItem>
       </List>
+    </form>
       </MuiThemeProvider>
     )
   }

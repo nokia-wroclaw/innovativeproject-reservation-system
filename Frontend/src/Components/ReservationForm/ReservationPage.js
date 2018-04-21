@@ -41,12 +41,12 @@ class ReservationPage extends Component {
   }
 
   handleReservationSubmit = (reservation) => {
-    let reservations = this.state.data;
     axios.post(this.props.url, reservation)
     .then((result) =>{
       let error = result.data.error
       if(error){
         let errLength = result.data.errors.length;
+        let errString = ''
         for(var i =0;i<errLength;i++){
           this.state.errData[i] = result.data.errors[i]
         }
@@ -71,11 +71,17 @@ class ReservationPage extends Component {
     });
   }
 
-  handleRenderChange = (e) =>  {
+  handleRenderChange = (e) => {
+  if (e.start !== 'Invalid date') {
     this.setState({startDate: e.start})
+  }
+  if (e.end !== 'Invalid date') {
     this.setState({endDate: e.end})
+  }
+  if (e.start !== 'Invalid date' && e.end !== 'Invalid date') {
     this.setState({isDialogOpen: true})
   }
+}
 
   render() {
     return (
