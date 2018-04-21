@@ -15,7 +15,6 @@ class DeviceDetails extends Component {
     super(props);
     this.state = {
       data: [],
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis urna at libero mollis dignissim. Etiam tristique lectus sapien, id condimentum nisl facilisis sed. Etiam bibendum eros porttitor ex varius, nec scelerisque ligula vestibulum. Nam nibh justo, semper ut suscipit quis, consectetur at ipsum. Curabitur eget magna lectus. Morbi blandit est felis, non posuere lorem ultrices eget. Morbi orci sem.'
     };
   }
 

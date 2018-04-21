@@ -1,38 +1,27 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import DeviceList from './DeviceList';
-import DeviceForm from './DeviceForm';
 import style from '../../style';
+
+import {Redirect} from 'react-router-dom'
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import {List, ListItem} from 'material-ui/List'
 
 class DeviceBlock extends Component {
   constructor(props){
     super(props);
-    this.state = {data: []};
+    this.state = {data: [], redirectAdd: false, addFormOpen: true};
     this.loadDeviceFromServer = this.loadDeviceFromServer.bind(this);
-    this.handleDeviceSubmit = this.handleDeviceSubmit.bind(this);
     this.handleDeviceDelete = this.handleDeviceDelete.bind(this);
     this.handleDeviceEdit = this.handleDeviceEdit.bind(this);
   }
-
 
   loadDeviceFromServer() {
     axios.get(this.props.url)
       .then(res => {
         this.setState({data: res.data});
       })
-  }
-
-  handleDeviceSubmit(device){
-    let devices = this.state.data;
-    device.id = Date.now();
-    axios.post(this.props.url, device)
-    .then((result) =>{
-      this.setState({data:  [...devices,result.data]});
-    })
-    .catch(err => {
-      console.error(err);
-
-    });
   }
 
   handleDeviceDelete(id) {
@@ -70,12 +59,35 @@ class DeviceBlock extends Component {
   componentWillUnmount() {
   }
 
+  redirectToAddingPage = () => {
+    this.setState({
+      redirectAdd: true
+    });
+  }
+
+  handleAddFormOpen = (e) => {
+    this.setState({
+      addFormOpen: !this.state.addFormOpen
+    });
+  }
+
   render() {
+    if(this.state.redirectAdd){
+        return <Redirect to={`/devices/add`}/>
+    }
     return (
         <div style={style.deviceBox}>
           <h3 style={style.title}>Devices:</h3>
-        <DeviceForm
-          onDeviceSubmit={this.handleDeviceSubmit} />
+        <MuiThemeProvider>
+          <List>
+            <ListItem
+              primaryText="Click to add new device..."
+              onClick={this.redirectToAddingPage}
+              style={{backgroundColor: 'rgb(213, 232, 241)'}}
+            >
+            </ListItem>
+          </List>
+        </MuiThemeProvider>
         <DeviceList
           onDeviceDelete = {this.handleDeviceDelete}
           onDeviceEdit={this.handleDeviceEdit}

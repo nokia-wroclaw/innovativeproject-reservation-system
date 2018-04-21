@@ -46,7 +46,6 @@ class ReservationPage extends Component {
       let error = result.data.error
       if(error){
         let errLength = result.data.errors.length;
-        let errString = ''
         for(var i =0;i<errLength;i++){
           this.state.errData[i] = result.data.errors[i]
         }
@@ -63,7 +62,11 @@ class ReservationPage extends Component {
           end: new Date(result.data.endDate),
           title: result.data.option
         }
-        this.setState({data:  [...this.state.data,newItem], isDialogOpen: false, isSnackbarOpen: true});
+        this.setState({
+          isDialogOpen: false,
+          isSnackbarOpen: true
+        });
+        this.setState({data:  [...this.state.data,newItem]});
       }
     })
     .catch(err => {

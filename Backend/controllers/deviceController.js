@@ -19,7 +19,8 @@ exports.device_post = function(req, res) {
   var device = new Device();
   (req.body.name) ? device.name = req.body.name : null;
   (req.body.numLeft) ? device.numLeft = req.body.numLeft : null;
-
+  (req.body.description) ? device.description= req.body.description : null;
+  
   device.save(function(err, result){
     if(err) return res.send(err);
     res.json(result);
@@ -31,11 +32,13 @@ exports.device_put = function(req,res) {
     if (err) {        res.send(err); }
     (req.body.name) ? device.name = req.body.name : null;
     (req.body.numLeft) ? device.numLeft= req.body.numLeft : null;
-   device.save(function(err, result) {
-      if (err) return res.send(err);
-      res.json(result);
-    });
-  });
+    (req.body.description) ? device.description= req.body.description : null;
+
+      device.save(function(err, result) {
+        if (err) return res.send(err);
+        res.json(result);
+      });
+    })
 }
 
 exports.device_delete = function(req, res) {

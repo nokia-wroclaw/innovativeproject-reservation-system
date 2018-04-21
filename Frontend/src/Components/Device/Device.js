@@ -13,6 +13,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
+
 import Avatar from 'material-ui/Avatar';
 
 import {Link, Redirect} from 'react-router-dom';
@@ -27,6 +28,7 @@ class Device extends Component {
       toBeAdded: true,
       name: '',
       numLeft: '',
+      description: '',
       redirect: false
     };
 

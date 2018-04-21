@@ -6,6 +6,8 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import style from './Styles/DeviceStyles'
+
 class DeviceEdit extends Component{
   constructor(props){
     super(props);
@@ -60,10 +62,10 @@ class DeviceEdit extends Component{
       return <Redirect to={`/devices/${this.state._id}`}/>
     }
     return (
-
-      <MuiThemeProvider>
+      <div style={style.container}>
+        <MuiThemeProvider>
         <form onSubmit={this.handleDeviceEdit}>
-      <h1>Device edit page</h1>
+      <h1 style={style.title}>Device edit page</h1>
       <List>
         <ListItem
           disabled={true}
@@ -94,12 +96,13 @@ class DeviceEdit extends Component{
         <ListItem
           primaryText="enter device description here: "
           disabled={true}
-          rightIconButton={
-            <textarea rows="4" cols="100">
-            </textarea>
-          }
         >
         </ListItem>
+
+        <textarea rows="5" cols="50" placeholder='placeholder' maxLength='255' style={style.textArea}>
+        </textarea>
+
+
         <ListItem
           disabled={true}
           style={{marginTop: '30px'}}
@@ -115,6 +118,7 @@ class DeviceEdit extends Component{
       </List>
     </form>
       </MuiThemeProvider>
+    </div>
     )
   }
 }

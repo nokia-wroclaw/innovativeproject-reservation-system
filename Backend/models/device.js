@@ -13,6 +13,11 @@ var DeviceSchema = new Schema ( {
     type: Number,
      min: 0,
      required: true
+  },
+  description: {
+    type: String,
+    min: 1,
+    max: 255
   }
 });
 

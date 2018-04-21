@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import AddIcon from '../../images/add_thumbnail.png';
+//import AddIcon from '../../images/add_thumbnail.png';
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
+import AddBoxIcon from 'material-ui/svg-icons/content/add-box';
+import AddIcon from '../../images/ic_add_box_black_24px.svg';
+
 
 class DeviceForm extends Component {
   constructor(props) {
@@ -45,7 +48,7 @@ class DeviceForm extends Component {
             <List>
               <ListItem
                 primaryText="Add new device"
-                leftAvatar={<Avatar src={AddIcon} />}
+                leftAvatar={<Avatar src={AddIcon}/>}
                 onClick={this.handleAddingButton}
                 hoverColor='#ffffff'
 
@@ -57,7 +60,10 @@ class DeviceForm extends Component {
         <form onSubmit={ this.handleSubmit }>
         <MuiThemeProvider>
           <List>
-            <ListItem  isKeyboardFocused='false' hoverColor='#b9ffff' >
+            <ListItem
+              isKeyboardFocused='false'
+               hoverColor='#b9ffff'
+              >
             <TextField
             id ="name"
             floatingLabelText="Enter device name..."
