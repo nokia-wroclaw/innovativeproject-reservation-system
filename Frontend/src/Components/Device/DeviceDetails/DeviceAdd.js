@@ -87,22 +87,23 @@ class DeviceAdd extends Component {
         <h1 style={style.title}>Add new device to garage</h1>
         <MuiThemeProvider>
         <form onSubmit={this.handleDeviceSubmit}>
+        <div>
         <List>
           <ListItem
             primaryText='Enter device name: '
             disabled={true}
-
             rightIconButton = {
               <TextField
                 id='idAddDeviceName'
                 value={this.state.name}
                 placeholder='enter device name'
                 onChange={this.handleDeviceNameChange}
+                style={style.textFieldForm}
               />
             }
           />
           <ListItem
-            primaryText='Enter number of available devices'
+            primaryText='Number of available devices'
             disabled={true}
             rightIconButton={
               <TextField
@@ -110,6 +111,7 @@ class DeviceAdd extends Component {
                 value={this.state.numLeft}
                 placeholder='ex. 3'
                 onChange={this.handleDeviceNumLeftChange}
+                style={style.textFieldForm}
               />
             }
           />
@@ -119,6 +121,7 @@ class DeviceAdd extends Component {
           />
         <textarea rows='5' cols='50' style={style.textArea} onChange={this.handleDeviceDescritionChange}/>
         </List>
+      </div>
         <DropZone
 
         />

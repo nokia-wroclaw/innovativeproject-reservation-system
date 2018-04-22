@@ -32,7 +32,7 @@ class HomeComponent extends Component{
         <MuiThemeProvider>
           <Toolbar style={{backgroundColor: 'white'}}>
             <ToolbarGroup firstChild={true} style={{marignRight: '50px'}}>
-              <RadiatingLink to="/" style={style.link}>
+              <RadiatingLink to="/" style={{marginRight: '100px'}}>
                 <img src={NokiaLogo}/>
               </RadiatingLink>
             </ToolbarGroup>

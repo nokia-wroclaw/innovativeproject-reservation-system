@@ -1,8 +1,10 @@
 const deviceStyles = {
   container: {
     maxWidth: '90%',
-    margin: 'auto',
-    marginTop: '10px',
+    minWidth: '40%',
+    margin: '10px auto 10px auto',
+    minWidth: '400px',
+    float: 'none',
     borderTop: '1px solid rgba(30, 32, 33, 0.52)'
   },
   title: {
@@ -32,14 +34,20 @@ const deviceStyles = {
     fontSize: '16px',
     position: 'relative'
   },
+  textFieldForm: {
+    minWidth: '130px',
+    overflow: 'hidden',
+    width: '30%',
+    minWidth: '10%',
+    position: 'absolute'
+  },
   dropzoneBox: {
     width: '50%',
-    position: 'relative',
     display: 'inline-block',
-    margin: '10px auto 10px auto'
+    overflow: 'hidden',
   },
   dropzoneRow: {
-    width: '60%',
+    width: '100%',
   }
 }
 

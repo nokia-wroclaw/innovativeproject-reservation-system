@@ -22,14 +22,14 @@ var ReservationItem = require('./models/reservations.js');
   }];
 
   var seedReservations = [{
-    startDate: '2018-04-15T10:00:05.000Z',
-    endDate: '2018-04-15T12:00:05.000Z',
+    startDate: '2018-04-24T10:00:05.000Z',
+    endDate: '2018-04-24T12:00:05.000Z',
     numOfPeople: 3,
     option: 'WholeSpace',
     personName: 'Smith'
   },{
-    startDate: '2018-04-16T08:00:00.000Z',
-    endDate: '2018-04-16T13:00:00.000Z',
+    startDate: '2018-04-23T08:00:00.000Z',
+    endDate: '2018-04-23T13:00:00.000Z',
     numOfPeople: 10,
     option: 'MakerSpace',
     personName: 'Miller'
