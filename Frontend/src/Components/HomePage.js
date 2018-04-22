@@ -20,7 +20,7 @@ class HomePage extends Component {
             overlay={<FlatButton label="Join now" primary={true} style={{backgroundColor: 'white', textAlign: 'center'}}/>}
             overlayContentStyle={{backgroundColor: 'rgba(255, 255, 255, 0)', margin: '0px auto 30px auto'}}
           >
-            <img src='https://www.archon.pl/images/products/m23c223bb0a00a/s/projekt-garaz-2-stanowiskowy-g27__26161.jpg' alt='nokia garage'/>
+            <img src='http://static.antyweb.pl/uploads/2015/04/Nokia-logo.jpg' alt='nokia garage'/>
           </CardMedia>
         </Card>
       </MuiThemeProvider>

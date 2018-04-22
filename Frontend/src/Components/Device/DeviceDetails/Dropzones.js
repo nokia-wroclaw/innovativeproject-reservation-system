@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import DropZone from 'react-dropzone'
 
+import style from './Styles/DeviceStyles'
+
 class Dropzones extends Component {
   constructor(props) {
     super(props);
@@ -28,36 +30,51 @@ class Dropzones extends Component {
 
   render() {
     return (
-      <div>
-        <div>
+      <div style={style.dropzoneRow}>
+        <div style={style.dropzoneBox}>
           {!this.state.isMainImageUploaded
             ? (
-              <DropZone
-                multiple={false}
-                accept="image/*"
-                onDrop={this.onMainImageDrop}
-              >
-              <p>Drop an image or click and select it</p>
-              </DropZone>
+              <div>
+                <h1 style={style.imageTitle}>Full image</h1>
+                <DropZone
+                  multiple={false}
+                  accept="image/*"
+                  onDrop={this.onMainImageDrop}
+                >
+                <p>Drop an image or click and select it</p>
+                </DropZone>
+              </div>
             )
             : (
-              <p>dzieki</p>
+              <div>
+                <h1 style={style.imageTitle}>Full image</h1>
+                  {this.state.mainImage.map(mi => <img src={mi.preview} style={{maxWidth: '200px', maxHeight: '200px', marginTop: '30px'}} />)}
+              </div>
             )
           }
         </div>
-        <div>
+        <div style={style.dropzoneBox}>
           {!this.state.isThumbUploaded
             ? (
-              <DropZone
-                multiple={false}
-                accept="image/*"
-                onDrop={this.onThumbImageDrop}
-              >
-              <p>Drop an image or click and select it</p>
-              </DropZone>
+              <div  >
+                <h1 style={style.imageTitle}>Thumbnail</h1>
+                <DropZone
+                  multiple={false}
+                  accept="image/*"
+                  onDrop={this.onThumbImageDrop}
+                >
+                <p>Drop an image or click and select it</p>
+                </DropZone>
+              </div>
             )
             : (
-              <p>dzieki</p>
+              <div>
+                <h1 style={style.imageTitle}>Thumbnail</h1>
+                  {
+                    this.state.thumbImage.map(mi => <img src={mi.preview} style={{maxWidth: '200px', maxHeight: '200px', marginTop: '30px'}} />)
+                  }
+
+              </div>
             )
           }
         </div>

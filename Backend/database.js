@@ -8,9 +8,6 @@ var ReservationItem = require('./models/reservations.js');
     name: "3d printer",
     numLeft: 5
   },{
-    name: "pc",
-    numLeft: 0
-  },{
     name: "Deep learning machine",
     numLeft: 10
   },{

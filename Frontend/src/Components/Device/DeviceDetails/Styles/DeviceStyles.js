@@ -27,6 +27,19 @@ const deviceStyles = {
   buttons: {
     margin: '15px 10px 20px 15px',
     position: 'relative'
+  },
+  imageTitle: {
+    fontSize: '16px',
+    position: 'relative'
+  },
+  dropzoneBox: {
+    width: '50%',
+    position: 'relative',
+    display: 'inline-block',
+    margin: '10px auto 10px auto'
+  },
+  dropzoneRow: {
+    width: '60%',
   }
 }
 

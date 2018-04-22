@@ -6,6 +6,8 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import Dropzones from './Dropzones';
+
 import style from './Styles/DeviceStyles'
 
 class DeviceEdit extends Component{
@@ -102,6 +104,7 @@ class DeviceEdit extends Component{
         <textarea rows="5" cols="50" placeholder='placeholder' maxLength='255' style={style.textArea}>
         </textarea>
 
+        <Dropzones />
 
         <ListItem
           disabled={true}
