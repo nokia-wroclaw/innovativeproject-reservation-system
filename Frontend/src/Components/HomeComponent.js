@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Route,
   Link,
@@ -21,7 +21,7 @@ import {
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import NokiaLogo from '../images/nokia.png'
 
-import HomePage from './HomePage'
+import HomePage from './HomePage/HomePage'
 
 const RadiatingLink = Radium(Link);
 

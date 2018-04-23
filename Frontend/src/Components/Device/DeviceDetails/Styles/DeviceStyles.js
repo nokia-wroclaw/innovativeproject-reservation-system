@@ -5,14 +5,13 @@ const deviceStyles = {
     margin: '10px auto 10px auto',
     minWidth: '400px',
     float: 'none',
-    borderTop: '1px solid rgba(30, 32, 33, 0.52)'
   },
   title: {
     fontSize: '32px',
     textAlign: 'center'
   },
   textArea: {
-    border: '3px solid rgba(63, 116, 139, 0.57)',
+    border: '3px solid rgba(0, 0, 0, 0.25)',
     margin: '10px 5px 5px 5px',
     color: 'black',
     padding: '2px',
@@ -23,7 +22,7 @@ const deviceStyles = {
     position: 'relative',
     resize: 'none',
     ":active": {
-      border: '3px solid rgb(63, 116, 139)'
+      border: '3px solid rgba(0, 0, 0, .5)'
     }
   },
   buttons: {

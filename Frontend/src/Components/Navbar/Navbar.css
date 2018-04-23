@@ -1,0 +1,48 @@
+.navbar-container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    max-width: 1024px;
+    margin: auto;
+}
+
+.spacing {
+    flex-grow: 1;
+}
+
+.navbar {
+    font-family: 'museo-sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
+
+.navbar-items li {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+}
+
+.navbar-items li:hover {
+    border-bottom: 1px solid white;
+}
