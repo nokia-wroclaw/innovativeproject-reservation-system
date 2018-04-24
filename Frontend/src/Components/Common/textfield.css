@@ -1,0 +1,21 @@
+
+.text-field-label-container {
+  display: flex;
+}
+
+
+.label-div{
+  width: 300px;
+}
+
+.text-field-div {
+  flex: 1;
+}
+
+.text-field-label {
+  float: left;
+  margin-right: 30px;
+  margin-top: 10px;
+  padding: 2px;
+  font-size: 18px;
+}

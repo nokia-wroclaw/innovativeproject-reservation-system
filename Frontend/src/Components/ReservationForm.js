@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
-
+import LabelTextFields from './LabelTextField';
 class ReservationForm extends Component {
   constructor(props) {
     super(props);
@@ -40,31 +39,40 @@ handleOptionsChange(e) {
     this.setState({startDate: '', endDate: '', NumOfPeople: '', Options: ''});
   }
   render() {
+    console.log(this.state.startDate);
     return (
       <form onSubmit={ this.handleSubmit }>
       <MuiThemeProvider>
-        <TextField
-          id ="startDate"
-          floatingLabelText="Enter startDate Reservation"
+        <LabelTextFields
+          id={"startDate"}
+          isLabelEnabled={true}
+          label={"enter starting date for reservation:"}
+          placeholder={"Enter start date"}
           value={this.state.startDate}
           onChange={this.handlestartDateChange}
         />
-        <TextField
-          id ="endDate"
-          floatingLabelText="Enter endDate Reservation"
+        <LabelTextFields
+          id={"endDate"}
+          isLabelEnabled={true}
+          label={"enter ending date for reservation:"}
+          placeholder={"Enter end date"}
           value={this.state.endDate}
           onChange={this.handleendDateChange}
         />
-        <TextField
-          id ="NumOfPeople"
-          floatingLabelText="Enterrrr NumOfPeople"
+        <LabelTextFields
+          id={"numOfPeople"}
+          isLabelEnabled={true}
+          label={"enter num of people:"}
+          placeholder={"Enter num of people"}
           value={this.state.NumOfPeople}
           onChange={this.handleNumOfPeopleChange}
         />
-        <TextField
-          id ="Options"
-          floatingLabelText="Options"
-          value={this.state.Options}
+        <LabelTextFields
+          id={"option"}
+          isLabelEnabled={true}
+          label={"enter option:"}
+          placeholder={"ex. whole space"}
+          value={this.state.option}
           onChange={this.handleOptionsChange}
         />
         <RaisedButton
