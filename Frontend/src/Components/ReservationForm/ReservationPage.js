@@ -14,7 +14,8 @@ class ReservationPage extends Component {
       areErrors: false,
       errData: [],
       isDialogOpen: false,
-      isSnackbarOpen: false
+      isSnackbarOpen: false,
+      successMsg: 'Reservation successfully added',
     }
   }
 
@@ -42,47 +43,40 @@ class ReservationPage extends Component {
 
   handleReservationSubmit = (reservation) => {
     axios.post(this.props.url, reservation)
-    .then((result) =>{
-      let error = result.data.error
-      if(error){
-        let errLength = result.data.errors.length;
-        for(var i =0;i<errLength;i++){
-          this.state.errData[i] = result.data.errors[i]
+      .then((result) => {
+        const error = result.data.error
+        if (error) {
+          this.setState({
+            areErrors: true,
+            errData: result.data.errors
+          });
+        } else {
+          const newItem = {
+            start: new Date(result.data.reservation.startDate),
+            end: new Date(result.data.reservation.endDate),
+            title: result.data.option
+          };
+          this.setState(() => ({
+            data: [...this.state.data, newItem],
+            isDialogOpen: false,
+            isSnackbarOpen: true
+          }));
         }
-        for(i =0;i<errLength;i++){
-          console.log(result.data.errors[i]);
-        }
-        this.setState({
-          areErrors: true
-        });
-      }
-      else {
-        const newItem = {
-          start: new Date(result.data.startDate),
-          end: new Date(result.data.endDate),
-          title: result.data.option
-        }
-        this.setState({
-          isDialogOpen: false,
-          isSnackbarOpen: true
-        });
-        this.setState({data:  [...this.state.data,newItem]});
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   handleRenderChange = (e) => {
-  if (e.start !== 'Invalid date') {
-    this.setState({startDate: e.start})
-  }
-  if (e.end !== 'Invalid date') {
-    this.setState({endDate: e.end})
-  }
-  if (e.start !== 'Invalid date' && e.end !== 'Invalid date') {
-    this.setState({isDialogOpen: true})
+  console.log(e.start);
+  console.log(e.end);
+  if (e.start != 'Invalid Date' || e.end != 'Invalid Date') {
+    this.setState({
+      isDialogOpen: true,
+      startDate: e.start,
+      endDate: e.end
+    })
   }
 }
 
@@ -111,7 +105,7 @@ class ReservationPage extends Component {
             <MuiThemeProvider>
               <Snackbar
                 open={this.state.isSnackbarOpen}
-                message='Reservation succesfully added'
+                message={this.state.successMsg}
                 autoHideDuration={3000}
                 style={{textAlign: 'center'}}
               />

@@ -1,0 +1,57 @@
+diff a/Frontend/src/Components/HomeComponent.js b/Frontend/src/Components/HomeComponent.js	(rejected hunks)
+@@ -1,7 +1,6 @@
+ import React, { Component } from 'react';
+ import {
+   Route,
+-  Link,
+   Switch
+ } from 'react-router-dom';
+ import DeviceBlock from './Device/DeviceBlock';
+@@ -11,45 +10,18 @@ import DeviceAdd from './Device/DeviceDetails/DeviceAdd';
+ import ReservationPage from './ReservationForm/ReservationPage';
+ import 'react-big-calendar/lib/css/react-big-calendar.css'
+ import style from '../style';
+-import Radium from 'radium';
+ import DeviceEdit from './Device/DeviceDetails/DeviceEdit'
+-import {
+-  Toolbar,
+-  ToolbarGroup,
+-  ToolbarTitle
+-} from 'material-ui/Toolbar'
+ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+-import NokiaLogo from '../images/nokia.png'
+ 
+ import HomePage from './HomePage/HomePage'
+-
+-const RadiatingLink = Radium(Link);
++import Navbar from "./Navbar/Navbar";
+ 
+ class HomeComponent extends Component{
+   render() {
+     return (
+       <div style={style.body}>
++        <Navbar />
+         <MuiThemeProvider>
+-          <Toolbar style={{backgroundColor: 'white'}}>
+-            <ToolbarGroup firstChild={true} style={{marignRight: '50px'}}>
+-              <RadiatingLink to="/" style={{marginRight: '100px'}}>
+-                <img src={NokiaLogo}/>
+-              </RadiatingLink>
+-            </ToolbarGroup>
+-            <ToolbarGroup >
+-              <RadiatingLink to="/devices"  style={style.link}>
+-                <ToolbarTitle text="Devices"/>
+-              </RadiatingLink>
+-
+-              <RadiatingLink to="/reservation"  style={style.link}>
+-                <ToolbarTitle text="Reservation"/>
+-              </RadiatingLink>
+-
+-            </ToolbarGroup>
+-            <ToolbarGroup>
+-
+-            </ToolbarGroup>
+-          </Toolbar>
+           <Switch>
+             <Route exact path="/" component={HomePage} />
+             <Route exact path="/devices" component={() => <DeviceBlock url='http://localhost:3001/api/devices'/>}/>

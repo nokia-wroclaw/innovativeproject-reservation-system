@@ -50,7 +50,7 @@ exports.reservation_post = function(req, res, reservationMiddleware){
   ];
   function isNumberOfPeopleOkay(results, reservation){
     const numberofpeople = results.map(item=>item.numOfPeople)
-    const maxnumberofpeople = Math.max(...numberofpeople)
+    const maxnumberofpeople = Math.max(...numberofpeople, 0)
 
     if( maxnumberofpeople + reservation.numOfPeople > maxGuests){
       return 'Reservation cannot be submited because there are more than ' + maxGuests + ' people (There would be ' + (maxnumberofpeople+reservation.numOfPeople) + ')'
@@ -85,7 +85,7 @@ exports.reservation_post = function(req, res, reservationMiddleware){
     .then((errors) => {
       if(errors.length === 0){
        reservation.save(function(err, newreservation){
-          if(err) { res.send(err); }
+          if(err) { return res.send(err); }
           res.json({reservation: newreservation, error: false});
         });
       }
