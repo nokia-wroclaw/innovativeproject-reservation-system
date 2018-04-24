@@ -44,7 +44,7 @@ class ReservationFormEdit extends Component {
     handleEditReservation =(e) =>{
     e.preventDefault();
     console.log(this.props.id)
-    let id = this.state.id;
+    let id = this.props.id;
     let numOfPeople = this.state.numOfPeople.trim();
     let option = this.state.value;
     let startDate = this.props.startDate;
@@ -74,6 +74,7 @@ class ReservationFormEdit extends Component {
   handleClose = () => {
     this.props.closeDialog();
   }
+
 
     render(){
       const actions = [
@@ -121,13 +122,14 @@ class ReservationFormEdit extends Component {
               endDate={this.props.endDate}
             />
             <SelectRoomField
+              //placeholder={this.props.option}
               value={this.state.value}
               onRoomSelectChange={this.handleSelectRoomChange}
             />
           <LabelTextField
               id={'numofpeople'}
               value={this.state.numOfPeople}
-              placeholder={'data'}
+              placeholder={this.props.numOfPeople}
               isLabelEnabled={true}
               label={"Enter number of people"}
               onChange={this.handleNumOfPeopleChange}
@@ -135,7 +137,7 @@ class ReservationFormEdit extends Component {
           <LabelTextField
               id={'personName'}
               value={this.state.personName}
-              placeholder={'ex. John Smith'}
+              placeholder={this.props.personName}
               isLabelEnabled={true}
               label={"Enter person name"}
               onChange={this.handlePersonNameChange}

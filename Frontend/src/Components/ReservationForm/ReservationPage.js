@@ -30,7 +30,10 @@ class ReservationPage extends Component {
           start: new Date(item.startDate),
           end: new Date(item.endDate),
           title: item.option,
-          id: item._id
+          id: item._id,
+          numOfPeople: item.numOfPeople,
+          personName: item.personName,
+          option: item.option
         }
       })
     });
@@ -42,7 +45,6 @@ class ReservationPage extends Component {
   }
 
   closeDialog= () => {
-    this.setState({isDialogSubmitOpen: false, areErrors: false})
     this.setState({isDialogEditOpen: false, areErrors: false})
   }
 
@@ -106,9 +108,11 @@ handleRenderChangeEdit = (e) => {
     isDialogEditOpen: true,
     startDate: e.start,
     endDate: e.end,
-    id: e.id
+    id: e.id,
+    numOfPeople: e.numOfPeople,
+    personName: e.personName,
+    option: e.option
   })
-  console.log('Maciej' + this.state.id)
 }
 
   render() {
@@ -139,9 +143,12 @@ handleRenderChangeEdit = (e) => {
             <div>
               <ReservationFormEdit
                 data={this.state.data}
-
+                id={this.state.id}
+                numOfPeople={this.state.numOfPeople}
+                personName={this.state.personName}
                 startDate = {this.state.startDate}
                 endDate = {this.state.endDate}
+                option={this.state.option}
                 onReservationEdit={this.handleReservationEdit}
                 isDialogEditOpen = {this.state.isDialogEditOpen}
                 closeDialog = {this.closeDialog}
