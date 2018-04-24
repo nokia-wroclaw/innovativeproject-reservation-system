@@ -9,6 +9,7 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment'
 
+import LabelTextField from '../LabelTextField'
 
 import style from '../../style'
 
@@ -129,14 +130,22 @@ class ReservationForm2 extends Component {
             value={this.state.value}
             onRoomSelectChange={this.handleSelectRoomChange}
           />
-          <NumOfPeopleTextField
-            numOfPeople={this.state.numOfPeople}
-            onChangeNumOfPeople={this.handleNumOfPeopleChange}
+        <LabelTextField
+            id={'numofpeople'}
+            value={this.state.numOfPeople}
+            placeholder={'ex. 3'}
+            isLabelEnabled={true}
+            label={"Enter number of people"}
+            onChange={this.handleNumOfPeopleChange}
           />
-          <PersonNameTextField
-            personName={this.state.personName}
-            onChangePersonName={this.handlePersonNameChange.bind(this)}
-          />
+        <LabelTextField
+            id={'personName'}
+            value={this.state.personName}
+            placeholder={'ex. John Smith'}
+            isLabelEnabled={true}
+            label={"Enter person name"}
+            onChange={this.handlePersonNameChange}
+        />
 
         </form>
         </Dialog>

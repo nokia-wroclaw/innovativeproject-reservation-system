@@ -51,7 +51,9 @@ class Dropzones extends Component {
             : (
               <div>
                 <h1 style={style.imageTitle}>Full image</h1>
-                  {this.state.mainImage.map(mi => <img src={mi.preview} style={{maxWidth: '200px', maxHeight: '200px', marginTop: '30px'}} />)}
+                  {this.state.mainImage.map(mi =>
+                      <img src={mi.preview} style={{maxWidth: '200px', maxHeight: '200px', marginTop: '30px'}} />
+                    )}
               </div>
             )
           }

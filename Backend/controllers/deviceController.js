@@ -20,7 +20,7 @@ exports.device_post = function(req, res) {
   (req.body.name) ? device.name = req.body.name : null;
   (req.body.numLeft) ? device.numLeft = req.body.numLeft : null;
   (req.body.description) ? device.description= req.body.description : null;
-  
+
   device.save(function(err, result){
     if(err) return res.send(err);
     res.json(result);

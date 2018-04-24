@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { Card, CardHeader, CardMedia } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Navbar from '../Navbar/Navbar';
-
+import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 class HomePage extends Component {
@@ -20,11 +15,8 @@ class HomePage extends Component {
             <Link to="/"><span className="join-button">Join now</span></Link>
           </div>
         </div>
-        <Navbar/>
       </div>
     );
   }
-
 }
-
 export default HomePage;

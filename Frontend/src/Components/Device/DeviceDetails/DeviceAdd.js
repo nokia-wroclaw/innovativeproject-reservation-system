@@ -13,7 +13,6 @@ import axios from 'axios'
 
 import style from './Styles/DeviceStyles'
 import '../../textFieldStyles.css'
-import './Styles/deviceStyles.css'
 
 class DeviceAdd extends Component {
   constructor(props) {
@@ -86,7 +85,7 @@ class DeviceAdd extends Component {
 
     return (
       <div style={style.container}>
-        <h1 className="titleAdd">Add new device to garage</h1>
+        <h1 >Add new device to garage</h1>
         <MuiThemeProvider>
         <form onSubmit={this.handleDeviceSubmit}>
         <div>
@@ -113,8 +112,7 @@ class DeviceAdd extends Component {
                 value={this.state.numLeft}
                 placeholder='ex. 3'
                 onChange={this.handleDeviceNumLeftChange}
-                underlineStyle="disabledTextField"
-                underlineFocusStyle={{borderColor: 'rgba(0,0,0,.5)'}}
+
               />
             }
           />
@@ -122,7 +120,7 @@ class DeviceAdd extends Component {
             primaryText='Enter device description'
             disabled={true}
           />
-        <textarea rows='5' cols='50' className="textArea" onChange={this.handleDeviceDescritionChange}/>
+        <textarea rows='5' cols='50' onChange={this.handleDeviceDescritionChange}/>
         </List>
       </div>
         <DropZone
