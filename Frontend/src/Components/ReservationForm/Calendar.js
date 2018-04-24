@@ -106,6 +106,9 @@ class Dnd extends Component {
     }
   }
 
+SelectEvent=(event)=>{this.props.onRenderChangeEdit(event)
+console.log(event)}
+
   render() {
     return (
         <DragAndDropCalendar
@@ -119,9 +122,9 @@ class Dnd extends Component {
           onEventDrop={this.moveEvent}
           defaultView="week"
           defaultDate={new Date()}
-          onSelectSlot={this.props.onRenderChange}
+          onSelectSlot={this.props.onRenderChangeSubmit}
           eventPropGetter={this.customRoomGetter}
-          onSelectEvent={this.props.onRenderChange}
+          onSelectEvent={this.SelectEvent}
          />
     )
   }

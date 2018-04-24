@@ -1,10 +1,11 @@
 import React ,{Component} from 'react'
-import ReservationForm2 from './ReservationForm'
+import ReservationFormSubmit from './ReservationFormSubmit'
 import axios from 'axios';
 import Dnd from './Calendar';
 
 import Snackbar from 'material-ui/Snackbar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ReservationFormEdit from './ReservationFormEdit';
 
 class ReservationPage extends Component {
   constructor(props){
@@ -13,9 +14,11 @@ class ReservationPage extends Component {
       data:[],
       areErrors: false,
       errData: [],
-      isDialogOpen: false,
+      isDialogSubmitOpen: false,
+      isDialogEditOpen: false,
       isSnackbarOpen: false,
       successMsg: 'Reservation successfully added',
+      ifEventExists:false
     }
   }
 
@@ -26,7 +29,8 @@ class ReservationPage extends Component {
         return {
           start: new Date(item.startDate),
           end: new Date(item.endDate),
-          title: item.option
+          title: item.option,
+          id: item._id
         }
       })
     });
@@ -38,7 +42,8 @@ class ReservationPage extends Component {
   }
 
   closeDialog= () => {
-    this.setState({isDialogOpen: false, areErrors: false})
+    this.setState({isDialogSubmitOpen: false, areErrors: false})
+    this.setState({isDialogEditOpen: false, areErrors: false})
   }
 
   handleReservationSubmit = (reservation) => {
@@ -58,7 +63,7 @@ class ReservationPage extends Component {
           };
           this.setState(() => ({
             data: [...this.state.data, newItem],
-            isDialogOpen: false,
+            isDialogSubmitOpen: false,
             isSnackbarOpen: true
           }));
         }
@@ -68,16 +73,42 @@ class ReservationPage extends Component {
       });
   }
 
-  handleRenderChange = (e) => {
-  console.log(e.start);
-  console.log(e.end);
+  handleReservationEdit = (id, reservation) =>{
+      //let reservations = this.state.data;
+      axios.put( `${this.props.url}/${id}`, reservation )
+      .then(result => {
+        //console.log(result.data);
+        const index = this.state.data.findIndex(function(item) {
+          return item._id === result.data._id;
+        })
+        const newData = [...this.state.data];
+        newData[index] = result.data;
+        this.setState({data: newData});
+      })
+      .catch(err => {
+        console.error(err);
+      })
+    }
+
+  handleRenderChangeSubmit = (e) => {
   if (e.start != 'Invalid Date' || e.end != 'Invalid Date') {
     this.setState({
-      isDialogOpen: true,
+      isDialogSubmitOpen: true,
       startDate: e.start,
-      endDate: e.end
+      endDate: e.end,
+      id: e.id
     })
   }
+}
+
+handleRenderChangeEdit = (e) => {
+  this.setState({
+    isDialogEditOpen: true,
+    startDate: e.start,
+    endDate: e.end,
+    id: e.id
+  })
+  console.log('Maciej' + this.state.id)
 }
 
   render() {
@@ -85,21 +116,38 @@ class ReservationPage extends Component {
       <div>
 
             <Dnd
-              onRenderChange={this.handleRenderChange}
+              onRenderChangeSubmit={this.handleRenderChangeSubmit}
               data={this.state.data}
+              onRenderChangeEdit={this.handleRenderChangeEdit}
+              data={this.state.data}
+
             />
 
             <div>
-              <ReservationForm2
+              <ReservationFormSubmit
                 startDate = {this.state.startDate}
                 endDate = {this.state.endDate}
                 onReservationSubmit={this.handleReservationSubmit}
-                isDialogOpen = {this.state.isDialogOpen}
+                isDialogSubmitOpen = {this.state.isDialogSubmitOpen}
                 closeDialog = {this.closeDialog}
                 anyErrors = {this.state.areErrors}
                 errData1={this.state.errData[0]}
                 errData2={this.state.errData[1]}
 
+              />
+            </div>
+            <div>
+              <ReservationFormEdit
+                data={this.state.data}
+
+                startDate = {this.state.startDate}
+                endDate = {this.state.endDate}
+                onReservationEdit={this.handleReservationEdit}
+                isDialogEditOpen = {this.state.isDialogEditOpen}
+                closeDialog = {this.closeDialog}
+                anyErrors = {this.state.areErrors}
+                errData1={this.state.errData[0]}
+                errData2={this.state.errData[1]}
               />
             </div>
             <MuiThemeProvider>

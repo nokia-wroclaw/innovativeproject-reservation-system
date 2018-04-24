@@ -15,6 +15,13 @@ exports.reservation_get = function(req, res){
   });
 }
 
+exports.reservation_details_get = (function(req, res) {
+  Reservation.findById(req.params.reservation_id, function(err, reservation){
+    if(err) return res.send(err);
+    res.json(reservation);
+  });
+})
+
 //POST reservation
 var maxGuests = 12;
 var maxHours = 8;

@@ -22,7 +22,7 @@ class DeviceDetails extends Component {
     axios.get(`/api/devices/${this.props.match.params.id}`)
     .then(res => {
       this.setState(res.data);
-      console.log(res.data);
+      console.log("+" + res.data);
     })
   }
 
@@ -40,7 +40,6 @@ class DeviceDetails extends Component {
 
 
   render(){
-    console.log(this.props);
     return (
         <MuiThemeProvider>
           <Card style={{maxWidth: "80%", backgroundSize: "60% 100%, contain", margin: 'auto', padding: '3px'}}>

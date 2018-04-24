@@ -16,7 +16,7 @@ import style from '../../style'
 moment().format('MMMM Do YYYY, h:mm:ss a');
 
 
-class ReservationForm2 extends Component {
+class ReservationFormSubmit extends Component {
   constructor(props){
     super(props);
     this.state ={
@@ -39,29 +39,6 @@ class ReservationForm2 extends Component {
                                     startDate: startDate,
                                     endDate: endDate,
                                     personName: personName});
-    this.setState({numOfPeople: '', option: '', personName: ''})
-  }
-  
-  EditReservation = (e)=> 
-  {
-    e.preventDefault()
-    this.setState({toBeUpdated: !this.state.toBeUpdated});
-  }
-
-    handleEditReservation (e) {
-    e.preventDefault();
-    let id = this.props.uniqueID;
-    let numOfPeople = this.state.numOfPeople.trim();
-    let option = this.state.value;
-    let startDate = this.props.startDate;
-    let endDate = this.props.endDate;
-    let personName = this.state.personName;
-    let reservation = { numOfPeople: numOfPeople,
-                                    option: option,
-                                    startDate: startDate,
-                                    endDate: endDate,
-                                    personName: personName};
-    this.props.onReservationEdit(id, reservation);
     this.setState({numOfPeople: '', option: '', personName: ''})
   }
 
@@ -101,7 +78,7 @@ class ReservationForm2 extends Component {
           title="Reservation form"
           modal={false}
           actions={actions}
-          open={this.props.isDialogOpen }
+          open={this.props.isDialogSubmitOpen }
           onRequestClose={this.handleClose.bind(this)}
           autoScrollBodyContent={true}
         >
@@ -155,4 +132,4 @@ class ReservationForm2 extends Component {
   }
 }
 
-export default ReservationForm2;
+export default ReservationFormSubmit;
