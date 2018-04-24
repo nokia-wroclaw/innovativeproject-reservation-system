@@ -69,7 +69,7 @@ handleOptionsChange(e) {
         />
         <LabelTextFields
           id={"option"}
-          isLabelEnabled={true}
+          isLabelEnabled={false}
           label={"enter option:"}
           placeholder={"ex. whole space"}
           value={this.state.option}
