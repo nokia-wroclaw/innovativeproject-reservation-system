@@ -24,6 +24,7 @@ class DeviceAdd extends Component {
       numLeft: '',
       description: '',
       files: [],
+      mainImage: '',
       isMainImageUploaded: false,
       data: [],
       redirect: false,
@@ -32,14 +33,18 @@ class DeviceAdd extends Component {
   }
 
   handleDeviceSubmit = (e) =>{
-    e.preventDefault()
     const device = {
       id: Date.now(),
       name: this.state.name,
       numLeft: this.state.numLeft,
-      description: this.state.description
+      description: this.state.description,
     }
-    axios.post('http://localhost:3001/api/devices', device)
+    console.log(this.state.mainImage.preview);
+    const image = {
+      name: this.state.mainImage.preview
+    }
+    console.log(":" + device.deviceImage);
+    axios.post('http://localhost:3001/api/devices', device, image)
     setTimeout(()=>{
       this.setState({
         redirect: true
@@ -67,6 +72,12 @@ class DeviceAdd extends Component {
     });
   }
 
+  handleMainImage = (image) => {
+    this.state.mainImage= image
+    console.log(image);
+    console.log(this.state.mainImage);
+  }
+
   handleCancelClick = () => {
     this.setState({
       redirect: true
@@ -81,15 +92,11 @@ class DeviceAdd extends Component {
 
   render() {
 
-    if(this.state.redirect){
-      return <Redirect to='/devices'/>
-    }
-
     return (
       <div style={style.container}>
         <h1 >Add new device to garage</h1>
         <MuiThemeProvider>
-        <form onSubmit={this.handleDeviceSubmit}>
+        <form onSubmit={this.handleDeviceSubmit} enctype="multipart/form-data">
         <div>
         <List>
           <LabelTextField
@@ -116,7 +123,7 @@ class DeviceAdd extends Component {
         </List>
       </div>
         <DropZone
-
+            mainImage = {this.handleMainImage}
         />
         <RaisedButton
           primary={false}

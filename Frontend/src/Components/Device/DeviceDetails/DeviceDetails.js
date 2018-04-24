@@ -6,7 +6,6 @@ import {Link} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Card, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import ArduinoLogo from '../../../images/ArduinoAPP-01.svg'
-import Description from './Description'
 
 import arduino from '../../../images/arduino_mkr1000_front-1.jpg'
 
@@ -56,19 +55,11 @@ class DeviceDetails extends Component {
             <CardMedia
               overlay={<CardTitle title={this.state.name}/>}
             >
-              <img src={arduino} alt={this.state.name} style={{backgroundSize: "75% 50% inherit", maxHeight: "500px", maxWidth: '500px'}}/>
+              <img src={this.state.deviceImage} alt={this.state.name} style={{backgroundSize: "75% 50% inherit", maxHeight: "500px", maxWidth: '500px'}}/>
             </CardMedia>
             <CardTitle title="Description" />
             <CardText>
-            {this.state.toBeUpdated
-              ? (
-                <textarea rows="4" cols="100">
-                  {this.state.description}
-                </textarea>)
-              : (<Description
-                description={this.state.description}
-              />)
-            }
+            
             </CardText>
           </Card>
         </MuiThemeProvider>

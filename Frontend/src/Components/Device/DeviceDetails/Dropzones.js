@@ -19,6 +19,7 @@ class Dropzones extends Component {
       mainImage: files,
       isMainImageUploaded: true
     });
+    this.props.mainImage(files);
   }
 
   onThumbImageDrop = (files) => {

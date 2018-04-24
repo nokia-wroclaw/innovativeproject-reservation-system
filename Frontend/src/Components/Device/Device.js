@@ -29,6 +29,7 @@ class Device extends Component {
       name: '',
       numLeft: '',
       description: '',
+      image: '',
       redirect: false
     };
 

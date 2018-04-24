@@ -18,6 +18,10 @@ var DeviceSchema = new Schema ( {
     type: String,
     min: 1,
     max: 255
+  },
+  deviceImage: {
+   type: String,
+   required: false
   }
 });
 
