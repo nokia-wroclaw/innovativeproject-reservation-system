@@ -1,4 +1,3 @@
- //Uzyj tego do wyswietlenia dancyh o zaznaczonym obszarze w promptice
 import React, {Component} from 'react'
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
@@ -122,6 +121,7 @@ class Dnd extends Component {
           defaultDate={new Date()}
           onSelectSlot={this.props.onRenderChange}
           eventPropGetter={this.customRoomGetter}
+          onSelectEvent={this.props.onRenderChange}
          />
     )
   }

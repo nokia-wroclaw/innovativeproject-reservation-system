@@ -40,6 +40,29 @@ class ReservationForm2 extends Component {
                                     personName: personName});
     this.setState({numOfPeople: '', option: '', personName: ''})
   }
+  
+  EditReservation = (e)=> 
+  {
+    e.preventDefault()
+    this.setState({toBeUpdated: !this.state.toBeUpdated});
+  }
+
+    handleEditReservation (e) {
+    e.preventDefault();
+    let id = this.props.uniqueID;
+    let numOfPeople = this.state.numOfPeople.trim();
+    let option = this.state.value;
+    let startDate = this.props.startDate;
+    let endDate = this.props.endDate;
+    let personName = this.state.personName;
+    let reservation = { numOfPeople: numOfPeople,
+                                    option: option,
+                                    startDate: startDate,
+                                    endDate: endDate,
+                                    personName: personName};
+    this.props.onReservationEdit(id, reservation);
+    this.setState({numOfPeople: '', option: '', personName: ''})
+  }
 
   handleNumOfPeopleChange = (e)=> {
     this.setState({numOfPeople: e.target.value});
