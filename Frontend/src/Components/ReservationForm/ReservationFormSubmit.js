@@ -29,6 +29,7 @@ class ReservationFormSubmit extends Component {
 
   handleSubmit= (e) =>{
     e.preventDefault();
+    console.log(this.state.numOfPeople)
     let numOfPeople = this.state.numOfPeople.trim();
     let option = this.state.value;
     let startDate = this.props.startDate;

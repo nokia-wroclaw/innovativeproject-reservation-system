@@ -21,6 +21,9 @@ class ReservationFormEdit extends Component {
     super(props);
     this.state ={
       data: [],
+      value: 'WholeSpace',
+      numOfPeople: '',
+      personName: '',
     }
   }
 
@@ -40,7 +43,7 @@ class ReservationFormEdit extends Component {
 
     handleEditReservation =(e) =>{
     e.preventDefault();
-    //console.log(" " );
+    console.log(this.props.id)
     let id = this.state.id;
     let numOfPeople = this.state.numOfPeople.trim();
     let option = this.state.value;
