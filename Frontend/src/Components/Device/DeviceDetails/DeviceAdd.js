@@ -11,6 +11,8 @@ import request from 'superagent'
 import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 
+import LabelTextField from '../../LabelTextField'
+
 import style from './Styles/DeviceStyles'
 import '../../textFieldStyles.css'
 
@@ -90,31 +92,21 @@ class DeviceAdd extends Component {
         <form onSubmit={this.handleDeviceSubmit}>
         <div>
         <List>
-          <ListItem
-            primaryText='Enter device name: '
-            disabled={true}
-            rightIconButton = {
-              <TextField
-                id='idAddDeviceName'
-                value={this.state.name}
-                placeholder='enter device name'
-                onChange={this.handleDeviceNameChange}
-                style={style.textFieldForm}
-              />
-            }
+          <LabelTextField
+            value={this.state.name}
+            placeholder={'Enter device name'}
+            onChange={this.handleDeviceNameChange}
+            id={'devicename'}
+            isLabelEnabled={true}
+            label={'Enter device name'}
           />
-          <ListItem
-            primaryText='Number of available devices'
-            disabled={true}
-            rightIconButton={
-              <TextField
-                id='idAddDeviceNumLeft'
-                value={this.state.numLeft}
-                placeholder='ex. 3'
-                onChange={this.handleDeviceNumLeftChange}
-
-              />
-            }
+          <LabelTextField
+            value={this.state.numLeft}
+            placeholder={'ex. 3...'}
+            onChange={this.handleDeviceNumLeftChange}
+            id={'numleft'}
+            isLabelEnabled={true}
+            label={'Enter number of available devices: '}
           />
           <ListItem
             primaryText='Enter device description'

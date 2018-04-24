@@ -8,6 +8,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Dropzones from './Dropzones';
 
+import LabelTextField from '../../LabelTextField'
+
+
 import style from './Styles/DeviceStyles'
 
 class DeviceEdit extends Component{
@@ -69,32 +72,22 @@ class DeviceEdit extends Component{
         <form onSubmit={this.handleDeviceEdit}>
       <h1 style={style.title}>Device edit page</h1>
       <List>
-        <ListItem
-          disabled={true}
-          primaryText="Change device name"
-          rightIconButton={
-              <TextField
-                id="editDeviceName"
-                value={this.state.name}
-                onChange={this.handleNameChange}
-                placeholder={this.state.name}
-              />
-          }
-        >
-        </ListItem>
-        <ListItem
-          disabled={true}
-          primaryText="Change number of available devices"
-          rightIconButton={
-            <TextField
-              id="editDeviceNumLeft"
-              value={this.state.numLeft}
-              onChange={this.handleNumLeftChange}
-              placeholder={this.state.numLeft}
-            />
-          }
-        >
-        </ListItem>
+        <LabelTextField
+          value={this.state.name}
+          placeholder={'Enter device name'}
+          onChange={this.handleDeviceNameChange}
+          id={'devicename'}
+          isLabelEnabled={true}
+          label={'Enter device name'}
+        />
+        <LabelTextField
+          value={this.state.numLeft}
+          placeholder={'ex. 3...'}
+          onChange={this.handleDeviceNumLeftChange}
+          id={'numleft'}
+          isLabelEnabled={true}
+          label={'Enter number of available devices: '}
+        />
         <ListItem
           primaryText="enter device description here: "
           disabled={true}
