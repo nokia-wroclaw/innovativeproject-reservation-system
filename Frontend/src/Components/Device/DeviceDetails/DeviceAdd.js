@@ -38,14 +38,14 @@ class DeviceAdd extends Component {
       name: this.state.name,
       numLeft: this.state.numLeft,
       description: this.state.description,
-      deviceImage: this.state.mainImage
     }
-    axios.post('http://localhost:3001/api/devices', this.state.mainImage, device)
-    setTimeout(()=>{
-      //this.setState({
-      //  redirect: true
-      //});
-    },100)
+    axios.post('http://localhost:3001/api/devices',  device).then(() => {
+      this.setState({
+        redirect: true
+      });
+    })
+
+
   }
 
 
@@ -119,9 +119,7 @@ class DeviceAdd extends Component {
         <textarea rows='5' cols='50' onChange={this.handleDeviceDescritionChange}/>
         </List>
       </div>
-        <DropZone
-            mainImage = {this.handleMainImage}
-        />
+
         <RaisedButton
           primary={false}
           label='cancel'

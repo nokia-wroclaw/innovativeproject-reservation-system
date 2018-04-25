@@ -32,7 +32,6 @@ class SelectRoomField extends Component {
                 >
                 <MenuItem value={'MakerSpace'} primaryText="Maker Space" />
                 <MenuItem value={'OpenSpace'} primaryText="Open Space" />
-                <MenuItem value={'Lab'} primaryText="Lab" />
                 <MenuItem value={'WholeSpace'} primaryText="Whole space" />
               </SelectField>
             }

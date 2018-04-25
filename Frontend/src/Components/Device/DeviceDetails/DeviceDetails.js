@@ -7,6 +7,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 import ArduinoLogo from '../../../images/ArduinoAPP-01.svg'
+import placeholder from '../../../images/placeholder_thumbnail.png'
+import big_placeholder from '../../../images/big_image.png'
 import arduino from '../../../images/arduino_mkr1000_front-1.jpg'
 
 class DeviceDetails extends Component {
@@ -45,7 +47,7 @@ class DeviceDetails extends Component {
                   <CardHeader
                     title={this.state.name}
                     subtitle={this.state.numLeft + " devices"}
-                    avatar={ArduinoLogo}
+                    avatar={placeholder}
                     showExpandableButton={true}
                     actAsExpander={true}
                   />
@@ -55,7 +57,7 @@ class DeviceDetails extends Component {
                   <CardMedia
                     overlay={<CardTitle title={this.state.name}/>}
                   >
-                    <img src={arduino} alt={this.state.name}
+                    <img src={big_placeholder} alt={this.state.name}
                          style={{backgroundSize: "75% 50% inherit", maxHeight: "500px", maxWidth: '500px'}}/>
                   </CardMedia>
                   <CardTitle title="Description"/>

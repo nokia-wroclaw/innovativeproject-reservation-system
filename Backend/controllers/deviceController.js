@@ -44,27 +44,27 @@ exports.device_details_get = (function(req, res) {
   });
 })
 
-exports.device_post = ( upload.single('deviceImage'), function(req, res) {
+exports.device_post =  function(req, res) {
   //var device = new Device();
   //(req.body.name) ? device.name = req.body.name : null;
   //(req.body.numLeft) ? device.numLeft = req.body.numLeft : null;
   //(req.body.description) ? device.description= req.body.description : null;
-  console.log(req.file);
-  if(req.file === null) {return res.send(400)}
+  //console.log(req.file);
+  //if(req.file === null) {return res.send(400)}
   const newDevice = new Device({
     name: req.body.name,
     numLeft: req.body.numLeft,
-    deviceImage: req.file.path
+    //deviceImage: req.file.path
   });
   console.log(newDevice);
   //(req.body.deviceImage) ? device.deviceImage = req.file.path : null;
   console.log("-" + newDevice);
-  console.log("+" + req.file.path);
+  //console.log("+" + req.file.path);
   newDevice.save(function(err, result){
     if(err) {return res.send(err);}
     res.json(result);
   });
-})
+}
 
 exports.device_put = function(req,res) {
   Device.findById(req.params.device_id, function(err, device) {
