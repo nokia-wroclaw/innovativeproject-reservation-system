@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {List, ListItem} from 'material-ui/List'
-import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import DropZone from './Dropzones'
@@ -33,22 +32,19 @@ class DeviceAdd extends Component {
   }
 
   handleDeviceSubmit = (e) =>{
+    console.log(this.state.mainImage);
     const device = {
       id: Date.now(),
       name: this.state.name,
       numLeft: this.state.numLeft,
       description: this.state.description,
+      deviceImage: this.state.mainImage
     }
-    console.log(this.state.mainImage.preview);
-    const image = {
-      name: this.state.mainImage.preview
-    }
-    console.log(":" + device.deviceImage);
-    axios.post('http://localhost:3001/api/devices', device, image)
+    axios.post('http://localhost:3001/api/devices', this.state.mainImage, device)
     setTimeout(()=>{
-      this.setState({
-        redirect: true
-      });
+      //this.setState({
+      //  redirect: true
+      //});
     },100)
   }
 
@@ -73,9 +69,8 @@ class DeviceAdd extends Component {
   }
 
   handleMainImage = (image) => {
-    this.state.mainImage= image
-    console.log(image);
-    console.log(this.state.mainImage);
+    const reader = new FileReader();
+    this.state.mainImage = image[0].preview
   }
 
   handleCancelClick = () => {
@@ -91,12 +86,14 @@ class DeviceAdd extends Component {
   }
 
   render() {
-
+    if(this.state.redirect){
+      return <Redirect to='/devices'/>
+    }
     return (
       <div style={style.container}>
         <h1 >Add new device to garage</h1>
         <MuiThemeProvider>
-        <form onSubmit={this.handleDeviceSubmit} enctype="multipart/form-data">
+        <form onSubmit={this.handleDeviceSubmit} encType="multipart/form-data">
         <div>
         <List>
           <LabelTextField

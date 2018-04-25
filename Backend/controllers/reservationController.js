@@ -17,7 +17,7 @@ exports.reservation_get = function(req, res){
 
 exports.reservation_details_get = (function(req, res) {
   Reservation.findById(req.params.reservation_id, function(err, reservation){
-    if(err) return res.send(err);
+    if(err) {return res.send(err);}
     res.json(reservation);
   });
 })
@@ -115,7 +115,7 @@ exports.reservation_put = function(req, res) {
 
    reservation.save(function(err) {
       if (err)
-        res.send(err);
+      { return res.send(err);}
       res.json({message: 'reservations has been updated'});
     });
   });
@@ -125,7 +125,7 @@ exports.reservation_put = function(req, res) {
 exports.reservation_delete = function(req, res) {
   Reservation.remove({ _id: req.params.reservation_id }, function(err, reservation){
     if (err)
-      res.send(err);
+     {return  res.send(err);}
     res.json({ message: 'reservation has been deleted' })
   })
 }

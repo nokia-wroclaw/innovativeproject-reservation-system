@@ -4,7 +4,7 @@ var path = require('path')
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, '../Upload');
+    cb(null, './uploads/');
   },
   filename: function(req, file, cb) {
     cb(null, new Date().toISOString() + file.originalname);
@@ -44,32 +44,37 @@ exports.device_details_get = (function(req, res) {
   });
 })
 
-exports.device_post = ( '/Upload', upload.single('deviceImage'), function(req, res) {
-  var device = new Device();
-  console.log(req.body);
-  (req.body.name) ? device.name = req.body.name : null;
-  (req.body.numLeft) ? device.numLeft = req.body.numLeft : null;
-  (req.body.description) ? device.description= req.body.description : null;
-  console.log("@" + req.files);
-  //upload.single(device.deviceImage),
+exports.device_post = ( upload.single('deviceImage'), function(req, res) {
+  //var device = new Device();
+  //(req.body.name) ? device.name = req.body.name : null;
+  //(req.body.numLeft) ? device.numLeft = req.body.numLeft : null;
+  //(req.body.description) ? device.description= req.body.description : null;
+  console.log(req.file);
+  if(req.file === null) {return res.send(400)}
+  const newDevice = new Device({
+    name: req.body.name,
+    numLeft: req.body.numLeft,
+    deviceImage: req.file.path
+  });
+  console.log(newDevice);
   //(req.body.deviceImage) ? device.deviceImage = req.file.path : null;
-  console.log("-" + device);
+  console.log("-" + newDevice);
   console.log("+" + req.file.path);
-  device.save(function(err, result){
-    if(err) return res.send(err);
+  newDevice.save(function(err, result){
+    if(err) {return res.send(err);}
     res.json(result);
   });
 })
 
 exports.device_put = function(req,res) {
   Device.findById(req.params.device_id, function(err, device) {
-    if (err) {        res.send(err); }
+    if (err) { return  res.send(err); }
     (req.body.name) ? device.name = req.body.name : null;
     (req.body.numLeft) ? device.numLeft= req.body.numLeft : null;
     (req.body.description) ? device.description= req.body.description : null;
 
       device.save(function(err, result) {
-        if (err) return res.send(err);
+        if (err){ return res.send(err);}
         res.json(result);
       });
     })
@@ -78,7 +83,7 @@ exports.device_put = function(req,res) {
 exports.device_delete = function(req, res) {
   Device.remove({ _id: req.params.device_id }, function(err, device){
     if (err)
-      res.send(err);
+      {return res.send(err);}
     res.json({ message: 'device has been deleted' })
   })
 }

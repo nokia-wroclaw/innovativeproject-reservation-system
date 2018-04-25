@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import NumOfPeopleTextField from './NumOfPeopleTextField'
 import SelectRoomField from './SelectRoomField';
 import DataTextField from './DataTextField'
-import PersonNameTextField from './PersonNameTextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment'

@@ -8,7 +8,7 @@ router.post('/', device_controller.device_post)
 
 router.get('/:device_id', device_controller.device_details_get)
 
-router.put('/:device:id', device_controller.device_put)
+router.put('/:device_id', device_controller.device_put)
 router.delete('/:device_id', device_controller.device_delete)
 
 module.exports = router;

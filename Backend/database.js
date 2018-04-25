@@ -6,7 +6,8 @@ var ReservationItem = require('./models/reservations.js');
 
   var seedDevices = [{
     name: "3d printer",
-    numLeft: 5
+    numLeft: 5,
+    description: "This is a 3d printer"
   },{
     name: "Deep learning machine",
     numLeft: 10

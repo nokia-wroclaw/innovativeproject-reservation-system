@@ -45,7 +45,7 @@ class ReservationPage extends Component {
   }
 
   closeDialog= () => {
-    this.setState({isDialogEditOpen: false, areErrors: false})
+    this.setState({isDialogEditOpen: false, isDialogSubmitOpen: false, areErrors: false})
   }
 
   handleReservationSubmit = (reservation) => {
@@ -85,7 +85,10 @@ class ReservationPage extends Component {
         })
         const newData = [...this.state.data];
         newData[index] = result.data;
-        this.setState({data: newData});
+        this.setState({
+          data: newData,
+          isDialogEditOpen: false
+        });
       })
       .catch(err => {
         console.error(err);

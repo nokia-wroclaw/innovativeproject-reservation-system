@@ -1,5 +1,4 @@
 import React , {Component} from 'react'
-import TextField from 'material-ui/TextField';
 import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios'
@@ -18,7 +17,6 @@ class DeviceEdit extends Component{
     super(props);
     this.state = {
       data: [],
-      description: '',
       redirect: false,
     }
   }
@@ -28,8 +26,8 @@ class DeviceEdit extends Component{
     let id = this.state._id;
     let name = this.state.name;
     let numLeft = this.state.numLeft;
-
-    let device = {name: name, numLeft: numLeft}
+    let description = this.state.description;
+    let device = {name: name, numLeft: numLeft, description: description}
     axios.put( `/api/devices/${id}`, device )
     .then(result => {
       console.log(result.data);
@@ -62,6 +60,10 @@ class DeviceEdit extends Component{
     this.setState({numLeft: e.target.value})
   }
 
+  handleDescriptionChange = (e) => {
+    this.setState({description: e.target.value})
+  }
+
   render() {
     if(this.state.redirect){
       return <Redirect to={`/devices/${this.state._id}`}/>
@@ -75,7 +77,7 @@ class DeviceEdit extends Component{
         <LabelTextField
           value={this.state.name}
           placeholder={'Enter device name'}
-          onChange={this.handleDeviceNameChange}
+          onChange={this.handleNameChange}
           id={'devicename'}
           isLabelEnabled={true}
           label={'Enter device name'}
@@ -83,7 +85,7 @@ class DeviceEdit extends Component{
         <LabelTextField
           value={this.state.numLeft}
           placeholder={'ex. 3...'}
-          onChange={this.handleDeviceNumLeftChange}
+          onChange={this.handleNumLeftChange}
           id={'numleft'}
           isLabelEnabled={true}
           label={'Enter number of available devices: '}
@@ -94,7 +96,8 @@ class DeviceEdit extends Component{
         >
         </ListItem>
 
-        <textarea rows="5" cols="50" placeholder='placeholder' maxLength='255' style={style.textArea}>
+        <textarea rows="5" cols="50" placeholder='placeholder' maxLength='255' style={style.textArea} onChange={this.handleDescriptionChange}>
+          {this.state.description}
         </textarea>
 
         <Dropzones />

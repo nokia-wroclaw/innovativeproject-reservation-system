@@ -13,7 +13,6 @@ class Dropzones extends Component {
       isThumbUploaded: false
     };
   }
-
   onMainImageDrop = (files) => {
     this.setState({
       mainImage: files,
@@ -41,9 +40,6 @@ class Dropzones extends Component {
                   multiple={false}
                   accept="image/*"
                   onDrop={this.onMainImageDrop}
-                  thumbnailWidth='200px'
-                  thumbnailHeight='200px'
-                  maxFiles={ 1}
                 >
                 <p>Drop an image or click and select it</p>
                 </DropZone>
@@ -67,10 +63,7 @@ class Dropzones extends Component {
                 <DropZone
                   multiple={false}
                   accept="image/*"
-                  thumbnailWidth='200px'
-                  thumbnailHeight='200px'
                   onDrop={this.onThumbImageDrop}
-                  maxFiles={ 1}
                 >
                 <p>Drop an image or click and select it</p>
                 </DropZone>

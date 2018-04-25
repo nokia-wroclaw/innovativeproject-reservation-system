@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import style from '../../style'
 
 import placeholder from '../../images/placeholder_thumbnail.png';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -16,11 +16,11 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 import Avatar from 'material-ui/Avatar';
 
-import {Link, Redirect} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 
 class Device extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       toBeUpdated: false,
@@ -58,7 +58,7 @@ class Device extends Component {
     let id = this.props.uniqueID;
     let name = (this.state.name) ? this.state.name : null;
     let numLeft = (this.state.numLeft) ? this.state.numLeft : null;
-    let device = { name:  name, numLeft: numLeft};
+    let device = {name: name, numLeft: numLeft};
     this.props.onDeviceEdit(id, device);
     this.setState({
       toBeUpdated: !this.state.toBeUpdated,
@@ -80,28 +80,35 @@ class Device extends Component {
     this.setState({toBeUpdated: !this.state.toBeUpdated});
   }
 
+  stopEventPropagation(event) {
+    event.preventDefault();
+  }
+
   render() {
-    if(this.state.redirect){
-      return  <Redirect to={`/devices/${this.props.uniqueID}/edit`} />
+    if (this.state.redirect) {
+      return <Redirect to={`/devices/${this.props.uniqueID}/edit`}/>
     }
     return (
       <div>
         <MuiThemeProvider>
-            <List>
+          <List>
+            <Link to={`/devices/${this.props.uniqueID}`} style={style.link}>
               <ListItem
-                primaryText={<Link to={`/devices/${this.props.uniqueID}`} style={style.link}>{this.props.name} </Link>}
-                leftAvatar={<Avatar src={placeholder} />}
+                primaryText={this.props.name}
+                leftAvatar={<Avatar src={placeholder}/>}
                 rightIconButton={
                   <IconMenu
-                    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                    onClick={this.stopEventPropagation}
+                    iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
                   >
                     <MenuItem leftIcon={<EditIcon/>} primaryText="Edit" onClick={this.editDevice}/>
                     <MenuItem primaryText="Delete" leftIcon={<DeleteIcon/>} onClick={this.deleteDevice}/>
                   </IconMenu>
                 }
               />
-              <Divider/>
-            </List>
+            </Link>
+            <Divider/>
+          </List>
         </MuiThemeProvider>
       </div>
     )

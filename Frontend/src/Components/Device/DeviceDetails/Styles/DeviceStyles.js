@@ -1,11 +1,4 @@
 const deviceStyles = {
-  container: {
-    maxWidth: '90%',
-    minWidth: '40%',
-    margin: '10px auto 10px auto',
-    minWidth: '400px',
-    float: 'none',
-  },
   title: {
     fontSize: '32px',
     textAlign: 'center'
