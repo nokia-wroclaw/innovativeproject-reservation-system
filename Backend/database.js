@@ -34,6 +34,12 @@ var ReservationItem = require('./models/reservations.js');
     numOfPeople: 10,
     option: 'MakerSpace',
     personName: 'Miller'
+  },{
+    startDate: '2018-04-25T08:00:00.000Z',
+    endDate: '2018-04-25T15:00:00.000Z',
+    numOfPeople: 5,
+    option: 'Lab',
+    personName: 'Adam'
   }];
 
   DeviceItem.remove({}, ()=>{

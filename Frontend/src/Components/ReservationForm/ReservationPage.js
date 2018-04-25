@@ -68,6 +68,7 @@ class ReservationPage extends Component {
             isDialogSubmitOpen: false,
             isSnackbarOpen: true
           }));
+          this.loadReservationFromServer()
         }
       })
       .catch(err => {
@@ -89,11 +90,25 @@ class ReservationPage extends Component {
           data: newData,
           isDialogEditOpen: false
         });
+        this.loadReservationFromServer()
       })
       .catch(err => {
         console.error(err);
       })
     }
+
+    handleReservationDelete = (id) => {
+      axios.delete(`${this.props.url}/${id}`)
+        .then(res => {
+          let reservations = this.state.data.filter((item) => item._id !== id )
+            this.setState({data: reservations, isDialogEditOpen: false});
+            this.loadReservationFromServer()
+            console.log('reservation deleted');
+        })
+        .catch(err => {
+          console.error(err);
+        });
+      }
 
   handleRenderChangeSubmit = (e) => {
   if (e.start != 'Invalid Date' || e.end != 'Invalid Date') {
@@ -153,6 +168,7 @@ handleRenderChangeEdit = (e) => {
                 endDate = {this.state.endDate}
                 option={this.state.option}
                 onReservationEdit={this.handleReservationEdit}
+                onReservationDelete={this.handleReservationDelete}
                 isDialogEditOpen = {this.state.isDialogEditOpen}
                 closeDialog = {this.closeDialog}
                 anyErrors = {this.state.areErrors}

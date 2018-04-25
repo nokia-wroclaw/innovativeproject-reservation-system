@@ -41,7 +41,6 @@ class ReservationFormEdit extends Component {
 
     handleEditReservation =(e) =>{
     e.preventDefault();
-    console.log(this.props.id)
     let id = this.props.id;
     let numOfPeople = this.state.numOfPeople.trim();
     let option = this.state.value;
@@ -55,6 +54,13 @@ class ReservationFormEdit extends Component {
                                     personName: personName};
     this.props.onReservationEdit(id, reservation);
     this.setState({numOfPeople: '', option: '', personName: ''})
+  }
+
+  deleteReservation = (e) => {
+    e.preventDefault();
+    let id = this.props.id;
+    this.props.onReservationDelete(id);
+    console.log('deleted');
   }
 
   handleNumOfPeopleChange = (e)=> {
@@ -82,10 +88,16 @@ class ReservationFormEdit extends Component {
           onClick={this.handleClose}
         />,
         <RaisedButton
-          label="Edit"
+          label="Confirm"
           primary={true}
-          keyboardFocused={true}
+          keyboardFocused={false}
           onClick={this.handleEditReservation}
+        />,
+        <RaisedButton
+          label="Delete"
+          secondary={true}
+          keyboardFocused={false}
+          onClick={this.deleteReservation}
         />,
       ];
       return (
