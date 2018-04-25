@@ -14,6 +14,7 @@ var reservationRoute = require('./routes/reservations');
 var app = express();
 var router = express.Router();
 
+app.use('../Upload', express.static('Upload'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
