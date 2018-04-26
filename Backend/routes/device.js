@@ -3,16 +3,16 @@ var router = express.Router();
 const multer = require('multer');
 //var path = require('path');
 
-var Device = require('../models/device');
-//var device_controller = require('../controllers/deviceController.js');
-const upload=multer({dest: '../Upload' });
 
-/*const storage = multer.diskStorage({
+//var device_controller = require('../controllers/deviceController.js');
+//const upload=multer({dest: '../Upload' });
+
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, '../Upload');
+    cb(null, '../Upload/');
   },
   filename: function(req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
+    cb(null,Date.now() + file.originalname);
   }
 });
 
@@ -24,8 +24,10 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-*/
-/*
+
+//const upload=multer({storage:storage });
+var Device = require('../models/device');
+
 const upload = multer({
   storage: storage,
   limits: {
@@ -33,7 +35,7 @@ const upload = multer({
   },
   fileFilter: fileFilter
 });
-*/
+
 router.route('/')
 .get(function(req, res){
   Device.find(function(err, devices){
@@ -48,7 +50,7 @@ console.log(req.body);
   (req.body.name) ? device.name = req.body.name : null;
   (req.body.numLeft) ? device.numLeft = req.body.numLeft : null;
   //(req.body.deviceImage) ? device.deviceImage = req.file.path : null;
-  //device.deviceImage=req.file.path;
+  device.deviceImage=req.file.path;
   (req.body.description) ? device.description = req.body.description : null;
 
   device.save(function(err, result){
