@@ -61,3 +61,32 @@
 .active li {
     border-bottom: 1px solid white;
 }
+
+.navbar-items-registration {
+    list-style-type: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
+
+.navbar-items-registration li {
+    display: block;
+    color: yellow;
+    text-align: center;
+    padding: 5px 0;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+}
+
+.navbar-items-registration li:hover {
+    border-bottom: 1px solid yellow;
+}

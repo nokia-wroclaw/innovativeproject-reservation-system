@@ -10,13 +10,12 @@ import nokiaLogo from '../../images/nokia-logo.png';
  }, {
    title: 'devices',
    to: '/devices'
- }, {
-   title: 'register',
-   to: '/register'
- }, {
+ }];
+
+ const REGISTER_ROUTES = [{
    title: 'login',
    to: '/login'
- }];
+ }]
 
  class Navbar extends Component {
    render() {
@@ -34,6 +33,13 @@ import nokiaLogo from '../../images/nokia-logo.png';
                   <li>{title}</li>
                 </NavLink>
               ))}
+            </ul>
+            <ul className="navbar-items-registration">
+              {REGISTER_ROUTES.map(({to, title}, key) => (
+                <NavLink to={to} key={key}>
+                  <li>{title}</li>
+                </NavLink>
+                ))}
             </ul>
           </nav>
         </div>

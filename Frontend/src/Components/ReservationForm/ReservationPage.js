@@ -18,6 +18,8 @@ class ReservationPage extends Component {
       isDialogEditOpen: false,
       isSnackbarOpen: false,
       successMsg: 'Reservation successfully added',
+      isSnackbarDeleteOpen: false,
+      deleteMsg: 'Reservation has been successfully deleted',
       ifEventExists:false
     }
   }
@@ -101,7 +103,7 @@ class ReservationPage extends Component {
       axios.delete(`${this.props.url}/${id}`)
         .then(res => {
           let reservations = this.state.data.filter((item) => item._id !== id )
-            this.setState({data: reservations, isDialogEditOpen: false});
+            this.setState({data: reservations, isDialogEditOpen: false, isSnackbarDeleteOpen: true});
             this.loadReservationFromServer()
             console.log('reservation deleted');
         })
@@ -113,6 +115,7 @@ class ReservationPage extends Component {
   handleRenderChangeSubmit = (e) => {
   if (e.start != 'Invalid Date' || e.end != 'Invalid Date') {
     this.setState({
+      isSnackbarDeleteOpen: false,
       isDialogSubmitOpen: true,
       startDate: e.start,
       endDate: e.end,
@@ -124,6 +127,8 @@ class ReservationPage extends Component {
 handleRenderChangeEdit = (e) => {
   this.setState({
     isDialogEditOpen: true,
+    isSnackbarOpen: false,
+    isSnackbarDeleteOpen: false,
     startDate: e.start,
     endDate: e.end,
     id: e.id,
@@ -180,6 +185,12 @@ handleRenderChangeEdit = (e) => {
               <Snackbar
                 open={this.state.isSnackbarOpen}
                 message={this.state.successMsg}
+                autoHideDuration={3000}
+                style={{textAlign: 'center'}}
+              />
+              <Snackbar
+                open={this.state.isSnackbarDeleteOpen}
+                message={this.state.deleteMsg}
                 autoHideDuration={3000}
                 style={{textAlign: 'center'}}
               />
