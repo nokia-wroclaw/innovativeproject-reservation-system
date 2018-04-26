@@ -23,7 +23,8 @@ var ReservationSchema = {
     type: String,
     enum: ['MakerSpace', 'OpenSpace','Lab', 'WholeSpace'],
     required: false
-  }
+  },
+   device: { type: mongoose.Schema.Types.ObjectId, ref: 'Device', required: false },
 };
 
 module.exports = mongoose.model('Reservation', ReservationSchema);

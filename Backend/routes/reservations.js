@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var Reservation = require('../models/reservations');
+var Device = require('../models/device');
 //var device_controller = require('../controllers/deviceController.js');
+var mongoose = require('mongoose');
 
 router.route('/')
 .get(function(req, res){
@@ -17,6 +19,7 @@ router.route('/')
   (req.body.endDate) ? reservation.endDate = req.body.endDate : null;
   (req.body.numOfPeople) ? reservation.numOfPeople = req.body.numOfPeople : null;
   (req.body.option) ? reservation.option = req.body.option : null;
+  (req.body.deviceId) ? reservation.device=req.body.device: null;
 
   reservation.save(function(err, result){
     if(err) { res.send(err); }
