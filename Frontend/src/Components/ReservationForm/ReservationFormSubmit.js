@@ -113,6 +113,7 @@ class ReservationFormSubmit extends Component {
             isLabelEnabled={true}
             label={"Enter number of people"}
             onChange={this.handleNumOfPeopleChange}
+            position='left'
           />
         <LabelTextField
             id={'personName'}
@@ -121,6 +122,7 @@ class ReservationFormSubmit extends Component {
             isLabelEnabled={true}
             label={"Enter person name"}
             onChange={this.handlePersonNameChange}
+            position='left'
         />
 
         </form>

@@ -21,25 +21,79 @@ class LabelTextField extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <div className="text-field-label-container">
-            {this.props.isLabelEnabled
-              ? (<div>
-                  <p className="label-div">{this.props.label}</p>
-                </div>)
-              : (null)}
-            <div className="text-field-div">
-              <TextField
-                id={"id" + this.props.id}
-                placeholder={this.props.placeholder}
-                underlineStyle={textFieldStyle.disabled}
-                underlineFocusStyle={textFieldStyle.focused}
-                inputStyle={textFieldStyle.textStyle}
-                value={this.props.value}
-                onChange={this.props.onChange}
-              >
-              </TextField>
-            </div>
-          </div>
+          {this.props.position === 'left'
+            ? (
+              <div className="text-field-label-container-left">
+                {this.props.isLabelEnabled
+                  ? (<div>
+                      <p className="label-div-left">{this.props.label}</p>
+                    </div>)
+                  : (null)}
+                <div className="text-field-div-left">
+                  {this.props.isPassword
+                    ? (<TextField
+                      id={"id" + this.props.id}
+                      placeholder={this.props.placeholder}
+                      underlineStyle={textFieldStyle.disabled}
+                      underlineFocusStyle={textFieldStyle.focused}
+                      inputStyle={textFieldStyle.textStyle}
+                      value={this.props.value}
+                      onChange={this.props.onChange}
+                      type="password"
+                    >
+                    </TextField>)
+                    : (
+                      <TextField
+                        id={"id" + this.props.id}
+                        placeholder={this.props.placeholder}
+                        underlineStyle={textFieldStyle.disabled}
+                        underlineFocusStyle={textFieldStyle.focused}
+                        inputStyle={textFieldStyle.textStyle}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                      >
+                      </TextField>
+                    )
+                  }
+                </div>
+              </div>
+            )
+             : (
+               <div className="text-field-label-container-top">
+                 {this.props.isLabelEnabled
+                   ? (<div>
+                       <p className="label-div-top">{this.props.label}</p>
+                     </div>)
+                   : (null)}
+                 <div className="text-field-div-top">
+                   {this.props.isPassword
+                     ? (<TextField
+                       id={"id" + this.props.id}
+                       placeholder={this.props.placeholder}
+                       underlineStyle={textFieldStyle.disabled}
+                       underlineFocusStyle={textFieldStyle.focused}
+                       inputStyle={textFieldStyle.textStyle}
+                       value={this.props.value}
+                       onChange={this.props.onChange}
+                       type="password"
+                     >
+                     </TextField>)
+                     : (
+                       <TextField
+                         id={"id" + this.props.id}
+                         placeholder={this.props.placeholder}
+                         underlineStyle={textFieldStyle.disabled}
+                         underlineFocusStyle={textFieldStyle.focused}
+                         inputStyle={textFieldStyle.textStyle}
+                         value={this.props.value}
+                         onChange={this.props.onChange}
+                       >
+                       </TextField>
+                     )
+                   }
+                 </div>
+               </div>
+            )}
         </MuiThemeProvider>
       </div>
     );

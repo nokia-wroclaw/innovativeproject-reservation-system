@@ -1,23 +1,36 @@
 
-.text-field-label-container {
+.text-field-label-container-left {
   display: flex;
+  position: relative;
 }
 
-
-.label-div{
+.label-div-left{
   width: 450px;
   color: #000000;
+  position: relative;
   margin-left: 14px;
 }
 
-.text-field-div {
+.text-field-div-left {
   flex: 1;
 }
 
-.text-field-label {
-  float: left;
-  margin-right: 30px;
-  margin-top: 10px;
-  padding: 2px;
-  font-size: 18px;
+.text-field-div-top {
+  position: absolute;
+}
+
+.text-field-label-container-top {
+  margin-left: 30px;
+  position: relative;
+}
+
+.label-div-top{
+  width: 450px;
+  color: #000000;
+  position: relative;
+  margin-left: 14px;
+}
+
+.text-field-div-top {
+  position: relative;
 }

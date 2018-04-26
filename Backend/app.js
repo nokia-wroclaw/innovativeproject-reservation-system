@@ -10,6 +10,7 @@ var secrets = require('./secrets');
 var deviceRoute = require('./routes/deviceRoute');
 var reservationRoute = require('./routes/reservationsRoute');
 var reservationMiddleware = require('./controllers/Middleware/reservationMiddleware')
+var userRoute = require('./routes/usersRoute')
 
 var app = express();
 var router = express.Router();
@@ -37,7 +38,7 @@ router.get('/', function(req, res) {
 
 app.use('/api/devices', deviceRoute);
 app.use('/api/reservations', reservationRoute);
-
+app.use('/api/users', userRoute);
 
 
 module.exports = app;

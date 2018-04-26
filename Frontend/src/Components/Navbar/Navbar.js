@@ -10,6 +10,12 @@ import nokiaLogo from '../../images/nokia-logo.png';
  }, {
    title: 'devices',
    to: '/devices'
+ }, {
+   title: 'register',
+   to: '/register'
+ }, {
+   title: 'login',
+   to: '/login'
  }];
 
  class Navbar extends Component {

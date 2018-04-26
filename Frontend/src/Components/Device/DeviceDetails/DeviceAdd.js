@@ -102,6 +102,7 @@ class DeviceAdd extends Component {
             onChange={this.handleDeviceNameChange}
             id={'devicename'}
             isLabelEnabled={true}
+            position='left'
             label={'Enter device name'}
           />
           <LabelTextField
@@ -111,6 +112,7 @@ class DeviceAdd extends Component {
             id={'numleft'}
             isLabelEnabled={true}
             label={'Enter number of available devices: '}
+            position='left'
           />
           <ListItem
             primaryText='Enter device description'

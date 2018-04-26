@@ -25,7 +25,7 @@ var ReservationSchema = {
   },
   option: {
     type: String,
-    enum: ['MakerSpace', 'OpenSpace', 'WholeSpace'],
+    enum: ['MakerSpace', 'OpenSpace','Lab', 'WholeSpace'],
     required: true
   }
 };

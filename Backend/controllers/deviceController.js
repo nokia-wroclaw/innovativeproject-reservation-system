@@ -56,9 +56,7 @@ exports.device_post =  function(req, res) {
     numLeft: req.body.numLeft,
     //deviceImage: req.file.path
   });
-  console.log(newDevice);
   //(req.body.deviceImage) ? device.deviceImage = req.file.path : null;
-  console.log("-" + newDevice);
   //console.log("+" + req.file.path);
   newDevice.save(function(err, result){
     if(err) {return res.send(err);}

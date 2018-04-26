@@ -81,6 +81,7 @@ class DeviceEdit extends Component{
           id={'devicename'}
           isLabelEnabled={true}
           label={'Enter device name'}
+          position='left'
         />
         <LabelTextField
           value={this.state.numLeft}
@@ -89,6 +90,7 @@ class DeviceEdit extends Component{
           id={'numleft'}
           isLabelEnabled={true}
           label={'Enter number of available devices: '}
+          position='left'
         />
         <ListItem
           primaryText="enter device description here: "

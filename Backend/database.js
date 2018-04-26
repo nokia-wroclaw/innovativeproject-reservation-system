@@ -1,6 +1,8 @@
 var DeviceItem = require('./models/device.js');
 var ReservationItem = require('./models/reservations.js');
-
+var Users = require('./models/users.js')
+var bcrypt = require('bcrypt')
+const saltRounds = 10;
 
   //mongoose.connection.db.dropDataBase();
 
@@ -42,6 +44,17 @@ var ReservationItem = require('./models/reservations.js');
     personName: 'Adam'
   }];
 
+  var seedUsers = [
+    {
+      email: 'ex@gmail.com',
+      password: 'qwerty123'
+    },
+    {
+      email: 'asd@gmail.com',
+      password: 'qwerty123'
+    }
+  ];
+
   DeviceItem.remove({}, ()=>{
     seedDevices.forEach(function(item){
       new DeviceItem(item).save();
@@ -51,5 +64,16 @@ var ReservationItem = require('./models/reservations.js');
   ReservationItem.remove({}, ()=>{
     seedReservations.forEach(function(item){
       new ReservationItem(item).save();
+    })
+  })
+
+  Users.remove({}, ()=>{
+    seedUsers.forEach(function(item){
+      bcrypt.genSalt(saltRounds, function(err, salt){
+        bcrypt.hash(item.password, salt, function(err, hash) {
+         item.password = hash;
+          new Users(item).save()
+        })
+      })
     })
   })
