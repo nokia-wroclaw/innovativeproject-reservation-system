@@ -31,7 +31,7 @@ class SelectRoomField extends Component {
                   onChange={this.props.onRoomSelectChange}
                 >
                 <MenuItem value={'MakerSpace'} primaryText="Maker Space" />
-                <MenuItem value={'OpenSpace'} primaryText="Open Space" />
+                <MenuItem value={'OpenSpace'} primaryText="Creative Space" />
                 <MenuItem value={'WholeSpace'} primaryText="Whole space" />
               </SelectField>
             }

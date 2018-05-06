@@ -1,0 +1,473 @@
+From ed6ad9e2519bba58a7d0494c3e7623bd0ea057be Mon Sep 17 00:00:00 2001
+From: Mateusz Sikora <ms1qaz@gmail.com>
+Date: Sun, 6 May 2018 01:48:52 +0200
+Subject: [PATCH] history push instead of Redirect component, urls without host
+
+---
+ Frontend/src/Components/Device/Device.js            | 14 +++++---------
+ Frontend/src/Components/Device/DeviceBlock.js       | 19 ++++++++-----------
+ .../Components/Device/DeviceDetails/DeviceAdd.js    | 21 ++++++---------------
+ .../Device/DeviceDetails/DeviceDetails.js           |  4 +++-
+ .../Components/Device/DeviceDetails/DeviceEdit.js   | 15 ++++++---------
+ Frontend/src/Components/HomeComponent.js            |  6 +++---
+ Frontend/src/Components/Register.js                 |  4 +++-
+ Frontend/src/Components/ReservationBlock.js         | 11 ++++++-----
+ .../ReservationForm/ReservationFormEdit.js          |  3 ++-
+ .../Components/ReservationForm/ReservationPage.js   | 10 ++++++----
+ 10 files changed, 48 insertions(+), 59 deletions(-)
+
+diff --git a/Frontend/src/Components/Device/Device.js b/Frontend/src/Components/Device/Device.js
+index 973247b..6c29104 100644
+--- a/Frontend/src/Components/Device/Device.js
++++ b/Frontend/src/Components/Device/Device.js
+@@ -16,7 +16,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
+ 
+ import Avatar from 'material-ui/Avatar';
+ 
+-import { Link, Redirect } from 'react-router-dom';
++import { Link, withRouter } from 'react-router-dom';
+ 
+ 
+ class Device extends Component {
+@@ -29,8 +29,7 @@ class Device extends Component {
+       name: '',
+       numLeft: '',
+       description: '',
+-      image: '',
+-      redirect: false
++      image: ''
+     };
+ 
+     this.handleNameChange = this.handleNameChange.bind(this);
+@@ -49,8 +48,8 @@ class Device extends Component {
+   }
+ 
+   editDevice(e) {
+-    e.preventDefault()
+-    this.setState({redirect: true});
++    e.preventDefault();
++    this.props.history.push(`/devices/${this.props.uniqueID}/edit`);
+   }
+ 
+   handleEditDevice(e) {
+@@ -85,9 +84,6 @@ class Device extends Component {
+   }
+ 
+   render() {
+-    if (this.state.redirect) {
+-      return <Redirect to={`/devices/${this.props.uniqueID}/edit`}/>
+-    }
+     return (
+       <div>
+         <MuiThemeProvider>
+@@ -115,4 +111,4 @@ class Device extends Component {
+   }
+ }
+ 
+-export default Device
++export default withRouter(Device);
+diff --git a/Frontend/src/Components/Device/DeviceBlock.js b/Frontend/src/Components/Device/DeviceBlock.js
+index 2eeb398..9558749 100644
+--- a/Frontend/src/Components/Device/DeviceBlock.js
++++ b/Frontend/src/Components/Device/DeviceBlock.js
+@@ -3,11 +3,13 @@ import axios from 'axios'
+ import DeviceList from './DeviceList';
+ import style from '../../style';
+ 
+-import {Redirect} from 'react-router-dom'
++import {withRouter} from 'react-router-dom'
+ 
+ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+ import {List, ListItem} from 'material-ui/List'
+ 
++const DEVICES_BASE_URL = '/api/devices';
++
+ class DeviceBlock extends Component {
+   constructor(props){
+     super(props);
+@@ -18,14 +20,14 @@ class DeviceBlock extends Component {
+   }
+ 
+   loadDeviceFromServer() {
+-    axios.get(this.props.url)
++    axios.get(DEVICES_BASE_URL)
+       .then(res => {
+         this.setState({data: res.data});
+       })
+   }
+ 
+   handleDeviceDelete(id) {
+-    axios.delete(`${this.props.url}/${id}`)
++    axios.delete(`${DEVICES_BASE_URL}/${id}`)
+       .then(res => {
+         let devices = this.state.data.filter((item) => item._id !== id )
+           this.setState({data: devices});
+@@ -37,7 +39,7 @@ class DeviceBlock extends Component {
+     }
+ 
+     handleDeviceEdit(id, device) {
+-      axios.put( `${this.props.url}/${id}`, device )
++      axios.put( `${DEVICES_BASE_URL}/${id}`, device )
+       .then(result => {
+         console.log(result.data);
+         const index = this.state.data.findIndex(function(item) {
+@@ -60,9 +62,7 @@ class DeviceBlock extends Component {
+   }
+ 
+   redirectToAddingPage = () => {
+-    this.setState({
+-      redirectAdd: true
+-    });
++    this.props.history.push('/devices/add');
+   }
+ 
+   handleAddFormOpen = (e) => {
+@@ -72,9 +72,6 @@ class DeviceBlock extends Component {
+   }
+ 
+   render() {
+-    if(this.state.redirectAdd){
+-        return <Redirect to={`/devices/add`}/>
+-    }
+     return (
+         <div style={style.deviceBox}>
+           <h3 style={style.title}>Devices:</h3>
+@@ -98,4 +95,4 @@ class DeviceBlock extends Component {
+   }
+ }
+ 
+-export default DeviceBlock;
++export default withRouter(DeviceBlock);
+diff --git a/Frontend/src/Components/Device/DeviceDetails/DeviceAdd.js b/Frontend/src/Components/Device/DeviceDetails/DeviceAdd.js
+index a2c509d..b5b7825 100644
+--- a/Frontend/src/Components/Device/DeviceDetails/DeviceAdd.js
++++ b/Frontend/src/Components/Device/DeviceDetails/DeviceAdd.js
+@@ -7,7 +7,6 @@ import RaisedButton from 'material-ui/RaisedButton'
+ import DropZone from './Dropzones'
+ import request from 'superagent'
+ 
+-import {Redirect} from 'react-router-dom'
+ import axios from 'axios'
+ 
+ import LabelTextField from '../../LabelTextField'
+@@ -15,6 +14,8 @@ import LabelTextField from '../../LabelTextField'
+ import style from './Styles/DeviceStyles'
+ import '../../textFieldStyles.css'
+ 
++const DEVICES_BASE_URL = '/api/devices';
++
+ class DeviceAdd extends Component {
+   constructor(props) {
+     super(props);
+@@ -26,12 +27,12 @@ class DeviceAdd extends Component {
+       mainImage: '',
+       isMainImageUploaded: false,
+       data: [],
+-      redirect: false,
+       addPage: true
+     };
+   }
+ 
+   handleDeviceSubmit = (e) =>{
++    e.preventDefault();
+     console.log(this.state.mainImage);
+     const device = {
+       id: Date.now(),
+@@ -39,17 +40,12 @@ class DeviceAdd extends Component {
+       numLeft: this.state.numLeft,
+       description: this.state.description,
+     }
+-    axios.post('http://localhost:3001/api/devices',  device).then(() => {
+-      this.setState({
+-        redirect: true
+-      });
++    axios.post(DEVICES_BASE_URL, device).then((result) => {
++      this.props.history.push(`/devices/${result.data._id}`);
+     })
+-
+-
+   }
+ 
+ 
+-
+   handleDeviceNameChange = (e) => {
+     this.setState({
+       name: e.target.value
+@@ -74,9 +70,7 @@ class DeviceAdd extends Component {
+   }
+ 
+   handleCancelClick = () => {
+-    this.setState({
+-      redirect: true
+-    });
++    this.props.history.push('/devices');
+   }
+ 
+   handleShowForm = () => {
+@@ -86,9 +80,6 @@ class DeviceAdd extends Component {
+   }
+ 
+   render() {
+-    if(this.state.redirect){
+-      return <Redirect to='/devices'/>
+-    }
+     return (
+       <div style={style.container}>
+         <h1 >Add new device to garage</h1>
+diff --git a/Frontend/src/Components/Device/DeviceDetails/DeviceDetails.js b/Frontend/src/Components/Device/DeviceDetails/DeviceDetails.js
+index 57def3b..03e6f48 100644
+--- a/Frontend/src/Components/Device/DeviceDetails/DeviceDetails.js
++++ b/Frontend/src/Components/Device/DeviceDetails/DeviceDetails.js
+@@ -11,6 +11,8 @@ import placeholder from '../../../images/placeholder_thumbnail.png'
+ import big_placeholder from '../../../images/big_image.png'
+ import arduino from '../../../images/arduino_mkr1000_front-1.jpg'
+ 
++const DEVICES_BASE_URL = '/api/devices';
++
+ class DeviceDetails extends Component {
+   constructor(props){
+     super(props);
+@@ -20,7 +22,7 @@ class DeviceDetails extends Component {
+   }
+ 
+   componentDidMount() {
+-    axios.get(`/api/devices/${this.props.match.params.id}`)
++    axios.get(`${DEVICES_BASE_URL}/${this.props.match.params.id}`)
+       .then(res => {
+         this.setState(res.data);
+         console.log("+" + res.data);
+diff --git a/Frontend/src/Components/Device/DeviceDetails/DeviceEdit.js b/Frontend/src/Components/Device/DeviceDetails/DeviceEdit.js
+index 1b0e63c..3b05397 100644
+--- a/Frontend/src/Components/Device/DeviceDetails/DeviceEdit.js
++++ b/Frontend/src/Components/Device/DeviceDetails/DeviceEdit.js
+@@ -2,7 +2,6 @@ import React , {Component} from 'react'
+ import {List, ListItem} from 'material-ui/List';
+ import RaisedButton from 'material-ui/RaisedButton';
+ import axios from 'axios'
+-import {Redirect} from 'react-router-dom'
+ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+ 
+ import Dropzones from './Dropzones';
+@@ -12,12 +11,13 @@ import LabelTextField from '../../LabelTextField'
+ 
+ import style from './Styles/DeviceStyles'
+ 
++const DEVICES_BASE_URL = '/api/devices';
++
+ class DeviceEdit extends Component{
+   constructor(props){
+     super(props);
+     this.state = {
+-      data: [],
+-      redirect: false,
++      data: []
+     }
+   }
+ 
+@@ -28,7 +28,7 @@ class DeviceEdit extends Component{
+     let numLeft = this.state.numLeft;
+     let description = this.state.description;
+     let device = {name: name, numLeft: numLeft, description: description}
+-    axios.put( `/api/devices/${id}`, device )
++    axios.put( `${DEVICES_BASE_URL}/${id}`, device )
+     .then(result => {
+       console.log(result.data);
+       const index = this.state.data.findIndex(function(item) {
+@@ -37,15 +37,15 @@ class DeviceEdit extends Component{
+       const newData = [...this.state.data];
+       newData[index] = result.data;
+       this.setState({data: newData});
++      this.props.history.push(`/devices/${id}`);
+     })
+     .catch(err => {
+       console.error(err);
+     })
+-    this.setState({redirect: true})
+   }
+ 
+   componentDidMount() {
+-    axios.get(`/api/devices/${this.props.match.params.id}`)
++    axios.get(`${DEVICES_BASE_URL}/${this.props.match.params.id}`)
+     .then(res => {
+       this.setState(res.data);
+       console.log(res.data);
+@@ -65,9 +65,6 @@ class DeviceEdit extends Component{
+   }
+ 
+   render() {
+-    if(this.state.redirect){
+-      return <Redirect to={`/devices/${this.state._id}`}/>
+-    }
+     return (
+       <div style={style.container}>
+         <MuiThemeProvider>
+diff --git a/Frontend/src/Components/HomeComponent.js b/Frontend/src/Components/HomeComponent.js
+index 8f4d279..c095d7a 100644
+--- a/Frontend/src/Components/HomeComponent.js
++++ b/Frontend/src/Components/HomeComponent.js
+@@ -26,14 +26,14 @@ class HomeComponent extends Component {
+           <div className="container content-container">
+             <Switch>
+               <Route exact path="/" component={HomePage}/>
+-              <Route exact path="/devices" component={() => <DeviceBlock url='http://localhost:3001/api/devices'/>}/>
++              <Route exact path="/devices" component={DeviceBlock}/>
+               <Route path='/devices/add' component={DeviceAdd}/>
+               <Route exact path={'/devices/:id'} component={DeviceDetails}/>
+               <Route path={'/devices/:id/edit'} component={DeviceEdit}/>
+               <Route path="/reservations_list"
+-                     component={() => <ReservationBlock url='http://localhost:3001/api/reservations'/>}/>
++                     component={ReservationBlock}/>
+               <Route path={'/reservation'}
+-                     component={() => <ReservationPage url='http://localhost:3001/api/reservations'/>}/>
++                     component={ReservationPage}/>
+               <Route path="/register" component={Register}/>
+               <Route path="/login" component={Register}/>
+           </Switch>
+diff --git a/Frontend/src/Components/Register.js b/Frontend/src/Components/Register.js
+index e22a634..5473a0a 100644
+--- a/Frontend/src/Components/Register.js
++++ b/Frontend/src/Components/Register.js
+@@ -8,6 +8,8 @@ import axios from 'axios'
+ import './HomePage/HomePage.css'
+ import './Register.css'
+ 
++const USERS_BASE_URL = '/api/users';
++
+ class Register extends Component {
+   constructor(props) {
+     super(props);
+@@ -36,7 +38,7 @@ class Register extends Component {
+       password: this.state.password
+     }
+     if(this.state.checked === true){
+-        axios.post('http://localhost:3001/api/users',newUser)
++        axios.post(USERS_BASE_URL, newUser)
+         this.setState({
+           email: '',
+           password: '',
+diff --git a/Frontend/src/Components/ReservationBlock.js b/Frontend/src/Components/ReservationBlock.js
+index 233eec2..0b77971 100644
+--- a/Frontend/src/Components/ReservationBlock.js
++++ b/Frontend/src/Components/ReservationBlock.js
+@@ -4,6 +4,8 @@ import ReservationList from './ReservationList';
+ import ReservationForm from './ReservationForm';
+ import style from '../style';
+ 
++const RESERVATIONS_BASE_URL = '/api/reservations';
++
+ class ReservationBlock extends Component {
+   constructor(props){
+     super(props);
+@@ -15,7 +17,7 @@ class ReservationBlock extends Component {
+   }
+ 
+   loadReservationFromServer() {
+-    axios.get(this.props.url)
++    axios.get(RESERVATIONS_BASE_URL)
+       .then(res => {
+         this.setState({data: res.data});
+       })
+@@ -24,19 +26,18 @@ class ReservationBlock extends Component {
+   handleReservationSubmit(reservation){
+     let reservations = this.state.data;
+     reservation.id = Date.now();
+-    axios.post(this.props.url, reservation)
++    axios.post(RESERVATIONS_BASE_URL, reservation)
+     .then((result) =>{
+       this.setState({data:  [...reservations,result.data]});
+     })
+     .catch(err => {
+       console.error(err);
+-
+     });
+   }
+ 
+ 
+   handleReservationDelete(id) {
+-    axios.delete(`${this.props.url}/${id}`)
++    axios.delete(`${RESERVATIONS_BASE_URL}/${id}`)
+       .then(res => {
+         let reservations = this.state.data.filter((item) => item._id !== id )
+           this.setState({data: reservations});
+@@ -48,7 +49,7 @@ class ReservationBlock extends Component {
+     }
+ 
+     handleReservationEdit(id, reservation) {
+-      axios.put( `${this.props.url}/${id}`, reservation )
++      axios.put( `${RESERVATIONS_BASE_URL}/${id}`, reservation )
+       .catch(err => {
+         console.error(err);
+       })
+diff --git a/Frontend/src/Components/ReservationForm/ReservationFormEdit.js b/Frontend/src/Components/ReservationForm/ReservationFormEdit.js
+index 5af11d1..22c4828 100644
+--- a/Frontend/src/Components/ReservationForm/ReservationFormEdit.js
++++ b/Frontend/src/Components/ReservationForm/ReservationFormEdit.js
+@@ -13,6 +13,7 @@ import LabelTextField from '../LabelTextField'
+ import style from '../../style'
+ 
+ moment().format('MMMM Do YYYY, h:mm:ss a');
++const RESERVATIONS_BASE_URL = '/api/reservations';
+ 
+ class ReservationFormEdit extends Component {
+   constructor(props){
+@@ -26,7 +27,7 @@ class ReservationFormEdit extends Component {
+   }
+ 
+   componentDidMount() {
+-    axios.get(`/api/reservations/${this.props.id}`)
++    axios.get(`${RESERVATIONS_BASE_URL}/${this.props.id}`)
+     .then(res => {
+       this.setState(res.data);
+       console.log(res.data);
+diff --git a/Frontend/src/Components/ReservationForm/ReservationPage.js b/Frontend/src/Components/ReservationForm/ReservationPage.js
+index c99ae28..efe13df 100644
+--- a/Frontend/src/Components/ReservationForm/ReservationPage.js
++++ b/Frontend/src/Components/ReservationForm/ReservationPage.js
+@@ -7,6 +7,8 @@ import Snackbar from 'material-ui/Snackbar'
+ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+ import ReservationFormEdit from './ReservationFormEdit';
+ 
++const RESERVATIONS_BASE_URL = '/api/reservations';
++
+ class ReservationPage extends Component {
+   constructor(props){
+     super(props);
+@@ -25,7 +27,7 @@ class ReservationPage extends Component {
+   }
+ 
+   loadReservationFromServer = () => {
+-  axios.get('http://localhost:3001/api/reservations').then(res => {
++  axios.get(RESERVATIONS_BASE_URL).then(res => {
+     this.setState({
+       data: res.data.map((item) => {
+         return {
+@@ -51,7 +53,7 @@ class ReservationPage extends Component {
+   }
+ 
+   handleReservationSubmit = (reservation) => {
+-    axios.post(this.props.url, reservation)
++    axios.post(RESERVATIONS_BASE_URL, reservation)
+       .then((result) => {
+         const error = result.data.error
+         if (error) {
+@@ -80,7 +82,7 @@ class ReservationPage extends Component {
+ 
+   handleReservationEdit = (id, reservation) =>{
+       //let reservations = this.state.data;
+-      axios.put( `${this.props.url}/${id}`, reservation )
++      axios.put( `${RESERVATIONS_BASE_URL}/${id}`, reservation )
+       .then(result => {
+         //console.log(result.data);
+         const index = this.state.data.findIndex(function(item) {
+@@ -100,7 +102,7 @@ class ReservationPage extends Component {
+     }
+ 
+     handleReservationDelete = (id) => {
+-      axios.delete(`${this.props.url}/${id}`)
++      axios.delete(`${RESERVATIONS_BASE_URL}/${id}`)
+         .then(res => {
+           let reservations = this.state.data.filter((item) => item._id !== id )
+             this.setState({data: reservations, isDialogEditOpen: false, isSnackbarDeleteOpen: true});
+-- 
+2.14.1
+

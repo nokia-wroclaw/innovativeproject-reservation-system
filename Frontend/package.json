@@ -1,10 +1,9 @@
 {
   "name": "reservation-system",
-  "homepage": "https://github.com/nokia-wroclaw/innovativeproject-reservation-system.git",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
@@ -13,21 +12,19 @@
   },
   "dependencies": {
     "axios": "^0.14.0",
-    "foreman": "^2.0.0",
-    "marked": "^0.3.6",
+    "jwt-decode": "^2.2.0",
     "material-ui": "^0.20.0",
     "moment": "^2.22.0",
-    "npm": "^5.8.0",
-    "radium": "^0.24.0",
     "react": "^16.2.0",
     "react-big-calendar": "^0.19.0",
     "react-dnd": "^2.6.0",
     "react-dnd-html5-backend": "^2.6.0",
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.9",
+    "react-facebook-login": "^4.0.1",
+    "react-https-redirect": "^1.0.10",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1",
-    "superagent": "^3.8.2"
+    "react-scripts": "1.1.1"
   },
   "proxy": {
     "/api": {

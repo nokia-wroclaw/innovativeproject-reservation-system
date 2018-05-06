@@ -13,6 +13,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DeviceDetails from './Device/DeviceDetails/DeviceDetails';
 import ReservationBlock from './ReservationBlock'
 import Register from './Register'
+import Login from './Login'
+import Profile from './Profile'
 
 import HomePage from './HomePage/HomePage'
 import Navbar from "./Navbar/Navbar";
@@ -35,7 +37,8 @@ class HomeComponent extends Component {
               <Route path={'/reservation'}
                      component={() => <ReservationPage url='http://localhost:3001/api/reservations'/>}/>
               <Route path="/register" component={Register}/>
-              <Route path="/login" component={Register}/>
+              <Route path="/login" component={Login}/>
+              <Route path="/profile" component={Profile} />
           </Switch>
             <footer style={style.footer}>
               Nokia- Innovative project 2018- Nokia Garage

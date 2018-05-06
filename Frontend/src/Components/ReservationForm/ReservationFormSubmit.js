@@ -6,13 +6,13 @@ import DataTextField from './DataTextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment'
+import TextField from 'material-ui/TextField'
 
 import LabelTextField from '../LabelTextField'
 
 import style from '../../style'
 
 moment().format('MMMM Do YYYY, h:mm:ss a');
-
 
 class ReservationFormSubmit extends Component {
   constructor(props){
@@ -27,18 +27,17 @@ class ReservationFormSubmit extends Component {
 
   handleSubmit= (e) =>{
     e.preventDefault();
-    console.log(this.state.numOfPeople)
     let numOfPeople = this.state.numOfPeople.trim();
     let option = this.state.value;
     let startDate = this.props.startDate;
-    let endDate = this.props.endDate;;
-    let personName = this.state.personName;
-    this.props.onReservationSubmit({ numOfPeople: numOfPeople,
+    let endDate = this.props.endDate;
+    let personName = this.props.userName;
+    this.props.onReservationSubmit({numOfPeople: numOfPeople,
                                     option: option,
                                     startDate: startDate,
                                     endDate: endDate,
                                     personName: personName});
-    this.setState({numOfPeople: '', option: '', personName: ''})
+    this.setState({numOfPeople: '', option: ''})
   }
 
   handleNumOfPeopleChange = (e)=> {
@@ -116,14 +115,13 @@ class ReservationFormSubmit extends Component {
             position='left'
           />
         <LabelTextField
-            id={'personName'}
-            value={this.state.personName}
-            placeholder={'ex. John Smith'}
-            isLabelEnabled={true}
-            label={"Enter person name"}
-            onChange={this.handlePersonNameChange}
-            position='left'
+          id='reservationOn'
+          value={this.props.userName}
+          label="Reservation on"
+          position='left'
+          isLabelEnabled={true}
         />
+
 
         </form>
         </Dialog>

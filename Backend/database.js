@@ -40,20 +40,11 @@ const saltRounds = 10;
     startDate: '2018-04-25T08:00:00.000Z',
     endDate: '2018-04-25T15:00:00.000Z',
     numOfPeople: 5,
-    option: 'Lab',
+    option: 'OpenSpace',
     personName: 'Adam'
   }];
 
-  var seedUsers = [
-    {
-      email: 'ex@gmail.com',
-      password: 'qwerty123'
-    },
-    {
-      email: 'asd@gmail.com',
-      password: 'qwerty123'
-    }
-  ];
+
 
   DeviceItem.remove({}, ()=>{
     seedDevices.forEach(function(item){
@@ -67,13 +58,4 @@ const saltRounds = 10;
     })
   })
 
-  Users.remove({}, ()=>{
-    seedUsers.forEach(function(item){
-      bcrypt.genSalt(saltRounds, function(err, salt){
-        bcrypt.hash(item.password, salt, function(err, hash) {
-         item.password = hash;
-          new Users(item).save()
-        })
-      })
-    })
-  })
+  Users.remove({})

@@ -16,7 +16,9 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 import Avatar from 'material-ui/Avatar';
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+
+import './DeviceDetails/Styles/deviceStyles.css'
 
 
 class Device extends Component {
@@ -29,8 +31,7 @@ class Device extends Component {
       name: '',
       numLeft: '',
       description: '',
-      image: '',
-      redirect: false
+      deviceCount: '',
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -49,8 +50,8 @@ class Device extends Component {
   }
 
   editDevice(e) {
-    e.preventDefault()
-    this.setState({redirect: true});
+    e.preventDefault();
+    this.props.history.push(`/devices/${this.props.uniqueID}/edit`);
   }
 
   handleEditDevice(e) {
@@ -84,10 +85,11 @@ class Device extends Component {
     event.preventDefault();
   }
 
+  countDevices = () => {
+
+  }
+
   render() {
-    if (this.state.redirect) {
-      return <Redirect to={`/devices/${this.props.uniqueID}/edit`}/>
-    }
     return (
       <div>
         <MuiThemeProvider>
@@ -115,4 +117,4 @@ class Device extends Component {
   }
 }
 
-export default Device
+export default withRouter(Device);

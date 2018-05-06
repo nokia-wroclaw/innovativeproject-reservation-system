@@ -13,18 +13,20 @@ import nokiaLogo from '../../images/nokia-logo.png';
  }];
 
  const REGISTER_ROUTES = [{
-   title: 'login',
+   title: 'Sign in',
    to: '/login'
  }]
 
  class Navbar extends Component {
    render() {
-    const isMainRoute = this.props.location.pathname === '/';
-    const navbarColorClass = isMainRoute ? '' : 'navbar-color';
+     const TRANSPARENT_NAVBAR_ROUTES = ['/', '/login'];
+     const isTransparentNavbarRoute = TRANSPARENT_NAVBAR_ROUTES.includes(this.props.location.pathname);
+     const isMainRoute = this.props.location.pathname === '/';
+     const navbarColorClass = isTransparentNavbarRoute ? '' : 'navbar-color';
      return (
       <div className={`navbar-container ${navbarColorClass}`}>
         <div className="navbar-content">
-          <Link to="/"> <img src={nokiaLogo}/> </Link>
+          <Link to="/"> <img src={nokiaLogo} alt='home page'/> </Link>
         <span className="spacing"/>
           <nav className="navbar">
             <ul className="navbar-items">

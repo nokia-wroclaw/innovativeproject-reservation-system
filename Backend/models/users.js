@@ -1,19 +1,33 @@
 var mongoose = require('mongoose')
-
+const bcrypt = require('bcrypt');
 var Shema = mongoose.Schema;
 
 var UserSchema = {
-  email: {
-    type: String,
-    required: true,
-    min: 1,
-    max: 32
+  local: {
+    email: {
+      type: String,
+      min: 1,
+      max: 32
+    },
+    password: {
+      type: String,
+      min: 8,
+      max: 24
+    },
+    name: String,
+    validated: Boolean,
+    isAdmin: Boolean
   },
-  password: {
-    type: String,
-    required: true,
-    min: 1,
-    max: 64
+  facebook: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  },
+  twitter: {
+    id: String,
+    email: String,
+    name: String
   }
 }
 

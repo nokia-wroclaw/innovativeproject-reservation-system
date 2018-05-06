@@ -49,33 +49,8 @@ class Dropzones extends Component {
               <div>
                 <h1 style={style.imageTitle}>Full image</h1>
                   {this.state.mainImage.map(mi =>
-                      <img src={mi.preview} style={{maxWidth: '200px', maxHeight: '200px', marginTop: '30px'}} />
+                      <img src={mi.preview} alt='preview' style={{maxWidth: '200px', maxHeight: '200px', marginTop: '30px'}} />
                     )}
-              </div>
-            )
-          }
-        </div>
-        <div style={style.dropzoneBox}>
-          {!this.state.isThumbUploaded
-            ? (
-              <div  >
-                <h1 style={style.imageTitle}>Thumbnail</h1>
-                <DropZone
-                  multiple={false}
-                  accept="image/*"
-                  onDrop={this.onThumbImageDrop}
-                >
-                <p>Drop an image or click and select it</p>
-                </DropZone>
-              </div>
-            )
-            : (
-              <div>
-                <h1 style={style.imageTitle}>Thumbnail</h1>
-                  {
-                    this.state.thumbImage.map(mi => <img src={mi.preview} style={{maxWidth: '200px', maxHeight: '200px', marginTop: '30px'}} />)
-                  }
-
               </div>
             )
           }

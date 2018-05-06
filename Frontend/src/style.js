@@ -1,12 +1,18 @@
 const style = {
   body: {
-    fontFamily: 'Helvetica, sans-serif'
+    margin: '0',
+    height: '100%',
+    fontFamily: 'Helvetica, sans-serif',
   },
   footer: {
     fontSize: '10px',
     margin: '10px auto',
     textAlign: 'center',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    position: 'auto',
+    width: '100%',
+    height: '50px',
+    bottom: '0'
   },
   deviceBox: {
     margin: '0 auto',

@@ -1,11 +1,4 @@
 var Reservation = require('../models/reservations');
-//var express = require('express')
-//var app = express();
-
-
-var reservationMiddleware = require('./Middleware/reservationMiddleware')
-
-//app.use(reservationMiddleware.CheckTime)
 
 //GET reservation
 exports.reservation_get = function(req, res){

@@ -30,7 +30,6 @@ const deviceStyles = {
     minWidth: '130px',
     overflow: 'hidden',
     width: '30%',
-    minWidth: '10%',
     position: 'absolute'
   },
   dropzoneBox: {
