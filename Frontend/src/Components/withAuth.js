@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from './AuthService';
 
-import {withRouter} from 'react-router-dom'
 
 export default function withAuth(AuthComponent) {
     const Auth = new AuthService('http://localhost:3001/api/');

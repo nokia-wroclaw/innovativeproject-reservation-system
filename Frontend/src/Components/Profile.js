@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import AuthService from './AuthService';
 import withAuth from './withAuth';
 const Auth = new AuthService();
@@ -23,7 +22,7 @@ class Profile extends Component {
       <div>
         User email: {this.props.user.sub[1]} <br/>
         User name: {this.props.user.sub[2]} <br/>
-      {this.props.user.sub[3] == true
+      {this.props.user.sub[3] === true
         ? (
           <p>User is admin</p>
         ) : (

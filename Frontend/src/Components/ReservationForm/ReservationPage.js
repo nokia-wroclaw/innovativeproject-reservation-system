@@ -3,9 +3,17 @@ import ReservationFormSubmit from './ReservationFormSubmit'
 import axios from 'axios';
 import Dnd from './Calendar';
 
+import {withRouter} from 'react-router-dom'
+
 import Snackbar from 'material-ui/Snackbar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReservationFormEdit from './ReservationFormEdit';
+
+import AuthService from '../AuthService';
+import withAuth from '../withAuth';
+const Auth = new AuthService();
+
+const RESERVATION_BASE_URL = '/api/reservations';
 
 class ReservationPage extends Component {
   constructor(props){
@@ -25,7 +33,7 @@ class ReservationPage extends Component {
   }
 
   loadReservationFromServer = () => {
-  axios.get('http://localhost:3001/api/reservations').then(res => {
+  axios.get(`${RESERVATION_BASE_URL}`).then(res => {
     this.setState({
       data: res.data.map((item) => {
         return {
@@ -41,6 +49,11 @@ class ReservationPage extends Component {
     });
   })
 }
+componentWillMount(){
+  if (!Auth.loggedIn()) {
+    this.props.history.replace('/login')
+  }
+}
 
   componentDidMount() {
     this.loadReservationFromServer()
@@ -51,9 +64,11 @@ class ReservationPage extends Component {
   }
 
   handleReservationSubmit = (reservation) => {
-    axios.post(this.props.url, reservation)
+    axios.post(RESERVATION_BASE_URL, reservation)
       .then((result) => {
         const error = result.data.error
+        console.log(result);
+        console.log(error);
         if (error) {
           this.setState({
             areErrors: true,
@@ -63,7 +78,7 @@ class ReservationPage extends Component {
           const newItem = {
             start: new Date(result.data.reservation.startDate),
             end: new Date(result.data.reservation.endDate),
-            title: result.data.option
+            title: result.data.reservation.option
           };
           this.setState(() => ({
             data: [...this.state.data, newItem],
@@ -80,7 +95,7 @@ class ReservationPage extends Component {
 
   handleReservationEdit = (id, reservation) =>{
       //let reservations = this.state.data;
-      axios.put( `${this.props.url}/${id}`, reservation )
+      axios.put( `${RESERVATION_BASE_URL}/${id}`, reservation )
       .then(result => {
         //console.log(result.data);
         const index = this.state.data.findIndex(function(item) {
@@ -100,7 +115,7 @@ class ReservationPage extends Component {
     }
 
     handleReservationDelete = (id) => {
-      axios.delete(`${this.props.url}/${id}`)
+      axios.delete(`${RESERVATION_BASE_URL}/${id}`)
         .then(res => {
           let reservations = this.state.data.filter((item) => item._id !== id )
             this.setState({data: reservations, isDialogEditOpen: false, isSnackbarDeleteOpen: true});
@@ -141,17 +156,17 @@ handleRenderChangeEdit = (e) => {
   render() {
     return (
       <div>
+        <div>
+          <Dnd
+            onRenderChangeSubmit={this.handleRenderChangeSubmit}
+            data={this.state.data}
+            onRenderChangeEdit={this.handleRenderChangeEdit}
+            data={this.state.data}
+          />
+        </div>
 
-            <Dnd
-              onRenderChangeSubmit={this.handleRenderChangeSubmit}
-              data={this.state.data}
-              onRenderChangeEdit={this.handleRenderChangeEdit}
-              data={this.state.data}
-
-            />
-
-            <div>
-              <ReservationFormSubmit
+        <div>
+            <ReservationFormSubmit
                 startDate = {this.state.startDate}
                 endDate = {this.state.endDate}
                 onReservationSubmit={this.handleReservationSubmit}
@@ -160,44 +175,46 @@ handleRenderChangeEdit = (e) => {
                 anyErrors = {this.state.areErrors}
                 errData1={this.state.errData[0]}
                 errData2={this.state.errData[1]}
-
+                userName={this.props.user.sub[1]}
               />
-            </div>
-            <div>
+          </div>
+            {this.state.isDialogEditOpen && <div>
               <ReservationFormEdit
-                data={this.state.data}
-                id={this.state.id}
-                numOfPeople={this.state.numOfPeople}
-                personName={this.state.personName}
-                startDate = {this.state.startDate}
-                endDate = {this.state.endDate}
-                option={this.state.option}
-                onReservationEdit={this.handleReservationEdit}
-                onReservationDelete={this.handleReservationDelete}
-                isDialogEditOpen = {this.state.isDialogEditOpen}
-                closeDialog = {this.closeDialog}
-                anyErrors = {this.state.areErrors}
-                errData1={this.state.errData[0]}
-                errData2={this.state.errData[1]}
-              />
-            </div>
-            <MuiThemeProvider>
-              <Snackbar
-                open={this.state.isSnackbarOpen}
-                message={this.state.successMsg}
-                autoHideDuration={3000}
-                style={{textAlign: 'center'}}
-              />
-              <Snackbar
-                open={this.state.isSnackbarDeleteOpen}
-                message={this.state.deleteMsg}
-                autoHideDuration={3000}
-                style={{textAlign: 'center'}}
-              />
-            </MuiThemeProvider>
+             data={this.state.data}
+             id={this.state.id}
+             numOfPeople={this.state.numOfPeople}
+             personName={this.state.personName}
+             startDate={this.state.startDate}
+             endDate={this.state.endDate}
+             option={this.state.option}
+             onReservationEdit={this.handleReservationEdit}
+             onReservationDelete={this.handleReservationDelete}
+             isDialogEditOpen={this.state.isDialogEditOpen}
+             closeDialog={this.closeDialog}
+             anyErrors={this.state.areErrors}
+             errData1={this.state.errData[0]}
+             errData2={this.state.errData[1]}
+           />
+         </div>}
+         <div>
+           <MuiThemeProvider>
+             <Snackbar
+               open={this.state.isSnackbarOpen}
+               message={this.state.successMsg}
+               autoHideDuration={3000}
+               style={{textAlign: 'center'}}
+             />
+             <Snackbar
+               open={this.state.isSnackbarDeleteOpen}
+               message={this.state.deleteMsg}
+               autoHideDuration={3000}
+               style={{textAlign: 'center'}}
+             />
+           </MuiThemeProvider>
+         </div>
       </div>
     )
   }
 }
 
-export default ReservationPage;
+export default withAuth(ReservationPage);

@@ -4,16 +4,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {List, ListItem} from 'material-ui/List'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import DropZone from './Dropzones'
-import request from 'superagent'
+//import DropZone from './Dropzones'
 
-import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 
 import LabelTextField from '../../LabelTextField'
 
 import style from './Styles/DeviceStyles'
 import '../../textFieldStyles.css'
+
+const DEVICES_BASE_URL = '/api/devices';
 
 class DeviceAdd extends Component {
   constructor(props) {
@@ -26,12 +26,12 @@ class DeviceAdd extends Component {
       mainImage: '',
       isMainImageUploaded: false,
       data: [],
-      redirect: false,
       addPage: true
     };
   }
 
   handleDeviceSubmit = (e) =>{
+    e.preventDefault();
     console.log(this.state.mainImage);
     const device = {
       id: Date.now(),
@@ -39,15 +39,10 @@ class DeviceAdd extends Component {
       numLeft: this.state.numLeft,
       description: this.state.description,
     }
-    axios.post('http://localhost:3001/api/devices',  device).then(() => {
-      this.setState({
-        redirect: true
-      });
+    axios.post(DEVICES_BASE_URL, device).then((result) => {
+      this.props.history.push(`/devices/${result.data._id}`);
     })
-
-
   }
-
 
 
   handleDeviceNameChange = (e) => {
@@ -69,14 +64,12 @@ class DeviceAdd extends Component {
   }
 
   handleMainImage = (image) => {
-    const reader = new FileReader();
-    this.state.mainImage = image[0].preview
+
+    //this.state.mainImage = image[0].preview
   }
 
   handleCancelClick = () => {
-    this.setState({
-      redirect: true
-    });
+    this.props.history.push('/devices');
   }
 
   handleShowForm = () => {
@@ -86,9 +79,6 @@ class DeviceAdd extends Component {
   }
 
   render() {
-    if(this.state.redirect){
-      return <Redirect to='/devices'/>
-    }
     return (
       <div style={style.container}>
         <h1 >Add new device to garage</h1>

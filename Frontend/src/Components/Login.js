@@ -3,7 +3,6 @@ import LabelTextField from './LabelTextField'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import {withRouter} from 'react-router-dom'
-import axios from 'axios'
 import AuthService from './AuthService'
 
 import './HomePage/HomePage.css'

@@ -3,10 +3,16 @@ import axios from 'axios'
 import DeviceList from './DeviceList';
 import style from '../../style';
 
-import {Redirect} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {List, ListItem} from 'material-ui/List'
+
+import AuthService from '../AuthService';
+import withAuth from '../withAuth';
+
+const Auth = new AuthService();
+const DEVICES_BASE_URL = '/api/devices';
 
 class DeviceBlock extends Component {
   constructor(props){
@@ -18,14 +24,14 @@ class DeviceBlock extends Component {
   }
 
   loadDeviceFromServer() {
-    axios.get(this.props.url)
+    axios.get(DEVICES_BASE_URL)
       .then(res => {
         this.setState({data: res.data});
       })
   }
 
   handleDeviceDelete(id) {
-    axios.delete(`${this.props.url}/${id}`)
+    axios.delete(`${DEVICES_BASE_URL}/${id}`)
       .then(res => {
         let devices = this.state.data.filter((item) => item._id !== id )
           this.setState({data: devices});
@@ -37,7 +43,7 @@ class DeviceBlock extends Component {
     }
 
     handleDeviceEdit(id, device) {
-      axios.put( `${this.props.url}/${id}`, device )
+      axios.put( `${DEVICES_BASE_URL}/${id}`, device )
       .then(result => {
         console.log(result.data);
         const index = this.state.data.findIndex(function(item) {
@@ -60,9 +66,7 @@ class DeviceBlock extends Component {
   }
 
   redirectToAddingPage = () => {
-    this.setState({
-      redirectAdd: true
-    });
+    this.props.history.push('/devices/add');
   }
 
   handleAddFormOpen = (e) => {
@@ -72,22 +76,23 @@ class DeviceBlock extends Component {
   }
 
   render() {
-    if(this.state.redirectAdd){
-        return <Redirect to={`/devices/add`}/>
-    }
     return (
         <div style={style.deviceBox}>
           <h3 style={style.title}>Devices:</h3>
-        <MuiThemeProvider>
-          <List>
-            <ListItem
-              primaryText="Click to add new device..."
-              onClick={this.redirectToAddingPage}
-              style={{backgroundColor: 'rgb(213, 232, 241)'}}
-            >
-            </ListItem>
-          </List>
-        </MuiThemeProvider>
+          {this.props.user.sub[3] === true
+            ? (
+              <MuiThemeProvider>
+                  <List>
+                    <ListItem
+                      primaryText="Click to add new device..."
+                      onClick={this.redirectToAddingPage}
+                      style={{backgroundColor: 'rgb(213, 232, 241)'}}
+                    >
+                    </ListItem>
+                  </List>
+                </MuiThemeProvider>
+            ) : (
+              null)}
         <DeviceList
           onDeviceDelete = {this.handleDeviceDelete}
           onDeviceEdit={this.handleDeviceEdit}
@@ -98,4 +103,4 @@ class DeviceBlock extends Component {
   }
 }
 
-export default DeviceBlock;
+export default withRouter(withAuth(DeviceBlock));

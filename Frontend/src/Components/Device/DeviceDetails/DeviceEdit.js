@@ -2,7 +2,6 @@ import React , {Component} from 'react'
 import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios'
-import {Redirect} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Dropzones from './Dropzones';
@@ -12,12 +11,13 @@ import LabelTextField from '../../LabelTextField'
 
 import style from './Styles/DeviceStyles'
 
+const DEVICES_BASE_URL = '/api/devices';
+
 class DeviceEdit extends Component{
   constructor(props){
     super(props);
     this.state = {
-      data: [],
-      redirect: false,
+      data: []
     }
   }
 
@@ -28,7 +28,7 @@ class DeviceEdit extends Component{
     let numLeft = this.state.numLeft;
     let description = this.state.description;
     let device = {name: name, numLeft: numLeft, description: description}
-    axios.put( `/api/devices/${id}`, device )
+    axios.put( `${DEVICES_BASE_URL}/${id}`, device )
     .then(result => {
       console.log(result.data);
       const index = this.state.data.findIndex(function(item) {
@@ -37,15 +37,15 @@ class DeviceEdit extends Component{
       const newData = [...this.state.data];
       newData[index] = result.data;
       this.setState({data: newData});
+      this.props.history.push(`/devices/${id}`);
     })
     .catch(err => {
       console.error(err);
     })
-    this.setState({redirect: true})
   }
 
   componentDidMount() {
-    axios.get(`/api/devices/${this.props.match.params.id}`)
+    axios.get(`${DEVICES_BASE_URL}/${this.props.match.params.id}`)
     .then(res => {
       this.setState(res.data);
       console.log(res.data);
@@ -65,9 +65,6 @@ class DeviceEdit extends Component{
   }
 
   render() {
-    if(this.state.redirect){
-      return <Redirect to={`/devices/${this.state._id}`}/>
-    }
     return (
       <div style={style.container}>
         <MuiThemeProvider>

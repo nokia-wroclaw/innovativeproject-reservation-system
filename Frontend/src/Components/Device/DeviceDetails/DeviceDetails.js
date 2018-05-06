@@ -6,10 +6,12 @@ import {Link} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
-import ArduinoLogo from '../../../images/ArduinoAPP-01.svg'
+//import ArduinoLogo from '../../../images/ArduinoAPP-01.svg'
 import placeholder from '../../../images/placeholder_thumbnail.png'
 import big_placeholder from '../../../images/big_image.png'
-import arduino from '../../../images/arduino_mkr1000_front-1.jpg'
+//import arduino from '../../../images/arduino_mkr1000_front-1.jpg'
+
+const DEVICES_BASE_URL = '/api/devices';
 
 class DeviceDetails extends Component {
   constructor(props){
@@ -20,7 +22,7 @@ class DeviceDetails extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/devices/${this.props.match.params.id}`)
+    axios.get(`${DEVICES_BASE_URL}/${this.props.match.params.id}`)
       .then(res => {
         this.setState(res.data);
         console.log("+" + res.data);

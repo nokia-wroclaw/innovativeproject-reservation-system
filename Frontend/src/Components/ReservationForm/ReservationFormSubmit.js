@@ -6,6 +6,7 @@ import DataTextField from './DataTextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment'
+
 import TextField from 'material-ui/TextField'
 
 import LabelTextField from '../LabelTextField'
@@ -114,12 +115,11 @@ class ReservationFormSubmit extends Component {
             onChange={this.handleNumOfPeopleChange}
             position='left'
           />
-        <LabelTextField
+        <TextField
           id='reservationOn'
-          value={this.props.userName}
-          label="Reservation on"
-          position='left'
-          isLabelEnabled={true}
+          defaultValue={this.props.userName}
+          disabled={true}
+          style={{marginLeft: '310px'}}
         />
 
 

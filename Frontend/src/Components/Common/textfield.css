@@ -2,10 +2,11 @@
 .text-field-label-container-left {
   display: flex;
   position: relative;
+  clear:both;
 }
 
 .label-div-left{
-  width: 450px;
+  width: 300px;
   color: #000000;
   position: relative;
   margin-left: 14px;
@@ -25,7 +26,7 @@
 }
 
 .label-div-top{
-  width: 450px;
+  width: 200px;
   color: #000000;
   position: relative;
   margin-left: 14px;
