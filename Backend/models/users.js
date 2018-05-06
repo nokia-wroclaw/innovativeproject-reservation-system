@@ -15,7 +15,10 @@ var UserSchema = {
       max: 24
     },
     name: String,
-    validated: Boolean,
+    confirmed: {
+      type: Boolean,
+      dafault: false
+    },
     isAdmin: Boolean
   },
   facebook: {

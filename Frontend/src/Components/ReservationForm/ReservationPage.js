@@ -9,11 +9,11 @@ import Snackbar from 'material-ui/Snackbar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReservationFormEdit from './ReservationFormEdit';
 
+import {RESERVATION_BASE_URL} from '../../routes'
+
 import AuthService from '../AuthService';
 import withAuth from '../withAuth';
 const Auth = new AuthService();
-
-const RESERVATION_BASE_URL = '/api/reservations';
 
 class ReservationPage extends Component {
   constructor(props){
@@ -217,4 +217,4 @@ handleRenderChangeEdit = (e) => {
   }
 }
 
-export default withAuth(ReservationPage);
+export default withRouter(withAuth(ReservationPage));

@@ -1,6 +1,17 @@
 const JWT = require('jsonwebtoken');
 const User = require('../models/users');
 const { JWT_SECRET } = require('../config/auth');
+var nodemailer = require('nodemailer')
+
+var smtpTransport = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'norber.kia.test.no.reply@gmail.com',
+    pass: process.env.EMAIL_PWD
+  }
+});
+
+var rand, mailOptions, host, link
 
 signToken = user => {
   return JWT.sign({
@@ -12,7 +23,7 @@ signToken = user => {
 }
 
 module.exports = {
-  signUp: async (req, res, next) => {
+  signUp: async (req, res, next, {transporter, models, EMAIL_SECRET}) => {
     const { email, password } = req.value.body;
 
     // Check if there is a user with the same email
@@ -26,20 +37,45 @@ module.exports = {
       method: 'local',
       local: {
         email: email,
-        password: password
+        password: password,
+        confirmed: false
       }
     });
 
     await newUser.save();
 
+    bcrypt.genSalt(10, function(err, salt){
+      bcrypt.hash('test-hash', salt, function(err, hash) {
+          var hashed_verifaction = hash;
+          var host = req.get('host');
+          console.log(host);
+          link=`https://`+host+`/verify?id=`+hashed_verifaction;
+          console.log(link);
+          mailOptions={
+            to:newUser.local.email,
+            subject: 'confirm email',
+            html: 'Confirm by pressing following link: <a href="'+link+'">'+link+'</a>'
+          }
+          console.log(mailOptions);
+          smtpTransport.sendMail(mailOptions, function(err, response){
+            if(err) throw err;
+
+          })
+        })
+      })
+
+
     // Generate the token
-    const token = signToken(newUser);
+    const token = signToken(newUser)
+
     // Respond with token
     res.status(200).json({ token });
   },
 
   signIn: async (req, res, next) => {
     // Generate token
+    if(!req.user.confirmed)
+      res.status(403).json({notconfirmed: 'Your account is not confirmed'})
     const token = signToken(req.user);
     res.status(200).json({ token });
   },

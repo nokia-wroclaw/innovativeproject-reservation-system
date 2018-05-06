@@ -10,10 +10,12 @@ var http = require('http');
 var https = require('https')
 var mongoose = require('mongoose');
 var fs = require('fs')
-var secrets = require('../secrets');
 
-var port = normalizePort(process.env.PORT || '3001');
-var httpsPort = normalizePort(process.env.PORT || '3002')
+require('dotenv').config();
+//var secrets = require('../secrets');
+
+//var port = normalizePort(process.env.PORT || '3002');
+var port = normalizePort(process.env.PORT || '3001')
 
 app.set('port', port);
 //app.set('port', httpsPort)
@@ -29,10 +31,9 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-var httpsServer = https.createServer(options, app);
-
-var mongoDB = secrets.requestSecret('db_uri');
-mongoose.connect(mongoDB);
+//var httpsServer = https.createServer(options,app).listen(3001);
+//var mongoDB = secrets.requestSecret('db_uri');
+mongoose.connect(process.env.DB_URI);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -43,9 +44,9 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-httpsServer.listen(httpsPort)
-httpsServer.on('error', onError)
-httpsServer.on('listenig', onListening)
+//httpsServer.listen(port)
+//httpsServer.on('error', onError)
+//httpsServer.on('listenig', onListening)
 
 /**
  * Normalize a port into a number, string, or false.

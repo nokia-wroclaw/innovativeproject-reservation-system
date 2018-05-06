@@ -1,14 +1,16 @@
+require('dotenv').config()
+
 module.exports = {
-  'JWT_SECRET': 'reservation-system',
+  'JWT_SECRET': process.env.JWT_SECRET,
   'facebookAuth':{
-    'clientID': '422510151528330',
-    'clientSecret': '8f36ef0436dbe3bca9283be7d87aabe7',
+    'clientID': process.env.FB_CLIENT_ID,
+    'clientSecret': process.env.FB_CLIENT_SECRET,
     'callbackURL': 'http://localhost:3001/api/auth/facebook/callback',
     'profileFields': ['id', 'email', 'name'],
   },
   'twitterAuth':{
-    'consumerKey': 'XpZxEmGwyJ8gTibCh26M1lDPb',
-    'consumerSecret': 'MskGzI6LDWRWsKXtCPXuipiyXQEYFE8DNeTVgjqqbSfWz21sSb',
+    'consumerKey': process.env.TWITTER_CONSUMER_KEY,
+    'consumerSecret': process.env.TWITTER_CONSUMER_SECRET,
     'callbackURL': "http://127.0.0.1:3001/api/auth/twitter/callback"
   }
 }

@@ -14,7 +14,7 @@ class SiteFacebookLogin extends Component {
       <div>
         <FacebookLogin
           appId="422510151528330"
-          autoLoad={false}
+          autoLoad={true}
           fields="id, name,email"
           scope='public_profile,email'
           callback={this.responseFacebook}
