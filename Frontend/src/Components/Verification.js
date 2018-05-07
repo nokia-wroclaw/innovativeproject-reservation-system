@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom'
 import axios from 'axios'
 
+import {USER_BASE_URL} from '../routes'
+
 class Verification extends Component {
   constructor(props){
     super(props)
@@ -15,7 +17,7 @@ class Verification extends Component {
       query: this.props.match.params.id
     });
     console.log(this.state.query);
-    axios.get(`http://localhost:3001/api/users/verify/${this.props.match.params.id}`)
+    axios.get(`${USER_BASE_URL}/verify/${this.props.match.params.id}`)
     .then(()=>{console.log('success');})
     .catch(err => {
       console.log('error');
@@ -27,7 +29,7 @@ class Verification extends Component {
   render() {
     return (
       <div>
-        Your account is now verified! 
+        Your account is now verified!
       </div>
     );
   }

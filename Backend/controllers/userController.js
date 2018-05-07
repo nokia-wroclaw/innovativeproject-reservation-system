@@ -94,7 +94,6 @@ exports.user_post = function(req, res){
             subject: 'Nokia Garage- verify your email',
             html: 'Confirm by pressing following link: <a href="'+link+'">'+link+'</a>'
           }
-          console.log(mailOptions);
           smtpTransport.sendMail(mailOptions, function(err, response){
             if(err) throw err;
 
@@ -107,7 +106,10 @@ exports.user_verify = function(req, res) {
   User.findOne({'local.email_hash': req.params.email_hash }, function(err, user) {
     if(err) {return res.send(err)}
     res.send('email confirmed')
-    user.local.confirmed = true;
+    const confirmation = {
+      confirmed: true
+    }
+    user.local.confirmed = confirmation.confirmed;
     user.save(error=>{if(err) return res.send(err)})
   })
 }
