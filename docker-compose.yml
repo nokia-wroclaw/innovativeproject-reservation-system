@@ -6,7 +6,9 @@ services:
     build:
       context: ./Backend
     restart: unless-stopped
-
+    environment:
+      - "DB_URI=mongodb://mongo:27017/nokia-reservation"
+      - "JWT_SECRET=${JWT_SECRET}"
   frontend:
     container_name: frontend
     build:
@@ -14,3 +16,6 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+  mongo:
+    restart: unless-stopped
+    image: mongo

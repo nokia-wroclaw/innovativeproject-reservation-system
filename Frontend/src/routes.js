@@ -1,18 +1,35 @@
 //frontend routes
-const ROUTES = [{
+export const LOGGED_IN_ROUTES = [{
   title: 'reservation',
   to: '/reservation'
 }, {
   title: 'devices',
   to: '/devices'
+},{
+  title: 'profile',
+  to: '/profile'
 }];
 
-const REGISTER_ROUTES = [{
-  title: 'Sign in',
-  to: '/login'
+export const NOT_LOGGED_IN_ROUTES = [{
+  title: 'about',
+  to: '/about'
 }]
 
-const DASHBOARD_ROUTES = [{
+
+export const REGISTER_ROUTES = [{
+  title: 'Sign in',
+  to: '/login'
+}, {
+  title: 'Sign up',
+  to: 'register'
+}]
+
+export const LOGOUT_ROUTE = [{
+  title: 'logout',
+  to: '/logout'
+}]
+
+export const DASHBOARD_ROUTES = [{
   title: 'My reservations',
   to: '/myreservations'
 },{
@@ -24,6 +41,6 @@ const DASHBOARD_ROUTES = [{
 }]
 
 //backend ROUTES
-const RESERVATION_BASE_URL = '/api/reservations';
-const DEVICE_BASE_URL = '/api/devices'
-const USER_BASE_URL = '/api/users'
+export const RESERVATION_BASE_URL = '/api/reservations';
+export const DEVICE_BASE_URL = '/api/devices'
+export const USER_BASE_URL = '/api/users'

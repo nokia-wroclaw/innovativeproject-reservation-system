@@ -1,24 +1,18 @@
-
 import React, { Component } from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import nokiaLogo from '../../images/nokia-logo.png';
 
- import './Navbar.css';
- const ROUTES = [{
-   title: 'reservation',
-   to: '/reservation'
- }, {
-   title: 'devices',
-   to: '/devices'
- }];
+import {NOT_LOGGED_IN_ROUTES, LOGGED_IN_ROUTES, REGISTER_ROUTES, LOGOUT_ROUTE} from '../../routes'
+import AuthService from '../AuthService';
+import withAuth from '../withAuth';
 
- const REGISTER_ROUTES = [{
-   title: 'Sign in',
-   to: '/login'
- }]
+ import './Navbar.css';
+
+ const Auth = new AuthService();
 
  class Navbar extends Component {
    render() {
+     console.log(Auth.loggedIn());
      const TRANSPARENT_NAVBAR_ROUTES = ['/', '/login'];
      const isTransparentNavbarRoute = TRANSPARENT_NAVBAR_ROUTES.includes(this.props.location.pathname);
      const isMainRoute = this.props.location.pathname === '/';
@@ -29,20 +23,41 @@ import nokiaLogo from '../../images/nokia-logo.png';
           <Link to="/"> <img src={nokiaLogo} alt='home page'/> </Link>
         <span className="spacing"/>
           <nav className="navbar">
-            <ul className="navbar-items">
-            {ROUTES.map(({to, title}, key) => (
-                <NavLink to={to} key={key}>
-                  <li>{title}</li>
-                </NavLink>
-              ))}
-            </ul>
-            <ul className="navbar-items-registration">
-              {REGISTER_ROUTES.map(({to, title}, key) => (
-                <NavLink to={to} key={key}>
-                  <li>{title}</li>
-                </NavLink>
+            {Auth.loggedIn() === false ? (
+              <div>
+                <ul className="navbar-items">
+              {NOT_LOGGED_IN_ROUTES.map(({to, title}, key) => (
+                  <NavLink to={to} key={key}>
+                    <li>{title}</li>
+                  </NavLink>
                 ))}
-            </ul>
+              </ul>
+              <ul className="navbar-items-registration">
+              {REGISTER_ROUTES.map(({to, title}, key) => (
+                  <NavLink to={to} key={key}>
+                    <li>{title}</li>
+                  </NavLink>
+                ))}
+              </ul>
+              </div>
+            ) : (
+              <div>
+                <ul className="navbar-items">
+                {LOGGED_IN_ROUTES.map(({to, title}, key) => (
+                    <NavLink to={to} key={key}>
+                      <li>{title}</li>
+                    </NavLink>
+                  ))}
+                </ul>
+                <ul className="navbar-items-registration">
+                {LOGOUT_ROUTE.map(({to, title}, key) => (
+                    <NavLink to={to} key={key}>
+                      <li>{title}</li>
+                    </NavLink>
+                  ))}
+                </ul>
+              </div>
+            )}
           </nav>
         </div>
        </div>

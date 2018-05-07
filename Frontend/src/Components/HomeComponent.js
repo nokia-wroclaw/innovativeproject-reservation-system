@@ -15,6 +15,8 @@ import ReservationBlock from './ReservationBlock'
 import Register from './Register'
 import Login from './Login'
 import Dashboard from './Dashboard/Dashboard'
+import Logout from './Logout'
+import NotFound from './NotFound';
 
 import HomePage from './HomePage/HomePage'
 import Navbar from "./Navbar/Navbar";
@@ -39,6 +41,8 @@ class HomeComponent extends Component {
               <Route path="/register" component={Register}/>
               <Route path="/login" component={Login}/>
               <Route path="/profile" component={Dashboard} />
+              <Route path="/logout" component={Logout}/>
+              <Route component={NotFound} />
           </Switch>
             <footer style={style.footer}>
               Nokia- Innovative project 2018- Nokia Garage
