@@ -50,11 +50,13 @@ const saltRounds = 10;
       name: 'Test user 1',
       email: 'test1@domain.com',
       password: 'qwerty123',
-      isAdmin: false
+      isAdmin: false,
+      confirmed: true
   };
 
   const admin = {
       name: 'Admin',
+      confirmed: true,
       email: 'admin@domain.com',
       password: 'qwerty123',
       isAdmin: true
@@ -79,9 +81,11 @@ const saltRounds = 10;
     a.local.name = admin.name;
     a.local.email = admin.email;
     a.local.isAdmin = admin.isAdmin
+    a.local.confirmed = admin.confirmed;
     u.local.name = testUser1.name;
     u.local.email = testUser1.email;
     u.local.isAdmin = testUser1.isAdmin
+    u.local.confirmed = testUser1.confirmed
     bcrypt.genSalt(10, function(err, salt){
       bcrypt.hash(admin.password, salt, function(err, hash) {
         a.local.password = hash;

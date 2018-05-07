@@ -9,6 +9,7 @@ var UserSchema = {
       min: 1,
       max: 32
     },
+    email_hash: String,
     password: {
       type: String,
       min: 8,

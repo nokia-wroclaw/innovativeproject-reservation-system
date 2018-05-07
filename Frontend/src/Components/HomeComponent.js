@@ -17,6 +17,7 @@ import Login from './Login'
 import Dashboard from './Dashboard/Dashboard'
 import Logout from './Logout'
 import NotFound from './NotFound';
+import Verification from './Verification'
 
 import HomePage from './HomePage/HomePage'
 import Navbar from "./Navbar/Navbar";
@@ -42,6 +43,7 @@ class HomeComponent extends Component {
               <Route path="/login" component={Login}/>
               <Route path="/profile" component={Dashboard} />
               <Route path="/logout" component={Logout}/>
+              <Route path="/verify/:id" component={Verification}/>
               <Route component={NotFound} />
           </Switch>
             <footer style={style.footer}>

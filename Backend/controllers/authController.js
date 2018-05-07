@@ -45,18 +45,18 @@ module.exports = {
     await newUser.save();
 
     bcrypt.genSalt(10, function(err, salt){
-      bcrypt.hash('test-hash', salt, function(err, hash) {
+      bcrypt.hash(req.user.local.email, salt, function(err, hash) {
           var hashed_verifaction = hash;
           var host = req.get('host');
           console.log(host);
           link=`https://`+host+`/verify?id=`+hashed_verifaction;
           console.log(link);
+
           mailOptions={
-            to:newUser.local.email,
+            to: newUser.local.email,
             subject: 'confirm email',
             html: 'Confirm by pressing following link: <a href="'+link+'">'+link+'</a>'
           }
-          console.log(mailOptions);
           smtpTransport.sendMail(mailOptions, function(err, response){
             if(err) throw err;
 
@@ -73,11 +73,15 @@ module.exports = {
   },
 
   signIn: async (req, res, next) => {
-    // Generate token
-    //if(!req.user.confirmed)
-    //  res.status(403).json({notconfirmed: 'Your account is not confirmed'})
-    const token = signToken(req.user);
-    res.status(200).json({ token });
+    User.findOne({'local.email': req.body.email}, (err, foundUser)=>{
+      if(foundUser.local.confirmed){
+        const token = signToken(req.user);
+        res.status(200).json({ token });
+      }
+      else{
+          res.status(403).json({notconfirmed: 'Your account is not confirmed'})
+      }
+    })
   },
 
   secret: async (req, res, next) => {

@@ -80,27 +80,36 @@ exports.user_post = function(req, res){
       })
     })
 
-    // setup email data with unicode symbols
-    let mailOptions = {
-        from: '<nokia.kia.test.no.reply@gmail.com>', // sender address
-        to: user.local.email, // list of receivers
-        subject: 'Nokia Garage- verify your email', // Subject line
-        text: 'Click the following link to verify your account', // plain text body
-        html: '<b>Hello world?</b>' // html body
-    };
+    bcrypt.genSalt(10, function(err, salt){
+      bcrypt.hash(req.body.email, salt, function(err, hash) {
+          var hashed_verifaction = hash;
+          user.local.email_hash = hash
+          user.save(err=>{
+            if(err) return res.send(err);
+          })
+          link=`http://localhost:3000/verify/`+hashed_verifaction;
+          mailOptions={
+            from: '<nokia,kia.test.no.reply@gmail.com',
+            to: user.local.email,
+            subject: 'Nokia Garage- verify your email',
+            html: 'Confirm by pressing following link: <a href="'+link+'">'+link+'</a>'
+          }
+          console.log(mailOptions);
+          smtpTransport.sendMail(mailOptions, function(err, response){
+            if(err) throw err;
 
-    // send mail with defined transport object
-    smtpTransport.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
-        // Preview only available when sending through an Ethereal account
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+          })
+        })
+      })
+}
 
-        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    });
+exports.user_verify = function(req, res) {
+  User.findOne({'local.email_hash': req.params.email_hash }, function(err, user) {
+    if(err) {return res.send(err)}
+    res.send('email confirmed')
+    user.local.confirmed = true;
+    user.save(error=>{if(err) return res.send(err)})
+  })
 }
 
 exports.user_fb_post = function(req, res){
