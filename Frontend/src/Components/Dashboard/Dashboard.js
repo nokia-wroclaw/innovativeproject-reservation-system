@@ -51,6 +51,9 @@ class Profile extends Component {
             {this.props.user.sub[1]} <br/>
             {this.props.user.sub[2]}
           </div>
+          <div style={{marginTop: '100px'}}>
+            <p onClick={this.handleLogout}>LOGOUT</p>
+          </div>
         </div>
       </div>
     );
