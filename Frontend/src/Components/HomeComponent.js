@@ -14,7 +14,7 @@ import DeviceDetails from './Device/DeviceDetails/DeviceDetails';
 import ReservationBlock from './ReservationBlock'
 import Register from './Register'
 import Login from './Login'
-import Profile from './Profile'
+import Profile from './Profile/Profile'
 
 import HomePage from './HomePage/HomePage'
 import Navbar from "./Navbar/Navbar";

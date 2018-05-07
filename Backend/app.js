@@ -5,7 +5,6 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Device = require('./models/device');
-var secrets = require('./secrets');
 var passport = require('passport')
 var session = require('express-session')
 var deviceRoute = require('./routes/deviceRoute');

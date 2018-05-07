@@ -1,0 +1,50 @@
+.profile-container {
+  width: 80%;
+  margin-top: 15px;
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.profile-upper-block {
+  background: rgb(0,0,0);
+  height: 50px;
+  width: 100%;
+  position: absolute;
+}
+
+.profile-links {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  height: 50px;
+  text-align: center;
+  color: white;
+}
+
+
+
+.profile-links li:hover {
+  color: red;
+}
+
+.active li {
+    border-bottom: 1px solid white;
+}
+
+.left-side-menu {
+  text-decoration: none;
+  text-transform: uppercase;
+  list-style-type: none;
+  overflow: hidden;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 200px;
+  background: black;
+}
+
+.profile-data {
+  flex: 1;
+  position: absolute;
+}

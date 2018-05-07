@@ -1,9 +1,3 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
 var app = require('../app');
 var debug = require('debug')('new-app:server');
 var http = require('http');
@@ -12,33 +6,23 @@ var mongoose = require('mongoose');
 var fs = require('fs')
 
 require('dotenv').config();
-//var secrets = require('../secrets');
 
-//var port = normalizePort(process.env.PORT || '3002');
 var port = normalizePort(process.env.PORT || '3001')
 
 app.set('port', port);
-//app.set('port', httpsPort)
-
-/**
- * Create HTTP server.
- */
-
- var options = {
-   key: fs.readFileSync('../config/k.pem'),
-   cert: fs.readFileSync('../config/cert.pem'),
- }
 
 var server = http.createServer(app);
 
 //var httpsServer = https.createServer(options,app).listen(3001);
 //var mongoDB = secrets.requestSecret('db_uri');
-mongoose.connect(process.env.DB_URI);
+mongoose.connect(process.env.DB_URI).catch(err){
+  console.error(err);
+  process.exit(1);
+};
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 require('../database');
-
 
 server.listen(port);
 server.on('error', onError);

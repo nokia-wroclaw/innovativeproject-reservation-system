@@ -74,8 +74,8 @@ module.exports = {
 
   signIn: async (req, res, next) => {
     // Generate token
-    if(!req.user.confirmed)
-      res.status(403).json({notconfirmed: 'Your account is not confirmed'})
+    //if(!req.user.confirmed)
+    //  res.status(403).json({notconfirmed: 'Your account is not confirmed'})
     const token = signToken(req.user);
     res.status(200).json({ token });
   },

@@ -11,7 +11,7 @@ export default class AuthService {
 
     login(email, password) {
         // Get a token from api server using the fetch api
-        return this.fetch(`/signin`, {
+        return this.fetch(`http://localhost:3001/api/signin`, {
             method: 'POST',
             body: JSON.stringify({
                 email,
