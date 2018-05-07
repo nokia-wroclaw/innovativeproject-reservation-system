@@ -17,7 +17,7 @@ var UserSchema = {
     name: String,
     confirmed: {
       type: Boolean,
-      dafault: false
+      default: false
     },
     isAdmin: Boolean
   },
