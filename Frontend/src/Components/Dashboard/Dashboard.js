@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import AuthService from '../AuthService';
 import withAuth from '../withAuth';
-import './profile.css'
+import { NavLink, Link, withRouter } from 'react-router-dom';
+
+import {DASHBOARD_ROUTES} from '../../routes'
+import './dashboard.css'
 
 const Auth = new AuthService();
+
 
 class Profile extends Component {
   constructor(props){
@@ -25,9 +29,11 @@ class Profile extends Component {
         <div className="profile-upper-block">
           <div className="left-side-menu">
             <ul className="profile-links">
-              <li>Profile</li>
-              <li>Reservation history</li>
-              <li>Edit profile data </li>
+            {DASHBOARD_ROUTES.map(({to, title}, key) => (
+                <NavLink to={to} key={key}>
+                  <li>{title}</li>
+                </NavLink>
+              ))}
             </ul>
           </div>
           <div className="profile-data">
@@ -41,4 +47,4 @@ class Profile extends Component {
 
 }
 
-export default withAuth(Profile);
+export default withRouter(withAuth(Profile));
