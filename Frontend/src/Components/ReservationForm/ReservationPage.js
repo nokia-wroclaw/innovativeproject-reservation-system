@@ -175,7 +175,7 @@ handleRenderChangeEdit = (e) => {
                 anyErrors = {this.state.areErrors}
                 errData1={this.state.errData[0]}
                 errData2={this.state.errData[1]}
-                userName={this.props.user.sub[1]}
+                userName={this.props.user.sub[2]}
               />
           </div>
             {this.state.isDialogEditOpen && <div>

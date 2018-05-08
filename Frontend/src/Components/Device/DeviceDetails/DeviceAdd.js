@@ -77,7 +77,6 @@ class DeviceAdd extends Component {
       addPage: false
     });
   }
-
   render() {
     return (
       <div style={style.container}>

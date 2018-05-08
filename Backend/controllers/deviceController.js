@@ -54,6 +54,7 @@ exports.device_post =  function(req, res) {
   const newDevice = new Device({
     name: req.body.name,
     numLeft: req.body.numLeft,
+    description: req.body.description
     //deviceImage: req.file.path
   });
   //(req.body.deviceImage) ? device.deviceImage = req.file.path : null;
