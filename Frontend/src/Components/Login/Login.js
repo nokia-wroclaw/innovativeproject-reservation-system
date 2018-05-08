@@ -77,7 +77,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div className="login-page">
         {this.state.formEmpty ? (
           <div className="login-error">
             <p>Email or password is empty</p>
@@ -92,13 +92,14 @@ class Login extends Component {
               transitionEnter={false}
               transitionLeave={false}>
                 <div className="login-logo">
-                  <img src={NokiaLogoBlue} alt='nokia logo' />
+                  <img src={NokiaLogoBlue} alt='nokia logo' style={{marginTop:'-50px'}}/>
                 </div>
                 <div className="login-container">
                   <div className="login-form-wrapper">
                     <MuiThemeProvider>
                       <p className="login-input-helper" style={{marginTop: '-10px'}}>Enter email:</p>
                       <TextField
+                        id="idloginemail"
                         value={this.state.email}
                         onChange={this.handleEmailChange}
                         fullWidth={true}
@@ -107,6 +108,7 @@ class Login extends Component {
                       />
                       <p className="login-input-helper">Enter password:</p>
                       <TextField
+                        id="idloginpassword"
                         value={this.state.password}
                         onChange={this.handlePasswordChange}
                         fullWidth={true}
@@ -137,6 +139,9 @@ class Login extends Component {
                 </div>
               </div>
             </ReactCSSTransitionGroup>
+            <footer className="login-footer">
+              Nokia- Innovative project 2018- Nokia Garage
+            </footer>
           </div>
     );
   }

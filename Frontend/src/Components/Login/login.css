@@ -8,6 +8,11 @@
   margin-bottom: -50px;
 }
 
+.login-page{
+  min-height: 100%;
+  height: 100%;
+}
+
 .login-sign-up {
   font-size: 32px;
   color: black;
@@ -19,13 +24,15 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 50px;
+  height: 100%;
+  min-height: 100%;
 }
 
 .login-logo {
   margin-left: auto;
   margin-right:auto;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .login-form-wrapper {
@@ -57,8 +64,9 @@
 
 .login-create-account-redirect{
   font-size: 14px;
-  margin-top: 5px;
+  margin-top: 15px;
   color: #00f;
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -75,4 +83,14 @@
 .fade-appear.fade-appear-active {
   opacity: 1;
   transition: opacity .5s ease-in;
+}
+
+.login-footer {
+  position: fixed;
+  top: 95%;
+  left: 42%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 10px;
+  font-style: italic;
 }

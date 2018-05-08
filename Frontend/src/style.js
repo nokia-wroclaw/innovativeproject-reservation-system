@@ -1,7 +1,7 @@
 const style = {
   body: {
     margin: '0',
-    height: '100%',
+    minHeight: '100%',
     fontFamily: 'Helvetica, sans-serif',
   },
   footer: {

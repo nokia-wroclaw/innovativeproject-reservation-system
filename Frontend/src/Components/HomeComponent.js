@@ -50,10 +50,6 @@ class HomeComponent extends Component {
               <Route path='/register' component={Register} />
               <Route component={NotFound} />
             </Switch>
-
-              <footer style={style.footer}>
-                Nokia- Innovative project 2018- Nokia Garage
-              </footer>
           </div>
         ) : (
           <div style={style.body}>
