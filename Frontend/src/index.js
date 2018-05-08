@@ -5,7 +5,7 @@ import HomeComponent from './Components/HomeComponent';
 import './main.css';
 
 import {
-  BrowserRouter as Router,
+  BrowserRouter as Router
 } from 'react-router-dom';
 
 ReactDOM.render(

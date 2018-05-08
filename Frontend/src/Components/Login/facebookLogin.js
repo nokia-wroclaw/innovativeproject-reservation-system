@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login'
 
-import axios from 'axios'
+import './facebookLogin.css';
 
 class SiteFacebookLogin extends Component {
 
@@ -11,8 +11,9 @@ class SiteFacebookLogin extends Component {
 
   render() {
     return (
-      <div>
+      <div className="facebook-login-container">
         <FacebookLogin
+          className="facebook-login-button"
           appId="422510151528330"
           autoLoad={true}
           fields="id, name,email"
@@ -20,7 +21,6 @@ class SiteFacebookLogin extends Component {
           callback={this.responseFacebook}
           icon="fa-facebook"
         />
-      <p onClick={this.handleFBlogout}>wyloguj</p>
       </div>
     );
   }

@@ -2,67 +2,79 @@ import React, { Component } from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import nokiaLogo from '../../images/nokia-logo.png';
 
-import {NOT_LOGGED_IN_ROUTES, LOGGED_IN_ROUTES, REGISTER_ROUTES, LOGOUT_ROUTE} from '../../routes'
 import AuthService from '../AuthService';
-import withAuth from '../withAuth';
 
- import './Navbar.css';
+import './Navbar.css';
 
- const Auth = new AuthService();
+const ROUTES = [{
+  title: 'reservation',
+  to: '/reservation',
+  auth: true,
+  itemClassName: ''
+}, {
+  title: 'devices',
+  to: '/devices',
+  auth: true,
+  itemClassName: ''
 
- class Navbar extends Component {
-   render() {
-     console.log(Auth.loggedIn());
-     const TRANSPARENT_NAVBAR_ROUTES = ['/', '/login'];
-     const isTransparentNavbarRoute = TRANSPARENT_NAVBAR_ROUTES.includes(this.props.location.pathname);
-     const isMainRoute = this.props.location.pathname === '/';
-     const navbarColorClass = isTransparentNavbarRoute ? '' : 'navbar-color';
-     return (
+}, {
+  title: 'profile',
+  to: '/profile',
+  auth: true,
+  itemClassName: ''
+}, {
+//   title: 'about',
+//   to: '/about',
+//   auth: false,
+//   itemClassName: ''
+// }, {
+  title: 'Sign in',
+  to: '/login',
+  auth: false,
+  itemClassName: 'auth-item'
+}, {
+  title: 'Sign up',
+  to: 'register',
+  auth: false,
+  itemClassName: 'auth-item'
+}, {
+  title: 'logout',
+  to: '/logout',
+  auth: true,
+  itemClassName: 'auth-item'
+}];
+
+const Auth = new AuthService();
+
+class Navbar extends Component {
+  renderRoutes() {
+    return ROUTES
+      .filter(({auth}) => auth === Auth.loggedIn())
+      .map(({to, title, itemClassName}, key) => (
+        <NavLink to={to} key={key} className={itemClassName}>
+          <li>{title}</li>
+        </NavLink>
+      ));
+  }
+
+  render() {
+    const TRANSPARENT_NAVBAR_ROUTES = ['/', '/login'];
+    const isTransparentNavbarRoute = TRANSPARENT_NAVBAR_ROUTES.includes(this.props.location.pathname);
+    const navbarColorClass = isTransparentNavbarRoute ? '' : 'navbar-color';
+    return (
       <div className={`navbar-container ${navbarColorClass}`}>
         <div className="navbar-content">
           <Link to="/"> <img src={nokiaLogo} alt='home page'/> </Link>
-        <span className="spacing"/>
+          <span className="spacing"/>
           <nav className="navbar">
-            {Auth.loggedIn() === false ? (
-              <div>
-                <ul className="navbar-items">
-              {NOT_LOGGED_IN_ROUTES.map(({to, title}, key) => (
-                  <NavLink to={to} key={key}>
-                    <li>{title}</li>
-                  </NavLink>
-                ))}
-              </ul>
-              <ul className="navbar-items-registration">
-              {REGISTER_ROUTES.map(({to, title}, key) => (
-                  <NavLink to={to} key={key}>
-                    <li>{title}</li>
-                  </NavLink>
-                ))}
-              </ul>
-              </div>
-            ) : (
-              <div>
-                <ul className="navbar-items">
-                {LOGGED_IN_ROUTES.map(({to, title}, key) => (
-                    <NavLink to={to} key={key}>
-                      <li>{title}</li>
-                    </NavLink>
-                  ))}
-                </ul>
-                <ul className="navbar-items-registration">
-                {LOGOUT_ROUTE.map(({to, title}, key) => (
-                    <NavLink to={to} key={key}>
-                      <li>{title}</li>
-                    </NavLink>
-                  ))}
-                </ul>
-              </div>
-            )}
+            <ul className="navbar-items">
+              {this.renderRoutes()}
+            </ul>
           </nav>
         </div>
-       </div>
-     );
-   }
- }
+      </div>
+    );
+  }
+}
 
 export default withRouter(Navbar);
