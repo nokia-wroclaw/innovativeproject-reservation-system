@@ -5,6 +5,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios'
 
+import {Link, withRouter} from 'react-router-dom'
+
 import SiteFacebookLogin from './Login/facebookLogin'
 
 import './HomePage/HomePage.css'
@@ -16,6 +18,9 @@ class Register extends Component {
     this.state = {
       email: '',
       password: '',
+      passwordConfirm: '',
+      name: '',
+      samePassword: true,
       checked: false,
       uncheckedError: false,
       successReservation: false
@@ -32,35 +37,61 @@ class Register extends Component {
       password: e.target.value
     });
   }
+  handlePasswordConfirmChange = (e) => {
+    this.setState({
+      passwordConfirm: e.target.value
+    });
+  }
+  handleNameChange = (e) => {
+    this.setState({
+      name: e.target.value
+    });
+  }
 
   handleRegistration = () => {
+    this.setState({
+      samePassword: true,
+      uncheckedError: false
+    });
     const newUser = {
+      name: this.state.name,
       email: this.state.email,
       password: this.state.password
     }
-    if(this.state.checked === true){
-        axios.post('/api/users',newUser)
-        .then(()=>{
-          this.setState({
-            email: '',
-            password: '',
-            checked: false,
-            uncheckedError: false,
-            successReservation: true
-          });
-        })
-    }
-    else {
+    if(this.state.password !== this.state.passwordConfirm){
       this.setState({
-        uncheckedError: true
+        passwordConfirm: '',
+        samePassword: false
       });
     }
+    else{
+      if(!this.state.checked){
+        this.setState({
+          uncheckedError: true
+        });
+      }else {
+          axios.post('/api/users',newUser)
+            .then(()=>{
+              this.setState({
+                email: '',
+                password: '',
+                checked: false,
+                uncheckedError: false,
+                successReservation: true
+              });
+            })
+          }
+      }
   }
 
-  updateCheck() {
+  updateCheck = () => {
     this.setState({
       checked: !this.state.checked
     })
+  }
+
+  gotoPrivacy =() => {
+    this.props.history.push('/privacy')
   }
 
   render() {
@@ -71,6 +102,7 @@ class Register extends Component {
             {this.state.successReservation === false
               ? (
                 <div>
+                  {this.state.samePassword ? (null) : (<p style={{color: 'red'}}>Not same password</p>)}
                   <LabelTextField
                     id="registerEmail"
                     isLabelEnabled={true}
@@ -78,7 +110,16 @@ class Register extends Component {
                     value={this.state.email}
                     onChange={this.handleEmailChange}
                     placeholder='ex@domain.com'
-                    position='top'
+                    position='left'
+                  />
+                  <LabelTextField
+                    id="registerName"
+                    isLabelEnabled={true}
+                    label='Enter your name'
+                    value={this.state.name}
+                    onChange={this.handleNameChange}
+                    placeholder='ex.. John Smith'
+                    position='left'
                   />
                   <LabelTextField
                     id="registerpassword"
@@ -87,12 +128,26 @@ class Register extends Component {
                     value={this.state.password}
                     onChange={this.handlePasswordChange}
                     isPassword={true}
-                    position='top'
+                    position='left'
+                  />
+                  <LabelTextField
+                    id="registerconfirmpassword"
+                    isLabelEnabled={true}
+                    label='Confirm your password'
+                    value={this.state.passwordConfirm}
+                    onChange={this.handlePasswordConfirmChange}
+                    isPassword={true}
+                    position='left'
                   />
                   <MuiThemeProvider>
                     {this.state.uncheckedError ? (<p style={{color: 'red'}}>error: unchecked</p>) : (null)}
                     <Checkbox
-                      label="Agree with licence"
+                      labelStyle={{zIndex: '3'}}
+                      label={(
+                          <label onClick={this.gotoPrivacy}>
+                              I agree with privacy
+                          </label>
+                        )}
                       checked={this.state.checked}
                       onCheck={this.updateCheck.bind(this)}
                       style={{marginLeft: '30px', position: 'relative'}}
@@ -106,11 +161,10 @@ class Register extends Component {
                       onClick={this.handleRegistration}
                     />
                     </MuiThemeProvider>
-                    <SiteFacebookLogin/>
                 </div>
               ) : (
                 <div>
-                  <p>Your account has been succesfully registered</p>
+                  <p style={{padding: '2px'}}>Your account has been succesfully registered</p>
                 </div>
               )}
           </div>
@@ -121,4 +175,4 @@ class Register extends Component {
 
 }
 
-export default Register;
+export default withRouter(Register);

@@ -65,6 +65,7 @@ exports.user_post = function(req, res){
       return res.send('invalid email')
     }
     user.local.isAdmin = false;
+    user.local.name = req.body.name
     user.email = req.body.email
     bcrypt.genSalt(saltRounds, function(err, salt){
       if(PasswordController(req.body.password)){
