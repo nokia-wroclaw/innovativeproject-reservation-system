@@ -15,7 +15,7 @@ import DeviceDetails from './Device/DeviceDetails/DeviceDetails';
 import ReservationBlock from './ReservationBlock'
 import Register from './Login/Register'
 import Login from './Login/Login'
-import Dashboard from './Dashboard/Dashboard'
+import Dashboard from './Profile/Profile'
 import Logout from './Logout'
 import NotFound from './NotFound';
 import Verification from './Verification'
