@@ -13,7 +13,7 @@ import DeviceEdit from './Device/DeviceDetails/DeviceEdit'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DeviceDetails from './Device/DeviceDetails/DeviceDetails';
 import ReservationBlock from './ReservationBlock'
-import Register from './Register'
+import Register from './Login/Register'
 import Login from './Login/Login'
 import Dashboard from './Dashboard/Dashboard'
 import Logout from './Logout'
@@ -33,7 +33,7 @@ class HomeComponent extends Component {
   }
 
   render() {
-    if(this.props.location.pathname === "/login"){
+    if(this.props.location.pathname === "/login" || this.props.location.pathname === "/register"){
       this.state.isLoginPage = true;
     }
     else {
@@ -47,6 +47,7 @@ class HomeComponent extends Component {
           <div>
             <Switch>
               <Route path='/login' component={Login} />
+              <Route path='/register' component={Register} />
               <Route component={NotFound} />
             </Switch>
 
@@ -69,7 +70,6 @@ class HomeComponent extends Component {
                          component={() => <ReservationBlock url='http://localhost:3001/api/reservations'/>}/>
                   <Route path={'/reservation'}
                          component={() => <ReservationPage url='http://localhost:3001/api/reservations'/>}/>
-                       <Route path="/register" component={Register}/>
                   <Route path="/profile" component={Dashboard} />
                   <Route path="/logout" component={Logout}/>
                   <Route path="/verify/:id" component={Verification}/>

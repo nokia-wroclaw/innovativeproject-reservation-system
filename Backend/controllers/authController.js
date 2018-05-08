@@ -24,46 +24,6 @@ signToken = user => {
 
 module.exports = {
   signUp: async (req, res, next, {transporter, models, EMAIL_SECRET}) => {
-    const { email, password } = req.value.body;
-
-    // Check if there is a user with the same email
-    const foundUser = await User.findOne({ "local.email": email });
-    if (foundUser) {
-      return res.status(403).json({ error: 'Email is already in use'});
-    }
-
-    // Create a new user
-    const newUser = new User({
-      method: 'local',
-      local: {
-        email: email,
-        password: password,
-        confirmed: false
-      }
-    });
-
-    await newUser.save();
-
-    bcrypt.genSalt(10, function(err, salt){
-      bcrypt.hash(req.user.local.email, salt, function(err, hash) {
-          var hashed_verifaction = hash;
-          var host = req.get('host');
-          console.log(host);
-          link=`https://`+host+`/verify?id=`+hashed_verifaction;
-          console.log(link);
-
-          mailOptions={
-            to: newUser.local.email,
-            subject: 'confirm email',
-            html: 'Confirm by pressing following link: <a href="'+link+'">'+link+'</a>'
-          }
-          smtpTransport.sendMail(mailOptions, function(err, response){
-            if(err) throw err;
-
-          })
-        })
-      })
-
 
     // Generate the token
     const token = signToken(newUser)

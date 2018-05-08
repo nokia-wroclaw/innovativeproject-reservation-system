@@ -57,7 +57,6 @@ exports.user_get_details = function(req, res) {
 
 exports.user_post = function(req, res){
     var user = new User()
-
     if(EmailController(req.body.email))  {
         user.local.email = req.body.email
     }
@@ -74,33 +73,29 @@ exports.user_post = function(req, res){
       else{return res.send('invalid password')}
       bcrypt.hash(req.body.password, salt, function(err, hash) {
         user.local.password = hash;
-        user.save(function(err, result){
-          if(err) {return err}
-          res.send(result)
+        bcrypt.hash(req.body.email, salt, function(e, email_hash){
+          var hashed_verifaction = hash;
+          user.local.email_hash = hash
+
+          user.save((err, result)=>{
+            if(err) {return err}
+            link=`http://localhost:3000/verify/`+hashed_verifaction;
+              mailOptions={
+                from: '<nokia,kia.test.no.reply@gmail.com',
+                to: user.local.email,
+                subject: 'Nokia Garage- verify your email',
+                html: 'Confirm by pressing following link: <a href="'+link+'">'+link+'</a>'
+              }
+              smtpTransport.sendMail(mailOptions, function(error_mail, response){
+                if(error_mail) throw error_mail;
+              })
+
+              return res.send({error: false, result})
+            })
+
         })
       })
     })
-
-    bcrypt.genSalt(10, function(err, salt){
-      bcrypt.hash(req.body.email, salt, function(err, hash) {
-          var hashed_verifaction = hash;
-          user.local.email_hash = hash
-          user.save(err=>{
-            if(err) return res.send(err);
-          })
-          link=`http://localhost:3000/verify/`+hashed_verifaction;
-          mailOptions={
-            from: '<nokia,kia.test.no.reply@gmail.com',
-            to: user.local.email,
-            subject: 'Nokia Garage- verify your email',
-            html: 'Confirm by pressing following link: <a href="'+link+'">'+link+'</a>'
-          }
-          smtpTransport.sendMail(mailOptions, function(err, response){
-            if(err) throw err;
-
-          })
-        })
-      })
 }
 
 exports.user_verify = function(req, res) {

@@ -6,6 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {withRouter} from 'react-router-dom'
 import AuthService from '../AuthService'
 
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 import {Link} from 'react-router-dom'
 
 import NokiaLogoBlue from '../../images/nokia-logo.jpg'
@@ -79,56 +81,63 @@ class Login extends Component {
         {this.state.formEmpty ? (
           <div className="login-error">
             <p>Email or password is empty</p>
+              </div>
+            ) : (
+              null
+            )}
+            <ReactCSSTransitionGroup
+              transitionName="fade"
+              transitionAppear={true}
+              transitionAppearTimeout={1000}
+              transitionEnter={false}
+              transitionLeave={false}>
+                <div className="login-logo">
+                  <img src={NokiaLogoBlue} alt='nokia logo' />
+                </div>
+                <div className="login-container">
+                  <div className="login-form-wrapper">
+                    <MuiThemeProvider>
+                      <p className="login-input-helper" style={{marginTop: '-10px'}}>Enter email:</p>
+                      <TextField
+                        value={this.state.email}
+                        onChange={this.handleEmailChange}
+                        fullWidth={true}
+                        underlineStyle={textFieldStyle.disabled}
+                        underlineFocusStyle={textFieldStyle.focused}
+                      />
+                      <p className="login-input-helper">Enter password:</p>
+                      <TextField
+                        value={this.state.password}
+                        onChange={this.handlePasswordChange}
+                        fullWidth={true}
+                        underlineStyle={textFieldStyle.disabled}
+                        underlineFocusStyle={textFieldStyle.focused}
+                        type="password"
+                      />
+                      <div className="login-actions">
+                        <div className='login-forgot-password'>
+                          <p>Forgot your password?</p>
+                        </div>
+                      <div className="login-button">
+                      <RaisedButton
+                        type='submit'
+                        label='Sign in'
+                        primary={true}
+                        onClick={this.handleLogin}
+                        fullWidth={true}
+                      />
+                  </div>
+                  </div>
+                    <div>
+                      <div className="login-create-account-redirect">
+                        <Link to="/register">Create account</Link>
+                      </div>
+                    </div>
+                  </MuiThemeProvider>
+                </div>
+              </div>
+            </ReactCSSTransitionGroup>
           </div>
-        ) : (
-          null
-        )}
-        <div className="login-logo">
-          <img src={NokiaLogoBlue} alt='nokia logo' />
-        </div>
-        <div className="login-container">
-          <div className="login-form-wrapper">
-              <MuiThemeProvider>
-              <p className="login-input-helper" style={{marginTop: '-10px'}}>Enter email:</p>
-              <TextField
-                value={this.state.email}
-                onChange={this.handleEmailChange}
-                fullWidth={true}
-                underlineStyle={textFieldStyle.disabled}
-                underlineFocusStyle={textFieldStyle.focused}
-              />
-            <p className="login-input-helper">Enter password:</p>
-              <TextField
-                value={this.state.password}
-                onChange={this.handlePasswordChange}
-                fullWidth={true}
-                underlineStyle={textFieldStyle.disabled}
-                underlineFocusStyle={textFieldStyle.focused}
-                type="password"
-              />
-            <div className="login-actions">
-              <div className='login-forgot-password'>
-                <p>Forgot your password?</p>
-              </div>
-              <div className="login-button">
-                <RaisedButton
-                  type='submit'
-                  label='Sign in'
-                  primary={true}
-                  onClick={this.handleLogin}
-                  fullWidth={true}
-                />
-              </div>
-            </div>
-            <div>
-              <div className="login-create-account-redirect">
-                <Link to="/register">Create account</Link>
-              </div>
-            </div>
-              </MuiThemeProvider>
-          </div>
-        </div>
-      </div>
     );
   }
 
