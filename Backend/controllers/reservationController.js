@@ -16,7 +16,7 @@ exports.reservation_details_get = (function(req, res) {
 })
 
 //POST reservation
-var maxGuests = 12;
+var maxGuests = 16;
 var maxHours = 8;
 
 exports.reservation_post = function(req, res, reservationMiddleware){

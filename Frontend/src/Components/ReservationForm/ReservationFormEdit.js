@@ -12,24 +12,29 @@ import LabelTextField from '../LabelTextField'
 
 import style from '../../style'
 
+import {RESERVATION_BASE_URL} from '../../routes'
+
 moment().format('MMMM Do YYYY, h:mm:ss a');
 
 class ReservationFormEdit extends Component {
   constructor(props){
     super(props);
     this.state ={
+      id: '',
       data: [],
-      value: 'WholeSpace',
+      value: this.props.option,
       numOfPeople: '',
       personName: '',
     }
   }
 
   componentDidMount() {
-    axios.get(`/api/reservations/${this.props.id}`)
+    this.setState({
+      id: this.props.id
+    });
+    axios.get(`${RESERVATION_BASE_URL}/${this.state.id}`)
     .then(res => {
-      this.setState(res.data);
-      console.log(res.data);
+      this.setState({data: res.data});
     })
   }
 
@@ -131,11 +136,10 @@ class ReservationFormEdit extends Component {
               startDate={this.props.startDate}
               endDate={this.props.endDate}
             />
-            <SelectRoomField
-              //placeholder={this.props.option}
-              value={this.state.value}
-              onRoomSelectChange={this.handleSelectRoomChange}
-            />
+          <SelectRoomField
+            value={this.state.value}
+            onRoomSelectChange={this.handleSelectRoomChange}
+          />
           <LabelTextField
               id={'numofpeople'}
               value={this.state.numOfPeople}

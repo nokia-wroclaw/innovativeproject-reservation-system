@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import LabelTextField from '../LabelTextField'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
@@ -10,9 +9,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import {Link} from 'react-router-dom'
 
-import NokiaLogoBlue from '../../images/nokia-logo.jpg'
-
-import FacebookLogin from './facebookLogin'
+//import NokiaLogoBlue from '../../images/NG_LOGOTYP_BASIC_NA_CIEMNYM_BEZ_TŁA_RGB.png'
+import NokiaLogoBlue from '../../images/NG_LOGO_BEZ_CLAIMU_UPROSZCZONE_NA_BIAŁYM_RGB.png';
 
 import './login.css'
 
@@ -77,10 +75,10 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="login-page">
+      <div>
         {this.state.formEmpty ? (
           <div className="login-error">
-            <p>Email or password is empty</p>
+            <p style={{fontFamily: 'Helvetica, sans-serif'}}>Email or password is empty</p>
               </div>
             ) : (
               null
@@ -91,8 +89,9 @@ class Login extends Component {
               transitionAppearTimeout={1000}
               transitionEnter={false}
               transitionLeave={false}>
+              <div style={{marginTop: '120px'}}>
                 <div className="login-logo">
-                  <img src={NokiaLogoBlue} alt='nokia logo' style={{marginTop:'-50px'}}/>
+                  <img src={NokiaLogoBlue} alt='nokia logo' style={{width: '435px', height: '207px', marginTop: '-50px'}}/>
                 </div>
                 <div className="login-container">
                   <div className="login-form-wrapper">
@@ -137,6 +136,7 @@ class Login extends Component {
                     </div>
                   </MuiThemeProvider>
                 </div>
+              </div>
               </div>
             </ReactCSSTransitionGroup>
             <footer className="login-footer">

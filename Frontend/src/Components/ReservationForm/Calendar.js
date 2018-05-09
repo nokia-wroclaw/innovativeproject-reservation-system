@@ -90,7 +90,7 @@ class Dnd extends Component {
         style: calendarStyles.labSpaceStyle
       }
     }
-    else if(event.title === 'OpenSpace'){
+    else if(event.title === 'CreativeSpace'){
       return {
         className: 'openSpaceStyle',
         style: calendarStyles.openSpaceStyle
@@ -106,8 +106,7 @@ class Dnd extends Component {
     }
   }
 
-SelectEvent=(event)=>{this.props.onRenderChangeEdit(event)
-console.log(event)}
+SelectEvent=(event)=>{this.props.onRenderChangeEdit(event)}
 
   render() {
     return (

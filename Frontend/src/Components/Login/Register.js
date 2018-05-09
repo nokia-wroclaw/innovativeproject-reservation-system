@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import LabelTextField from '../LabelTextField'
 import Checkbox from 'material-ui/Checkbox';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -8,9 +7,7 @@ import TextField from 'material-ui/TextField'
 
 import {Link, withRouter} from 'react-router-dom'
 
-import SiteFacebookLogin from './facebookLogin'
-
-import NokiaLogoBlue from '../../images/nokia-logo.jpg'
+import NokiaLogoBlue from '../../images/NG_LOGO_BEZ_CLAIMU_UPROSZCZONE_NA_BIAŁYM_RGB.png'
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -139,8 +136,8 @@ class Register extends Component {
             transitionEnter={false}
             transitionLeave={false}>
           <div>
-            <div className="login-logo">
-              <img src={NokiaLogoBlue} alt='nokia logo' style={{marginTop:'-50px'}}/>
+            <div className="login-logo" style={{marginTop: '-20px !important'}}>
+              <img src={NokiaLogoBlue} alt='nokia logo' style={{width: '435px', height: '207px'}} />
             <p className="login-sign-up">Sign up</p>
             </div>
             <div className="login-container">

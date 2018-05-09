@@ -5,7 +5,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import AuthService from '../AuthService'
 import withAuth from '../withAuth'
 
 import axios from 'axios'
@@ -13,8 +12,6 @@ import {USER_BASE_URL} from '../../routes'
 
 
 import './profile.css'
-
-const Auth = new AuthService()
 
 const textFieldStyle = {
   focused: {
@@ -72,10 +69,10 @@ class Profile extends Component {
   }
 
   handlePasswordChangeSubmit = () => {
-    const passwords = {
+    /*const passwords = {
       oldpassword: this.state.oldpassword,
       newPassword: this.state.newPassword
-    }
+    }*/
   }
 
   render() {
@@ -85,7 +82,7 @@ class Profile extends Component {
           <div className="profile-profile-card">
             <div className="profile-profile-info">
               <div style={{textAlign: 'center', marginTop: '10px'}}>
-                <img src={BlankProfile} style={{maxWidth: '270px', maxHeight: '270px'}}/>
+                <img src={BlankProfile} alt="user thumbnail" style={{maxWidth: '270px', maxHeight: '270px'}}/>
               </div>
               <div className="profile-list-data-left">
                 <ul className="profile-ul-data">

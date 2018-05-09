@@ -72,61 +72,63 @@ class ReservationFormSubmit extends Component {
       />,
     ];
     return (
-      <MuiThemeProvider>
-        <Dialog
-          title="Reservation form"
-          modal={false}
-          actions={actions}
-          open={this.props.isDialogSubmitOpen }
-          onRequestClose={this.handleClose.bind(this)}
-          autoScrollBodyContent={true}
-        >
-        {(this.props.anyErrors)
-          ?
-          (
-            <p style={style.errorValidation}>
-              {this.props.errData1}
-            </p>
-          )
-        : null}
+      <div>
+        <MuiThemeProvider>
+          <Dialog
+            title="Reservation form"
+            modal={false}
+            actions={actions}
+            open={this.props.isDialogSubmitOpen }
+            onRequestClose={this.handleClose.bind(this)}
+            autoScrollBodyContent={true}
+          >
           {(this.props.anyErrors)
             ?
             (
               <p style={style.errorValidation}>
-                {this.props.errData2}
+                {this.props.errData1}
               </p>
             )
           : null}
-        <form onSubmit={this.handleSubmit}>
-          <DataTextField
-            startDate={this.props.startDate}
-            endDate={this.props.endDate}
+            {(this.props.anyErrors)
+              ?
+              (
+                <p style={style.errorValidation}>
+                  {this.props.errData2}
+                </p>
+              )
+            : null}
+          <form onSubmit={this.handleSubmit}>
+            <DataTextField
+              startDate={this.props.startDate}
+              endDate={this.props.endDate}
+            />
+            <SelectRoomField
+              value={this.state.value}
+              onRoomSelectChange={this.handleSelectRoomChange}
+            />
+          <LabelTextField
+              id={'numofpeople'}
+              value={this.state.numOfPeople}
+              placeholder={'ex. 3'}
+              isLabelEnabled={true}
+              label={"Enter number of people"}
+              onChange={this.handleNumOfPeopleChange}
+              position='left'
+            />
+          <TextField
+            id='reservationOn'
+            defaultValue={this.props.userName}
+            disabled={true}
+            style={{marginLeft: '310px'}}
           />
-          <SelectRoomField
-            value={this.state.value}
-            onRoomSelectChange={this.handleSelectRoomChange}
-          />
-        <LabelTextField
-            id={'numofpeople'}
-            value={this.state.numOfPeople}
-            placeholder={'ex. 3'}
-            isLabelEnabled={true}
-            label={"Enter number of people"}
-            onChange={this.handleNumOfPeopleChange}
-            position='left'
-          />
-        <TextField
-          id='reservationOn'
-          defaultValue={this.props.userName}
-          disabled={true}
-          style={{marginLeft: '310px'}}
-        />
 
 
-        </form>
-        </Dialog>
+          </form>
+          </Dialog>
 
-        </MuiThemeProvider>
+          </MuiThemeProvider>
+      </div>
     )
   }
 }

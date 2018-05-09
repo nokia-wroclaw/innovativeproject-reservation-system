@@ -42,7 +42,7 @@ function PasswordController(pwd){  //TODO minimal characters should be 8
 }
 
 exports.user_get = function(req, res){
-  User.find(function(err, users){
+  User.find({},'-local.password', function(err, users){
     if(err){res.send(err)}
     res.json(users)
   });

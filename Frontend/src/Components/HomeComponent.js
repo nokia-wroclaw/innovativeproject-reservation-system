@@ -27,17 +27,17 @@ import Navbar from "./Navbar/Navbar";
 class HomeComponent extends Component {
   constructor(props){
     super(props)
-    this.state ={
+    this.state = {
       isLoginPage: false
     }
   }
 
   render() {
     if(this.props.location.pathname === "/login" || this.props.location.pathname === "/register"){
-      this.state.isLoginPage = true;
+      this.state.isLoginPage = true
     }
     else {
-      this.state.isLoginPage = false;
+      this.state.isLoginPage=  false
     }
 
     return (
@@ -75,7 +75,7 @@ class HomeComponent extends Component {
               </Switch>
 
                 <footer style={style.footer}>
-                  Nokia- Innovative project 2018- Nokia Garage
+                  Nokia - Innovative project 2018 - Nokia Garage
                 </footer>
               </div>
             </MuiThemeProvider>

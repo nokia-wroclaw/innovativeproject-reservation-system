@@ -8,10 +8,8 @@ import {withRouter} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {List, ListItem} from 'material-ui/List'
 
-import AuthService from '../AuthService';
 import withAuth from '../withAuth';
 
-const Auth = new AuthService();
 const DEVICES_BASE_URL = '/api/devices';
 
 class DeviceBlock extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
-import nokiaLogo from '../../images/nokia-logo.png';
+import nokiaLogo from '../../images/NG_LOGOTYP_BASIC_NA_CIEMNYM_BEZ_TŁA_RGB.png';
 
 import AuthService from '../AuthService';
 
@@ -64,7 +64,7 @@ class Navbar extends Component {
     return (
       <div className={`navbar-container ${navbarColorClass}`}>
         <div className="navbar-content">
-          <Link to="/"> <img src={nokiaLogo} alt='home page'/> </Link>
+          <Link to="/"> <img src={nokiaLogo} style={{width: '145px', height: '69px'}} alt='home page'/> </Link>
           <span className="spacing"/>
           <nav className="navbar">
             <ul className="navbar-items">

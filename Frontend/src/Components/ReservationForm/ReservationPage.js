@@ -67,8 +67,6 @@ componentWillMount(){
     axios.post(RESERVATION_BASE_URL, reservation)
       .then((result) => {
         const error = result.data.error
-        console.log(result);
-        console.log(error);
         if (error) {
           this.setState({
             areErrors: true,
@@ -120,7 +118,6 @@ componentWillMount(){
           let reservations = this.state.data.filter((item) => item._id !== id )
             this.setState({data: reservations, isDialogEditOpen: false, isSnackbarDeleteOpen: true});
             this.loadReservationFromServer()
-            console.log('reservation deleted');
         })
         .catch(err => {
           console.error(err);
@@ -128,7 +125,9 @@ componentWillMount(){
       }
 
   handleRenderChangeSubmit = (e) => {
-  if (e.start != 'Invalid Date' || e.end != 'Invalid Date') {
+    var end = e.end;
+    var start = e.start
+  if (start != 'Invalid Date' || end != 'Invalid Date') {
     this.setState({
       isSnackbarDeleteOpen: false,
       isDialogSubmitOpen: true,
@@ -161,28 +160,27 @@ handleRenderChangeEdit = (e) => {
             onRenderChangeSubmit={this.handleRenderChangeSubmit}
             data={this.state.data}
             onRenderChangeEdit={this.handleRenderChangeEdit}
-            data={this.state.data}
           />
         </div>
 
         <div>
             <ReservationFormSubmit
-                startDate = {this.state.startDate}
-                endDate = {this.state.endDate}
-                onReservationSubmit={this.handleReservationSubmit}
-                isDialogSubmitOpen = {this.state.isDialogSubmitOpen}
-                closeDialog = {this.closeDialog}
-                anyErrors = {this.state.areErrors}
-                errData1={this.state.errData[0]}
-                errData2={this.state.errData[1]}
-                userName={this.props.user.sub[2]}
-              />
+              startDate = {this.state.startDate}
+              endDate = {this.state.endDate}
+              onReservationSubmit={this.handleReservationSubmit}
+              isDialogSubmitOpen = {this.state.isDialogSubmitOpen}
+              closeDialog = {this.closeDialog}
+              anyErrors = {this.state.areErrors}
+              errData1={this.state.errData[0]}
+              errData2={this.state.errData[1]}
+              userName={this.props.user.sub[2]}
+            />
           </div>
             {this.state.isDialogEditOpen && <div>
               <ReservationFormEdit
              data={this.state.data}
-             id={this.state.id}
              numOfPeople={this.state.numOfPeople}
+             id={this.state.id}
              personName={this.state.personName}
              startDate={this.state.startDate}
              endDate={this.state.endDate}
@@ -198,18 +196,20 @@ handleRenderChangeEdit = (e) => {
          </div>}
          <div>
            <MuiThemeProvider>
-             <Snackbar
-               open={this.state.isSnackbarOpen}
-               message={this.state.successMsg}
-               autoHideDuration={3000}
-               style={{textAlign: 'center'}}
-             />
-             <Snackbar
-               open={this.state.isSnackbarDeleteOpen}
-               message={this.state.deleteMsg}
-               autoHideDuration={3000}
-               style={{textAlign: 'center'}}
-             />
+             <div>
+               <Snackbar
+                 open={this.state.isSnackbarOpen}
+                 message={this.state.successMsg}
+                 autoHideDuration={3000}
+                 style={{textAlign: 'center'}}
+               />
+               <Snackbar
+                 open={this.state.isSnackbarDeleteOpen}
+                 message={this.state.deleteMsg}
+                 autoHideDuration={3000}
+                 style={{textAlign: 'center'}}
+               />
+             </div>
            </MuiThemeProvider>
          </div>
       </div>
