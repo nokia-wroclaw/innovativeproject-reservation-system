@@ -81,7 +81,7 @@ exports.user_post = function(req, res){
             if(err) {return err}
             const host = req.host;
             if(host === 'localhost'){
-              link = `http://`+host+`:3000/verify`+hashed_verifaction;
+              link = `http://`+host+`:3000/verify/`+hashed_verifaction;
             }
             else {
                 link=`http://`+host+`/verify/`+hashed_verifaction;
