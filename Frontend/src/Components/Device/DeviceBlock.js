@@ -60,9 +60,6 @@ class DeviceBlock extends Component {
     this.loadDeviceFromServer();
   }
 
-  componentWillUnmount() {
-  }
-
   redirectToAddingPage = () => {
     this.props.history.push('/devices/add');
   }

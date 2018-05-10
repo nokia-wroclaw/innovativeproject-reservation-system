@@ -79,7 +79,13 @@ exports.user_post = function(req, res){
 
           user.save((err, result)=>{
             if(err) {return err}
-            link=`http://localhost:3000/verify/`+hashed_verifaction;
+            const host = req.host;
+            if(host === 'localhost'){
+              link = `http://`+host+`:3000/verify`+hashed_verifaction;
+            }
+            else {
+                link=`http://`+host+`/verify/`+hashed_verifaction;
+            }
               mailOptions={
                 from: '<nokia,kia.test.no.reply@gmail.com',
                 to: user.local.email,
