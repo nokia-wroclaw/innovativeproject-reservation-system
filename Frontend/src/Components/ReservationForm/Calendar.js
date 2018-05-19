@@ -120,7 +120,7 @@ SelectEvent=(event)=>{this.props.onRenderChangeEdit(event)}
           events={this.props.data}
           onEventDrop={this.moveEvent}
           defaultView="week"
-          defaultDate={new Date()}
+          defaultDate={moment()}
           onSelectSlot={this.props.onRenderChangeSubmit}
           eventPropGetter={this.customRoomGetter}
           onSelectEvent={this.SelectEvent}

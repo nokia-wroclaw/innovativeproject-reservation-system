@@ -12,6 +12,9 @@ import LabelTextField from '../LabelTextField'
 
 import style from '../../style'
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import {RESERVATION_BASE_URL} from '../../routes'
 
 moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -25,6 +28,8 @@ class ReservationFormEdit extends Component {
       value: this.props.option,
       numOfPeople: '',
       personName: '',
+      startDate: '',
+      endDate: '',
     }
   }
 
@@ -49,7 +54,7 @@ class ReservationFormEdit extends Component {
     let id = this.props.id;
     let numOfPeople = this.state.numOfPeople.trim();
     let option = this.state.value;
-    let startDate = this.props.startDate;
+    let startDate = this.state.startDate;
     let endDate = this.props.endDate;
     let personName = this.state.personName;
     let reservation = { numOfPeople: numOfPeople,
@@ -83,6 +88,18 @@ class ReservationFormEdit extends Component {
   handleClose = () => {
     this.props.closeDialog();
   }
+
+  handleStartDateChange = (e) => {
+   this.setState({
+     startDate: e
+   })
+ }
+
+ handleEndDateChange = (e) => {
+  this.setState({
+    endDate: e
+  })
+}
 
 
     render(){
@@ -132,10 +149,24 @@ class ReservationFormEdit extends Component {
               )
             : null}
           <form onSubmit={this.handleEditReservation}>
-            <DataTextField
-              startDate={this.props.startDate}
-              endDate={this.props.endDate}
-            />
+              <DatePicker
+                  openToDate={moment(this.props.startDate)}
+                  selected={this.state.startDate}
+                  showTimeSelect
+                  dateFormat="DD/MM/YYYY H:mm"
+                  onChange={this.handleStartDateChange}
+                  placeholderText={moment(this.props.startDate).format("DD/MM/YYYY H:mm").valueOf()}
+                    />
+                    <DatePicker
+                        position='right'
+                        openToDate={moment(this.props.endDate)}
+                        selected={this.state.endDate}
+                        showTimeSelect
+                        dateFormat="DD/MM/YYYY H:mm"
+                        onChange={this.handleEndDateChange}
+                        placeholderText={moment(this.props.endDate).format("DD/MM/YYYY H:mm").valueOf()}
+                        className="red-border"
+                          />
           <SelectRoomField
             value={this.state.value}
             onRoomSelectChange={this.handleSelectRoomChange}
