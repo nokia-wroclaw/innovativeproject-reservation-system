@@ -74,17 +74,16 @@ exports.user_post = function(req, res){
       bcrypt.hash(req.body.password, salt, function(err, hash) {
         user.local.password = hash;
         bcrypt.hash(req.body.email, salt, function(e, email_hash){
-          var hashed_verifaction = hash;
-          user.local.email_hash = hash
+          user.local.email_hash = email_hash
 
           user.save((err, result)=>{
             if(err) {return err}
             const host = req.host;
             if(host === 'localhost'){
-              link = `http://`+host+`:3000/verify/`+hashed_verifaction;
+              link = `http://`+host+`:3000/verify/`+email_hash;
             }
             else {
-                link=`http://`+host+`/verify/`+hashed_verifaction;
+                link=`http://`+host+`/verify/`+email_hash;
             }
               mailOptions={
                 from: '<nokia,kia.test.no.reply@gmail.com',
