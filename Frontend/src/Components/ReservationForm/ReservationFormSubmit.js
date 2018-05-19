@@ -13,6 +13,9 @@ import LabelTextField from '../LabelTextField'
 
 import style from '../../style'
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 moment().format('MMMM Do YYYY, h:mm:ss a');
 
 class ReservationFormSubmit extends Component {
@@ -52,6 +55,11 @@ class ReservationFormSubmit extends Component {
   handlePersonNameChange = (e) => {
     this.setState({personName: e.target.value})
   }
+/*  handleDataChange = (e) =>  {
+    this.setState({
+      startDate: e.target.startD
+    });
+  }*/
 
   handleClose = () => {
     this.props.closeDialog();
@@ -103,6 +111,11 @@ class ReservationFormSubmit extends Component {
               startDate={this.props.startDate}
               endDate={this.props.endDate}
             />
+          {/*<DatePicker
+              selected={this.state.date}
+              onSelect={this.handleSelect}
+              onChange={this.handleDataChange}
+              />*/}
             <SelectRoomField
               value={this.state.value}
               onRoomSelectChange={this.handleSelectRoomChange}
