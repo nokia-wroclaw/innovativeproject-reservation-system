@@ -190,7 +190,7 @@ handleRegistration = () => {
                       onChange={this.handleEmailChange}
                     />
                   </div>
-                  <p className="register-input-helper">Enter phone number:</p>
+                  <p className="register-input-helper" >Enter phone number:</p>
                   <div className="register-input">
                     <RegisterTextField
                       propvalue={this.state.phonenumber}
@@ -206,16 +206,18 @@ handleRegistration = () => {
                       onChange={this.handleOrganizationChange}
                     />
                   </div>
-                  <p className="register-input-helper">Select your group:</p>
-                  <div className="register-input">
+                  <p className="register-input-helper" >Select your group:</p>
+                  <div className="register-input" >
                     <SelectField
                         value={this.state.value}
                         onChange={this.onOriginSelectChange}
+                        style={{width: 'inherit', marginLeft: '10px'}}
+                        autoWidth={false}
                       >
-                      <MenuItem value={'individual'} primaryText="individual" style={{textAlign: 'center'}}/>
-                      <MenuItem value={'startup'} primaryText="startup"  style={{textAlign: 'center'}}/>
-                      <MenuItem value={'company'} primaryText="company"  style={{textAlign: 'center'}}/>
-                      <MenuItem value={'other'} primaryText="other"  style={{textAlign: 'center'}}/>
+                      <MenuItem value={'individual'} primaryText="INDIVIDUAL" style={{textAlign: 'center'}}/>
+                      <MenuItem value={'startup'} primaryText="STARTUP"  style={{textAlign: 'center'}}/>
+                      <MenuItem value={'company'} primaryText="COMPANY"  style={{textAlign: 'center'}}/>
+                      <MenuItem value={'other'} primaryText="OTHER"  style={{textAlign: 'center'}}/>
                     </SelectField>
                   </div>
                 </div>
@@ -229,6 +231,7 @@ handleRegistration = () => {
                       underlineStyle={textFieldStyle.disabled}
                       underlineFocusStyle={textFieldStyle.focused}
                       type="password"
+                      style={{width: '90%'}}
                     />
                   </div>
                   <p className="register-input-helper">Confirm password:</p>
@@ -240,6 +243,7 @@ handleRegistration = () => {
                       underlineStyle={textFieldStyle.disabled}
                       underlineFocusStyle={textFieldStyle.focused}
                       type="password"
+                      style={{width: '90%'}}
                     />
                   </div>
                 </div>
