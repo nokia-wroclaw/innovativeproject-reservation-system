@@ -4,6 +4,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios'
 import TextField from 'material-ui/TextField'
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import {Link, withRouter} from 'react-router-dom'
 
@@ -13,19 +15,35 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 
 import '../HomePage/HomePage.css'
+import './register.css'
 import './login.css'
 
 const textFieldStyle = {
   focused: {
-    borderColor: 'rgba(0,0,0,0.5)',
+    borderColor: 'rgb(0, 38, 62)',
   },
   disabled: {
-    borderColor: 'black',
+    borderColor: 'rgba(0, 38, 62, .5)',
   },
   textStyle: {
     color: '#424242'
   }
 }
+
+const RegisterTextField = ({id, value, onChange}) => (
+  <div>
+    <MuiThemeProvider>
+      <TextField
+        id={id}
+        value={value}
+        onChange={onChange}
+        underlineStyle={textFieldStyle.disabled}
+        underlineFocusStyle={textFieldStyle.focused}
+        style={{width: '90%'}}
+      />
+    </MuiThemeProvider>
+  </div>
+);
 
 class Register extends Component {
   constructor(props) {
@@ -34,7 +52,11 @@ class Register extends Component {
       email: '',
       password: '',
       passwordConfirm: '',
+      phonenumber: '',
       name: '',
+      lastname: '',
+      organization: '',
+      value: 'individual',
       samePassword: true,
       checked: false,
       uncheckedError: false,
@@ -54,65 +76,68 @@ class Register extends Component {
       password: e.target.value
     });
   }
+
+  handleOrganizationChange = (e) => {
+    this.setState({
+      organization: e.target.value
+    });
+  }
+
+  handlephonenumberchange = (e) => {
+    this.setState({
+      phonenumber: e.target.value
+    });
+  }
+
+  onOriginSelectChange = (event, index, value) => {
+    this.setState({value});
+  }
+
   handlePasswordConfirmChange = (e) => {
     this.setState({
       passwordConfirm: e.target.value
     });
   }
+
   handleNameChange = (e) => {
     this.setState({
       name: e.target.value
     });
   }
 
-  handleRegistration = () => {
+  handleLastNameChange = (e) => {
     this.setState({
-      samePassword: true,
-      uncheckedError: false,
-      emailTakenError: false,
-      btnDisabled: true
+      lastname: e.target.value
     });
-    const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password
-    }
-    if(this.state.password !== this.state.passwordConfirm){
+  }
+
+handleRegistration = () => {
+  this.setState({samePassword: true, uncheckedError: false, emailTakenError: false, btnDisabled: true});
+  const newUser = {
+    name: this.state.name,
+    lastname: this.state.lastname,
+    email: this.state.email,
+    organization: this.state.organization,
+    phonenumber: this.state.phonenumber,
+    password: this.state.password,
+    origin: this.state.value
+  }
+  console.log(newUser);
+  axios.post('/api/users', newUser).then((result) => {
+    if (result.data.error) {
+      this.setState({emailTakenError: true, btnDisabled: false});
+    } else {
       this.setState({
-        passwordConfirm: '',
-        samePassword: false,
+        email: '',
+        password: '',
+        checked: false,
+        uncheckedError: false,
+        successReservation: true,
         btnDisabled: false
       });
     }
-    else{
-      if(!this.state.checked){
-        this.setState({
-          uncheckedError: true,
-          btnDisabled: false
-        });
-      }else {
-          axios.post('/api/users',newUser)
-            .then((result)=>{
-              if(result.data.error){
-                this.setState({
-                  emailTakenError: true,
-                  btnDisabled: false
-                });
-              }
-              else {
-                this.setState({
-                  email: '',
-                  password: '',
-                  checked: false,
-                  uncheckedError: false,
-                  successReservation: true,
-                  btnDisabled: false
-                });
-              }
-            })
-          }
-      }
-  }
+  })
+}
 
   updateCheck = () => {
     this.setState({
@@ -135,84 +160,106 @@ class Register extends Component {
             transitionAppearTimeout={1000}
             transitionEnter={false}
             transitionLeave={false}>
-          <div>
-            <div className="login-logo" style={{marginTop: '-20px !important'}}>
-              <img src={NokiaLogoBlue} alt='nokia logo' style={{width: '435px', height: '207px'}} />
-            <p className="login-sign-up">Sign up</p>
-            </div>
-            <div className="login-container">
-              <div className="login-form-wrapper">
-                {this.state.samePassword ? (null) : (<p style={{color: 'red'}}>Not same password</p>)}
-                {this.state.emailTakenError ? (<p style={{color: 'red'}}>Email already taken</p>) : (null)}
-                {this.state.uncheckedError ? (<p style={{color: 'red'}}>error: unchecked</p>) : (null)}
-                <MuiThemeProvider>
-                <p className="login-input-helper">Enter your name:</p>
-                <TextField
-                  value={this.state.name}
-                  onChange={this.handleNameChange}
-                  fullWidth={true}
-                  underlineStyle={textFieldStyle.disabled}
-                  underlineFocusStyle={textFieldStyle.focused}
-                />
-                <p className="login-input-helper">Enter your email:</p>
-                <TextField
-                  value={this.state.email}
-                  onChange={this.handleEmailChange}
-                  fullWidth={true}
-                  underlineStyle={textFieldStyle.disabled}
-                  underlineFocusStyle={textFieldStyle.focused}
-                />
-                <p className="login-input-helper">Enter your password:</p>
-                <TextField
-                  value={this.state.password}
-                  onChange={this.handlePasswordChange}
-                  fullWidth={true}
-                  underlineStyle={textFieldStyle.disabled}
-                  underlineFocusStyle={textFieldStyle.focused}
-                  type="password"
-                />
-                <p className="login-input-helper">Confirm your password:</p>
-                  <TextField
-                    value={this.state.passwordConfirm}
-                    onChange={this.handlePasswordConfirmChange}
-                    fullWidth={true}
-                    underlineStyle={textFieldStyle.disabled}
-                    underlineFocusStyle={textFieldStyle.focused}
-                    type="password"
+          <div className="register-form-container">
+            <div className="register-form-form">
+              <div className="register-form-title">
+                Sign up
+              </div>
+              <MuiThemeProvider>
+                <div className="register-form-row">
+                  <p className="register-input-helper">Enter first name:</p>
+                  <div className="register-input">
+                    <RegisterTextField
+                      propvalue={this.state.name}
+                      onChange={this.handleNameChange}
+                    />
+                  </div>
+                <p className="register-input-helper">Enter last name:</p>
+                <div className="register-input">
+                  <RegisterTextField
+                    propvalue={this.state.lastname}
+                    onChange={this.handleLastNameChange}
                   />
-                <Checkbox
-                  labelStyle={{zIndex: '3'}}
-                  label={(
-                    <div>
-                      <label>I agree with </label>
-                      <label onClick={this.gotoPrivacy} style={{color: 'blue', cursor: 'pointer'}}>
-                        terms of use and privacy
-                        </label>
-                    </div>
-                    )}
-                  checked={this.state.checked}
-                  onCheck={this.updateCheck.bind(this)}
-                  style={{marginLeft: '30px', position: 'relative'}}
-                />
-                <div className="login-actions">
-                  <div className="login-button">
-                  <RaisedButton
-                    label='Register'
-                    type='submit'
-                    primary={true}
-                    disabled={this.state.btnDisabled}
-                    onClick={this.handleRegistration}
-                    fullWidth={true}
-                  />
+                </div>
+                </div>
+                <div className="register-form-row">
+                  <p className="register-input-helper">Enter email:</p>
+                  <div className="register-input">
+                    <RegisterTextField
+                      propvalue={this.state.email}
+                      onChange={this.handleEmailChange}
+                    />
+                  </div>
+                  <p className="register-input-helper">Enter phone number:</p>
+                  <div className="register-input">
+                    <RegisterTextField
+                      propvalue={this.state.phonenumber}
+                      onChange={this.handlephonenumberchange}
+                    />
                   </div>
                 </div>
-                <div className="login-create-account-redirect">
-                  <Link to="/login">Already have an account? Sign in.</Link>
+                <div className="register-form-row">
+                  <p className="register-input-helper">Enter organization:</p>
+                  <div className="register-input">
+                    <RegisterTextField
+                      propvalue={this.state.organization}
+                      onChange={this.handleOrganizationChange}
+                    />
+                  </div>
+                  <p className="register-input-helper">Select your group:</p>
+                  <div className="register-input">
+                    <SelectField
+                        value={this.state.value}
+                        onChange={this.onOriginSelectChange}
+                      >
+                      <MenuItem value={'individual'} primaryText="individual" style={{textAlign: 'center'}}/>
+                      <MenuItem value={'startup'} primaryText="startup"  style={{textAlign: 'center'}}/>
+                      <MenuItem value={'company'} primaryText="company"  style={{textAlign: 'center'}}/>
+                      <MenuItem value={'other'} primaryText="other"  style={{textAlign: 'center'}}/>
+                    </SelectField>
+                  </div>
                 </div>
-                </MuiThemeProvider>
+                <div className="register-form-row" style={{marginTop: '-10px'}}>
+                  <p className="register-input-helper">Enter password:</p>
+                  <div className="register-input">
+                    <TextField
+                      id="idregisterpassword"
+                      value={this.state.password}
+                      onChange={this.handlePasswordChange}
+                      underlineStyle={textFieldStyle.disabled}
+                      underlineFocusStyle={textFieldStyle.focused}
+                      type="password"
+                    />
+                  </div>
+                  <p className="register-input-helper">Confirm password:</p>
+                  <div className="register-input">
+                    <TextField
+                      id="idregisterpasswordconfirm"
+                      value={this.state.passwordConfirm}
+                      onChange={this.handlePasswordConfirmChange}
+                      underlineStyle={textFieldStyle.disabled}
+                      underlineFocusStyle={textFieldStyle.focused}
+                      type="password"
+                    />
+                  </div>
+                </div>
+              <RaisedButton
+                type="submit"
+                label="register"
+                onClick={this.handleRegistration}
+                fullWidth={true}
+                primary={true}
+                buttonStyle={{background: 'rgb(0, 38, 62)'}}
+              />
+              </MuiThemeProvider>
+              <div className="login-create-account-redirect">
+                  <Link to="/login">Already have an account? Sign in.</Link>
               </div>
             </div>
-        </div>
+            <div className="register-form-image">
+              <img src={NokiaLogoBlue} alt="nokia-garage-logo" style={{width:  '435px', height: "207px", marginTop: 'auto', marginBottom: 'auto' }}/>
+            </div>
+          </div>
       </ReactCSSTransitionGroup>
         ) : (
           <div className='login-form-wrapper'>
@@ -223,9 +270,9 @@ class Register extends Component {
               <p className="login-create-account-redirect">
                 <Link to='/login'>Redirect to login page</Link>
               </p>
-          </div> //closed
+          </div>
         )}
-      </div> //closed
+      </div>
     );
   }
 

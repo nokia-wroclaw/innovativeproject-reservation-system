@@ -55,52 +55,57 @@ exports.user_get_details = function(req, res) {
   })
 }
 
-exports.user_post = function(req, res){
-    var user = new User()
-    if(EmailController(req.body.email))  {
-        user.local.email = req.body.email
-    }
-    else{
-      return res.send('invalid email')
-    }
-    user.local.isAdmin = false;
-    user.local.name = req.body.name
-    user.email = req.body.email
-    bcrypt.genSalt(saltRounds, function(err, salt){
-      if(PasswordController(req.body.password)){
-        user.local.password = req.body.password;
-      }
-      else{return res.send('invalid password')}
-      bcrypt.hash(req.body.password, salt, function(err, hash) {
-        user.local.password = hash;
-        bcrypt.hash(req.body.email, salt, function(e, email_hash){
-          user.local.email_hash = email_hash
+exports.user_post = function(req, res) {
+  var user = new User()
+  if (EmailController(req.body.email)) {
+    user.local.email = req.body.email
+  } else {
+    return res.send('invalid email')
+  }
+  user.local.isAdmin = false;
+  user.local.name = req.body.name
+  user.local.lastname = req.body.lastname
+  user.local.phonenumber = req.body.phonenumber
+  user.local.origin = req.body.origin
+  user.local.organization = req.body.organization
+  user.email = req.body.email
+  if (PasswordController(req.body.password)) {
+    user.local.password = req.body.password;
+  } else {
+    return res.send('invalid password')
+  }
+  bcrypt.genSalt(saltRounds, function(err, salt){
+    bcrypt.hash(req.body.email, salt, function(e, email_hash) {
+      user.local.email_hash = email_hash
 
-          user.save((err, result)=>{
-            if(err) {return err}
-            const host = req.host;
-            if(host === 'localhost'){
-              link = `http://`+host+`:3000/verify/`+email_hash;
-            }
-            else {
-                link=`http://`+host+`/verify/`+email_hash;
-            }
-              mailOptions={
-                from: '<nokia,kia.test.no.reply@gmail.com',
-                to: user.local.email,
-                subject: 'Nokia Garage- verify your email',
-                html: 'Confirm by pressing following link: <a href="'+link+'">'+link+'</a>'
-              }
-              smtpTransport.sendMail(mailOptions, function(error_mail, response){
-                if(error_mail) throw error_mail;
-              })
+      user.save((err, result) => {
+        if (err) {
+          return err
+        }
+        const host = req.host;
+        if (host === 'localhost') {
+          link = `http://` + host + `:3000/verify/` + email_hash;
+        } else {
+          link = `http://` + host + `/verify/` + email_hash;
+        }
+        mailOptions = {
+          from: '<nokia,kia.test.no.reply@gmail.com',
+          to: user.local.email,
+          subject: 'Nokia Garage- verify your email',
+          html: 'Confirm by pressing following link: <a href="' + link + '">' + link + '</a>'
+        }
+        smtpTransport.sendMail(mailOptions, function(error_mail, response) {
+          if (error_mail) throw error_mail;
+        })
 
-              return res.send({error: false, result})
-            })
-
+        return res.send({
+          error: false,
+          result
         })
       })
+
     })
+  })
 }
 
 exports.user_verify = function(req, res) {
