@@ -221,7 +221,7 @@ handleRegistration = () => {
                     </SelectField>
                   </div>
                 </div>
-                <div className="register-form-row" style={{marginTop: '-10px'}}>
+                <div className="register-form-row" style={{marginTop: '-10px', marginBottom: '15px'}}>
                   <p className="register-input-helper">Enter password:</p>
                   <div className="register-input">
                     <TextField

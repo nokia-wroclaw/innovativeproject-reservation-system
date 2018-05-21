@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
+var Device =  require('./device')
 
 var ReservationSchema = {
   startDate: {
@@ -27,7 +28,18 @@ var ReservationSchema = {
     type: String,
     enum: ['MakerSpace', 'CreativeSpace', 'WholeSpace'],
     required: true
-  }
+  },
+  usedDevices: {
+    type: Schema.Types.ObjectId,
+    ref: 'DeviceSchema'
+  },
+  deviceList: [{
+    quantity: Number,
+    usedDevices: {
+      type: Schema.Types.ObjectId,
+      ref: 'DeviceSchema'
+    }
+  }]
 };
 
 

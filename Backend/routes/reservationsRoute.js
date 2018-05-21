@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+var Device = require('../models/device')
+var Reservation = require('../models/reservations')
+
 var reservation_controller = require('../controllers/reservationController')
 
 router.get('/', reservation_controller.reservation_get);
