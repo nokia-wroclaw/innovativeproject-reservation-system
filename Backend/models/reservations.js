@@ -29,10 +29,6 @@ var ReservationSchema = {
     enum: ['MakerSpace', 'CreativeSpace', 'WholeSpace'],
     required: true
   },
-  usedDevices: {
-    type: Schema.Types.ObjectId,
-    ref: 'DeviceSchema'
-  },
   deviceList: [{
     quantity: Number,
     usedDevices: {

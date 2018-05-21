@@ -9,10 +9,6 @@ const saltRounds = 10;
   //mongoose.connection.db.dropDataBase();
 
   var seedDevices = [{
-    name: "3d printer",
-    numLeft: 5,
-    description: "This is a 3d printer"
-  },{
     name: "Deep learning machine",
     numLeft: 10
   },{
@@ -26,6 +22,22 @@ const saltRounds = 10;
     numLeft: 10
   }];
 
+  var printer3d = new DeviceItem({
+    name: "3d printer",
+    numLeft: 5,
+    description: "This is a 3d printer"
+  })
+
+  printer3d.save(err=>{
+    if(err) return res.send(err)
+  })
+
+  DeviceItem.remove({}, ()=>{
+    seedDevices.forEach(function(item){
+      new DeviceItem(item).save();
+    })
+  })
+
   var seedReservations = [{
     startDate: '2018-05-09T10:00:05.000Z',
     endDate: '2018-05-09T12:00:05.000Z',
@@ -37,7 +49,11 @@ const saltRounds = 10;
     endDate: '2018-05-10T13:00:00.000Z',
     numOfPeople: 10,
     option: 'MakerSpace',
-    personName: 'Miller'
+    personName: 'Miller',
+    deviceList: [{
+      quantity: 4,
+      usedDevices: printer3d._id
+    }]
   },{
     startDate: '2018-05-10T08:00:00.000Z',
     endDate: '2018-05-10T15:00:00.000Z',
@@ -71,12 +87,6 @@ const saltRounds = 10;
       isAdmin: true
     }
   };
-
-  DeviceItem.remove({}, ()=>{
-    seedDevices.forEach(function(item){
-      new DeviceItem(item).save();
-    })
-  })
 
   ReservationItem.remove({}, ()=>{
     seedReservations.forEach(function(item){
