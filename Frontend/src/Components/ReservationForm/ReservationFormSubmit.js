@@ -46,7 +46,12 @@ class ReservationFormSubmit extends Component {
       var i =0;
       if(this.props.deviceQuantity[0] > 0)
       {
-          deviceList.push({usedDevices: device._id, quantity: this.props.deviceQuantity[i]})
+          if(this.props.deviceQuantity[i] > device.numLeft)
+            console.log('quantity cannot be greater than available devices');
+          else
+          {
+              deviceList.push({usedDevices: device._id, quantity: this.props.deviceQuantity[i]})
+          }
       }
       i++;
     })
@@ -111,9 +116,6 @@ class ReservationFormSubmit extends Component {
         onClick={this.handleSubmit}
       />,
     ];
-    console.log(this.props.deviceQuantity[0]);
-    console.log(this.props.deviceQuantity[1]);
-    console.log(this.props.deviceQuantity[2]);
 
     return (
       <div>

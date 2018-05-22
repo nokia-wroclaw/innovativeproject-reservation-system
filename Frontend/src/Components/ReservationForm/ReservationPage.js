@@ -80,12 +80,13 @@ componentWillMount(){
     this.loadReservationFromServer()
     this.loadDevicesFromServer();
     this.setState({
-      deviceQuantity: '0'
+      deviceQuantity: '0',
+      isSnackbarOpen: false
     });
   }
 
   closeDialog= () => {
-    this.setState({isDialogEditOpen: false, isDialogSubmitOpen: false, areErrors: false})
+    this.setState({isDialogEditOpen: false, isDialogSubmitOpen: false, areErrors: false, isSnackbarOpen: false})
   }
 
   changeQuantity = (e) => {
@@ -113,10 +114,18 @@ componentWillMount(){
           this.setState(() => ({
             data: [...this.state.data, newItem],
             isDialogSubmitOpen: false,
-            isSnackbarOpen: true,
-            deviceQuantity: '0'
+            deviceQuantity: 0
           }));
+          setTimeout(()=>{
+            this.setState({
+              isSnackbarOpen: true
+            });
+          }, 100)
+          this.setState({
+            isSnackbarOpen: false
+          });
           this.loadReservationFromServer()
+          this.loadDevicesFromServer();
         }
       })
       .catch(err => {
