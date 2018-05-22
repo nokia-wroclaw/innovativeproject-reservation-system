@@ -12,7 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
-
+import TextField from 'material-ui/TextField'
 
 import Avatar from 'material-ui/Avatar';
 
@@ -93,24 +93,52 @@ class Device extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <List>
-            <Link to={`/devices/${this.props.uniqueID}`} style={style.link}>
+        {this.props.renderType === 'deviceList'
+          ? (
+            <List>
+              <Link to={`/devices/${this.props.uniqueID}`} style={style.link}>
+                <ListItem
+                  primaryText={this.props.name}
+                  leftAvatar={<Avatar src={placeholder}/>}
+                  rightIconButton={
+                    <IconMenu
+                      onClick={this.stopEventPropagation}
+                      iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
+                    >
+                      <MenuItem leftIcon={<EditIcon/>} primaryText="Edit" onClick={this.editDevice}/>
+                      <MenuItem primaryText="Delete" leftIcon={<DeleteIcon/>} onClick={this.deleteDevice}/>
+                    </IconMenu>
+                  }
+                />
+              </Link>
+              <Divider/>
+            </List>
+          ) : (
+            <List>
               <ListItem
                 primaryText={this.props.name}
-                leftAvatar={<Avatar src={placeholder}/>}
-                rightIconButton={
-                  <IconMenu
-                    onClick={this.stopEventPropagation}
-                    iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
-                  >
-                    <MenuItem leftIcon={<EditIcon/>} primaryText="Edit" onClick={this.editDevice}/>
-                    <MenuItem primaryText="Delete" leftIcon={<DeleteIcon/>} onClick={this.deleteDevice}/>
-                  </IconMenu>
+                leftAvatar={<Avatar src={placeholder} />}
+                disabled={true}
+                rightIconButton = {
+                  <div style={{display: 'flex', width: '100%'}}>
+                    <TextField
+                      id={"selectDevice" + this.props.uniqueID}
+                      defaultValue={this.props.selectedAmount}
+                      onChange={this.props.onAmountChange}
+                      style={{width: '10%', marginLeft: '80%'}}
+                    />
+                    <MenuItem
+                      primaryText={"/" + this.props.numLeft}
+                      style={{fontStyle: 'italic', color: 'lightgrey'}}
+                      disabled={true}
+                      style={{flex: '1'}}
+                      />
+                  </div>
                 }
-              />
-            </Link>
-            <Divider/>
-          </List>
+              >
+              </ListItem>
+            </List>
+          )}
         </MuiThemeProvider>
       </div>
     )

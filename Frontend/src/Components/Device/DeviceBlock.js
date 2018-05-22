@@ -33,7 +33,6 @@ class DeviceBlock extends Component {
       .then(res => {
         let devices = this.state.data.filter((item) => item._id !== id )
           this.setState({data: devices});
-        console.log('device deleted');
       })
       .catch(err => {
         console.error(err);
@@ -43,7 +42,6 @@ class DeviceBlock extends Component {
     handleDeviceEdit(id, device) {
       axios.put( `${DEVICES_BASE_URL}/${id}`, device )
       .then(result => {
-        console.log(result.data);
         const index = this.state.data.findIndex(function(item) {
           return item._id === result.data._id;
         })
@@ -91,7 +89,8 @@ class DeviceBlock extends Component {
         <DeviceList
           onDeviceDelete = {this.handleDeviceDelete}
           onDeviceEdit={this.handleDeviceEdit}
-          data={this.state.data}>
+          data={this.state.data}
+          renderType='deviceList'>
         </DeviceList>
         </div>
     )

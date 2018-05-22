@@ -1,4 +1,5 @@
 var Reservation = require('../models/reservations');
+var Device = require('../models/device')
 
 //GET reservation
 exports.reservation_get = function(req, res){
@@ -26,7 +27,6 @@ exports.reservation_post = function(req, res, reservationMiddleware){
   (req.body.numOfPeople) ? reservation.numOfPeople = req.body.numOfPeople : null;
   (req.body.option) ? reservation.option = req.body.option : null;
   (req.body.personName) ? reservation.personName = req.body.personName : null;
-
   var queries = [
     //end condition - ✓
     {$lt: reservation.startDate},
@@ -66,6 +66,19 @@ exports.reservation_post = function(req, res, reservationMiddleware){
     return ''
   }
 
+  function reserveDevices(reservation){
+    reservation.deviceList = req.body.deviceList
+    reservation.deviceList.forEach(device=>{
+      Device.findOne(device.usedDevices, (err, foundDevice)=>{
+          foundDevice.numLeft -= device.quantity
+          foundDevice.save(e=>{
+            if(e) return console.log(e);
+          })
+      })
+    })
+    return ''
+  }
+
   function Query(){
     return Promise.all(query)
       .then(results=>{
@@ -76,7 +89,8 @@ exports.reservation_post = function(req, res, reservationMiddleware){
       .then(allresults=>{
         return  [
           isOver8Hours(allresults, reservation),
-          isNumberOfPeopleOkay(allresults, reservation)
+          isNumberOfPeopleOkay(allresults, reservation),
+          reserveDevices(reservation)
         ].filter(item => item !== '')
       })
   }
@@ -87,7 +101,8 @@ exports.reservation_post = function(req, res, reservationMiddleware){
        reservation.save(function(err, newreservation){
           if(err) { return res.send(err); }
           res.json({reservation: newreservation, error: false});
-        });
+        })
+
       }
       else {
         res.json({error: true, errors})

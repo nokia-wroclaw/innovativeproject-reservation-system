@@ -9,7 +9,7 @@ import Snackbar from 'material-ui/Snackbar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReservationFormEdit from './ReservationFormEdit';
 
-import {RESERVATION_BASE_URL} from '../../routes'
+import {RESERVATION_BASE_URL, DEVICE_BASE_URL} from '../../routes'
 
 import AuthService from '../AuthService';
 import withAuth from '../withAuth';
@@ -20,7 +20,11 @@ class ReservationPage extends Component {
     super(props);
     this.state = {
       data:[],
+      deviceData: [],
       areErrors: false,
+      deviceName: '',
+      deviceQuantity: [6],
+      deviceCurAvailable: '',
       errData: [],
       isDialogSubmitOpen: false,
       isDialogEditOpen: false,
@@ -49,6 +53,23 @@ class ReservationPage extends Component {
     });
   })
 }
+
+loadDevicesFromServer = () => {
+  axios.get(`${DEVICE_BASE_URL}`)
+  .then(res=> {
+    this.setState({
+      deviceData: res.data.map((item) => {
+        return {
+          name: item.name,
+          numLeft: item.numLeft,
+          _id: item._id
+        }
+      })
+    });
+  })
+  .catch(err => {console.log(err);})
+}
+
 componentWillMount(){
   if (!Auth.loggedIn()) {
     this.props.history.replace('/login')
@@ -57,13 +78,25 @@ componentWillMount(){
 
   componentDidMount() {
     this.loadReservationFromServer()
+    this.loadDevicesFromServer();
+    this.setState({
+      deviceQuantity: '0',
+      isSnackbarOpen: false
+    });
   }
 
   closeDialog= () => {
-    this.setState({isDialogEditOpen: false, isDialogSubmitOpen: false, areErrors: false})
+    this.setState({isDialogEditOpen: false, isDialogSubmitOpen: false, areErrors: false, isSnackbarOpen: false})
+  }
+
+  changeQuantity = (e) => {
+    this.setState({
+      deviceQuantity: e.target.value
+    });
   }
 
   handleReservationSubmit = (reservation) => {
+    console.log(reservation);
     axios.post(RESERVATION_BASE_URL, reservation)
       .then((result) => {
         const error = result.data.error
@@ -81,9 +114,18 @@ componentWillMount(){
           this.setState(() => ({
             data: [...this.state.data, newItem],
             isDialogSubmitOpen: false,
-            isSnackbarOpen: true
+            deviceQuantity: 0
           }));
+          setTimeout(()=>{
+            this.setState({
+              isSnackbarOpen: true
+            });
+          }, 100)
+          this.setState({
+            isSnackbarOpen: false
+          });
           this.loadReservationFromServer()
+          this.loadDevicesFromServer();
         }
       })
       .catch(err => {
@@ -165,6 +207,7 @@ handleRenderChangeEdit = (e) => {
 
         <div>
             <ReservationFormSubmit
+              deviceData = {this.state.deviceData}
               startDate = {this.state.startDate}
               endDate = {this.state.endDate}
               onReservationSubmit={this.handleReservationSubmit}
@@ -174,6 +217,8 @@ handleRenderChangeEdit = (e) => {
               errData1={this.state.errData[0]}
               errData2={this.state.errData[1]}
               userName={this.props.user.sub[2]}
+              deviceQuantity={this.state.deviceQuantity}
+              onChangeQuantity={this.changeQuantity}
             />
           </div>
             {this.state.isDialogEditOpen && <div>

@@ -5,7 +5,10 @@ import SelectRoomField from './SelectRoomField';
 import DataTextField from './DataTextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
+import {List, ListItem} from 'material-ui/List';
+import DeviceList from '../Device/DeviceList'
 import moment from 'moment'
+import axios from 'axios'
 
 import TextField from 'material-ui/TextField'
 
@@ -15,6 +18,8 @@ import style from '../../style'
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
+import {DEVICE_BASE_URL} from '../../routes'
 
 moment().format('MMMM Do YYYY, h:mm:ss a');
 
@@ -36,11 +41,33 @@ class ReservationFormSubmit extends Component {
     let startDate = this.props.startDate;
     let endDate = this.props.endDate;
     let personName = this.props.userName;
+    let deviceList = []
+    this.props.deviceData.forEach((device)=>{
+      var i =0;
+      if(this.props.deviceQuantity[0] > 0)
+      {
+          if(this.props.deviceQuantity[i] > device.numLeft)
+            console.log('quantity cannot be greater than available devices');
+          else
+          {
+              deviceList.push({usedDevices: device._id, quantity: this.props.deviceQuantity[i]})
+          }
+      }
+      i++;
+    })
+
+    /*let deviceList = {
+      usedDevices: this.props.deviceData[0]._id,
+      quantity: this.props.deviceQuantity
+    }*/
+    console.log(deviceList);
     this.props.onReservationSubmit({numOfPeople: numOfPeople,
                                     option: option,
                                     startDate: startDate,
                                     endDate: endDate,
-                                    personName: personName});
+                                    personName: personName,
+                                    deviceList: deviceList
+                                    });
     this.setState({numOfPeople: '', option: ''})
   }
 
@@ -65,6 +92,16 @@ class ReservationFormSubmit extends Component {
     this.props.closeDialog();
   }
 
+  returnDevices()  {
+    return this.props.deviceData
+    .map(item => {
+      return {
+        deviceName: item.deviceName,
+        deviceMax: item.deviceCurAvailable
+      }
+    })
+  }
+
   render(){
     const actions = [
       <FlatButton
@@ -79,6 +116,7 @@ class ReservationFormSubmit extends Component {
         onClick={this.handleSubmit}
       />,
     ];
+
     return (
       <div>
         <MuiThemeProvider>
@@ -135,8 +173,12 @@ class ReservationFormSubmit extends Component {
             disabled={true}
             style={{marginLeft: '310px'}}
           />
-
-
+          <DeviceList
+            data={this.props.deviceData}
+            renderType='deviceSelection'
+            selectedAmount={this.props.deviceQuantity}
+            onAmountChange={this.props.onChangeQuantity}
+          />
           </form>
           </Dialog>
 

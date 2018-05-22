@@ -9,10 +9,6 @@ const saltRounds = 10;
   //mongoose.connection.db.dropDataBase();
 
   var seedDevices = [{
-    name: "3d printer",
-    numLeft: 5,
-    description: "This is a 3d printer"
-  },{
     name: "Deep learning machine",
     numLeft: 10
   },{
@@ -26,6 +22,22 @@ const saltRounds = 10;
     numLeft: 10
   }];
 
+  var printer3d = new DeviceItem({
+    name: "3d printer",
+    numLeft: 5,
+    description: "This is a 3d printer"
+  })
+
+  printer3d.save(err=>{
+    if(err) return res.send(err)
+  })
+
+  DeviceItem.remove({}, ()=>{
+    seedDevices.forEach(function(item){
+      new DeviceItem(item).save();
+    })
+  })
+
   var seedReservations = [{
     startDate: '2018-05-09T10:00:05.000Z',
     endDate: '2018-05-09T12:00:05.000Z',
@@ -37,7 +49,11 @@ const saltRounds = 10;
     endDate: '2018-05-10T13:00:00.000Z',
     numOfPeople: 10,
     option: 'MakerSpace',
-    personName: 'Miller'
+    personName: 'Miller',
+    deviceList: [{
+      quantity: 4,
+      usedDevices: printer3d._id
+    }]
   },{
     startDate: '2018-05-10T08:00:00.000Z',
     endDate: '2018-05-10T15:00:00.000Z',
@@ -47,26 +63,30 @@ const saltRounds = 10;
   }];
 
   const testUser1 = {
+    local: {
       name: 'Test user 1',
       email: 'test1@domain.com',
       password: 'qwerty123',
+      phonenumber: "123123123",
+      organization: "None",
+      origin: "individual",
       isAdmin: false,
       confirmed: true
+    }
   };
 
   const admin = {
+    local: {
       name: 'Admin',
+      phonenumber: "000000000",
+      organization: "Nokia Garage",
+      origin: "company",
       confirmed: true,
       email: 'admin@domain.com',
       password: 'qwerty123',
       isAdmin: true
+    }
   };
-
-  DeviceItem.remove({}, ()=>{
-    seedDevices.forEach(function(item){
-      new DeviceItem(item).save();
-    })
-  })
 
   ReservationItem.remove({}, ()=>{
     seedReservations.forEach(function(item){
@@ -76,26 +96,22 @@ const saltRounds = 10;
 
   UserItem.remove({}, (err)=>{
     if(err) throw err;
-    var a = new UserItem()
-    var u = new UserItem()
+    var a = new UserItem(admin)
+    var u = new UserItem(testUser1)
+    //a = admin;
+    //u = testUser1;
+    /*
     a.local.name = admin.name;
+
     a.local.email = admin.email;
     a.local.isAdmin = admin.isAdmin
     a.local.confirmed = admin.confirmed;
+    a.local.password = admin.password;
     u.local.name = testUser1.name;
     u.local.email = testUser1.email;
+    u.local.password = testUser1.password;
     u.local.isAdmin = testUser1.isAdmin
-    u.local.confirmed = testUser1.confirmed
-    bcrypt.genSalt(10, function(err, salt){
-      bcrypt.hash(admin.password, salt, function(err, hash) {
-        a.local.password = hash;
-        a.save(err=>{if(err) throw err});
-      })
-    })
-    bcrypt.genSalt(10, function(err, salt){
-      bcrypt.hash(testUser1.password, salt, function(err, hash) {
-        u.local.password = hash;
-        u.save(err=>{if(err) throw err});
-      })
-    })
+    u.local.confirmed = testUser1.confirmed*/
+    a.save(err=>{if(err) throw err});
+    u.save(err=>{if(err) throw err});
   })
