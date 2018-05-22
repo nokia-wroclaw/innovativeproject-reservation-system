@@ -41,10 +41,20 @@ class ReservationFormSubmit extends Component {
     let startDate = this.props.startDate;
     let endDate = this.props.endDate;
     let personName = this.props.userName;
-    let deviceList = {
+    let deviceList = []
+    this.props.deviceData.forEach((device)=>{
+      var i =0;
+      if(this.props.deviceQuantity[0] > 0)
+      {
+          deviceList.push({usedDevices: device._id, quantity: this.props.deviceQuantity[i]})
+      }
+      i++;
+    })
+
+    /*let deviceList = {
       usedDevices: this.props.deviceData[0]._id,
       quantity: this.props.deviceQuantity
-    }
+    }*/
     console.log(deviceList);
     this.props.onReservationSubmit({numOfPeople: numOfPeople,
                                     option: option,
@@ -101,6 +111,10 @@ class ReservationFormSubmit extends Component {
         onClick={this.handleSubmit}
       />,
     ];
+    console.log(this.props.deviceQuantity[0]);
+    console.log(this.props.deviceQuantity[1]);
+    console.log(this.props.deviceQuantity[2]);
+
     return (
       <div>
         <MuiThemeProvider>

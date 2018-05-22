@@ -23,7 +23,7 @@ class ReservationPage extends Component {
       deviceData: [],
       areErrors: false,
       deviceName: '',
-      deviceQuantity: '',
+      deviceQuantity: [6],
       deviceCurAvailable: '',
       errData: [],
       isDialogSubmitOpen: false,
