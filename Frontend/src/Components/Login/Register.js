@@ -247,6 +247,23 @@ handleRegistration = () => {
                     />
                   </div>
                 </div>
+                <div className="register-input-helper">
+                  <Checkbox
+                    labelStyle={{zIndex: '3'}}
+                    style={{marginBottom: '10px'}}
+                    label={(
+                      <div>
+                        <label>I agree with </label>
+                        <label onClick={this.gotoPrivacy} style={{color: 'blue', cursor: 'pointer'}}>
+                          terms of use and privacy
+                        </label>
+                      </div>
+                    )}
+                    checked={this.state.checked}
+                    onCheck={this.updateCheck.bind(this)}
+                    style={{marginLeft: '30px', position: 'relative', marginBottom: '15px'}}
+                  />
+                </div>
               <RaisedButton
                 type="submit"
                 label="register"
