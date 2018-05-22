@@ -26,7 +26,8 @@ exports.reservation_post = function(req, res, reservationMiddleware){
   (req.body.numOfPeople) ? reservation.numOfPeople = req.body.numOfPeople : null;
   (req.body.option) ? reservation.option = req.body.option : null;
   (req.body.personName) ? reservation.personName = req.body.personName : null;
-
+  console.log(req.body.deviceList);
+  reservation.deviceList = req.body.deviceList
   var queries = [
     //end condition - ✓
     {$lt: reservation.startDate},
@@ -87,7 +88,8 @@ exports.reservation_post = function(req, res, reservationMiddleware){
        reservation.save(function(err, newreservation){
           if(err) { return res.send(err); }
           res.json({reservation: newreservation, error: false});
-        });
+        })
+
       }
       else {
         res.json({error: true, errors})

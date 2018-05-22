@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import {List, ListItem} from 'material-ui/List'
 import RaisedButton from 'material-ui/RaisedButton'
 import BlankProfile from '../../../images/blank-profile.png'
 import TextField from 'material-ui/TextField'
@@ -10,9 +9,6 @@ import TextField from 'material-ui/TextField'
 
 import axios from 'axios'
 
-import LabelTextField from '../../LabelTextField'
-
-import style from './Styles/DeviceStyles'
 import '../../textFieldStyles.css'
 
 import './Styles/deviceadd.css'
