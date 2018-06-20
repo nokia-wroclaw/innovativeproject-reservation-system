@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
-import BlankProfile from '../../../images/blank-profile.png'
+import BlankProfile from '../../../images/tools.png'
 import TextField from 'material-ui/TextField'
 
 //import DropZone from './Dropzones'
@@ -44,7 +44,7 @@ class DeviceAdd extends Component {
 
   handleDeviceSubmit = (e) =>{
     e.preventDefault();
-    console.log(this.state.mainImage);
+    console.log(this.state.filepath);
     const device = {
       id: Date.now(),
       name: this.state.name,
@@ -105,6 +105,7 @@ class DeviceAdd extends Component {
                 <p style={{textAlign: 'center', fontWeight: 'bold', fontSize: '18px', color: '#504543'}}>Enter new device data:</p>
               </div>
               <div className="profile-right-side-info">
+              <form enctype="multipart/form-data" onSubmit={this.handleDeviceSubmit}>
                 <MuiThemeProvider>
                   <p className="device-label">Enter new device name: </p>
                   <TextField
@@ -131,9 +132,9 @@ class DeviceAdd extends Component {
                     type="submit"
                     primary={true}
                     style={{marginLeft: '20px'}}
-                    onClick={this.handleDeviceSubmit}
                   />
                 </MuiThemeProvider>
+                </form>
               </div>
             </div>
           </div>

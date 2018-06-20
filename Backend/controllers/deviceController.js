@@ -2,7 +2,7 @@ var Device = require('../models/device');
 const multer = require('multer');
 var path = require('path')
 
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, './uploads/');
   },
@@ -28,7 +28,7 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-
+*/
 
 exports.device_get = function(req, res){
   Device.find(function(err, devices){
@@ -45,20 +45,21 @@ exports.device_details_get = (function(req, res) {
 })
 
 exports.device_post =  function(req, res) {
-  //var device = new Device();
-  //(req.body.name) ? device.name = req.body.name : null;
-  //(req.body.numLeft) ? device.numLeft = req.body.numLeft : null;
-  //(req.body.description) ? device.description= req.body.description : null;
-  //console.log(req.file);
-  //if(req.file === null) {return res.send(400)}
+
+  //console.log("XXXXXXXXXXXXXXXXXXXXX");
+  //console.log(req.body);
+  //console.log("XXXXXXXXXXXXXXXXXXXXX");
+
+  //todo req.file.filename
+  //const filePathThis = `${req.file.destination}/${req.body.filepath}`
+
   const newDevice = new Device({
     name: req.body.name,
     numLeft: req.body.numLeft,
-    description: req.body.description
+    description: req.body.description,
     //deviceImage: req.file.path
   });
-  //(req.body.deviceImage) ? device.deviceImage = req.file.path : null;
-  //console.log("+" + req.file.path);
+
   newDevice.save(function(err, result){
     if(err) {return res.send(err);}
     res.json(result);

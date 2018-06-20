@@ -53,8 +53,8 @@ class HomeComponent extends Component {
           </div>
         ) : (
           <div style={style.body}>
+          <MuiThemeProvider>
             <Navbar/>
-            <MuiThemeProvider>
               <div className="container content-container">
                 <Switch>
                   <Route exact path="/" component={HomePage}/>
