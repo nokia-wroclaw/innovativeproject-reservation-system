@@ -101,6 +101,7 @@ class ReservationFormEdit extends Component {
 }
 
 
+
     render(){
       const actions = [
         <FlatButton
@@ -147,8 +148,9 @@ class ReservationFormEdit extends Component {
                 </p>
               )
             : null}
-          <form onSubmit={this.handleEditReservation}>
+          <form onSubmit={this.handleEditReservation}  >
               <DatePicker
+
                   openToDate={moment(this.props.startDate)}
                   selected={this.state.startDate}
                   showTimeSelect
@@ -157,12 +159,8 @@ class ReservationFormEdit extends Component {
                   placeholderText={moment(this.props.startDate).format("DD/MM/YYYY H:mm").valueOf()}
                   showTimeSelect
                   timeFormat="HH:mm"
-                  injectTimes=
-                  {[
-                    moment().hours(0).minutes(1),
-                    moment().hours(12).minutes(5),
-                    moment().hours(23).minutes(59)
-                    ]}
+                  minTime={moment().hours(7).minutes(0)}
+                  maxTime={moment().hours(18).minutes(0)}
                     />
                     <DatePicker
                         openToDate={moment(this.props.endDate)}
@@ -173,12 +171,9 @@ class ReservationFormEdit extends Component {
                         placeholderText={moment(this.props.endDate).format("DD/MM/YYYY H:mm").valueOf()}
                         showTimeSelect
                         timeFormat="HH:mm"
-                        injectTimes=
-                        {[
-                          moment().hours(0).minutes(1),
-                          moment().hours(12).minutes(5),
-                          moment().hours(23).minutes(59)
-                          ]}
+                        minTime={moment().hours(7).minutes(0)}
+                        maxTime={moment().hours(18).minutes(0)}
+      
                           />
           <SelectRoomField
             value={this.state.value}
