@@ -30,7 +30,7 @@ var UserSchema = new Schema({
     lastname: String,
     confirmed: {
       type: Boolean,
-      default: false
+      default: true
     },
     isAdmin: Boolean
   },

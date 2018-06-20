@@ -108,30 +108,31 @@ exports.user_post = function(req, res) {
       })
   }
 
-  allConditions()
-    .then(errors=>{
-      if (errors.length === 0) {
+  //allConditions()
+  //  .then(errors=>{
+  //    if (errors.length === 0) {
         user.save((err, newUser) => {
           if (err) return res.send(err)
           res.json({
             error: false,
             user: newUser
           })
-          //send verifaction email to user
-          bcrypt.genSalt(saltRounds, function(err, salt) {
-            bcrypt.hash(req.body.email, salt, function(e, email_hash) {
-              user.local.email_hash = email_hash
-              //sendEmail(user.local.email, req.host)
-            })
-          })
+  //        })
+  //        //send verifaction email to user
+  //        bcrypt.genSalt(saltRounds, function(err, salt) {
+  //          bcrypt.hash(req.body.email, salt, function(e, email_hash) {
+  //            user.local.email_hash = email_hash
+  //            //sendEmail(user.local.email, req.host)
+  //          })
+  //        })
         })
-      } else {
-        res.json({
-          error: true,
-          errors
-        })
-      }
-    })
+  //    } else {
+  //      res.json({
+  //        error: true,
+  //        errors
+  //      })
+  //    }
+  //  })
 }
 
 exports.user_verify = function(req, res) {
