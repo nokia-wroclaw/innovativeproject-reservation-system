@@ -90,8 +90,8 @@ class DeviceBlock extends Component {
           onDeviceDelete = {this.handleDeviceDelete}
           onDeviceEdit={this.handleDeviceEdit}
           data={this.state.data}
-          renderType='deviceList'>
-        </DeviceList>
+          renderType='deviceList'
+        />
         </div>
     )
   }

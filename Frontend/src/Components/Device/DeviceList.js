@@ -17,7 +17,8 @@ class DeviceList extends Component {
               image={device.deviceImage}
               onDeviceDelete={this.props.onDeviceDelete}
               onDeviceEdit={this.props.onDeviceEdit}
-              key={ device._id }>
+              key={ device._id }
+              renderType={this.props.renderType}>
             </Device>
 
           )
@@ -37,7 +38,8 @@ class DeviceList extends Component {
                 uniqueID={ device['_id'] }
                 selectedAmount={this.props.selectedAmount}
                 onAmountChange={this.props.onAmountChange}
-                key={ device._id }>
+                key={ device._id }
+                renderType={this.props.renderType}>
               </Device>
 
             )
