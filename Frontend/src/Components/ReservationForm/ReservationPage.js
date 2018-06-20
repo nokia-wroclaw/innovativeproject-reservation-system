@@ -197,7 +197,7 @@ handleRenderChangeEdit = (e) => {
   render() {
     return (
       <div>
-        <div>
+        <div style={{minHeight: '80%'}}>
           <Dnd
             onRenderChangeSubmit={this.handleRenderChangeSubmit}
             data={this.state.data}

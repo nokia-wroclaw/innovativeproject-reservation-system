@@ -79,7 +79,7 @@ class DeviceBlock extends Component {
                     <ListItem
                       primaryText="Click to add new device..."
                       onClick={this.redirectToAddingPage}
-                      style={{backgroundColor: 'rgb(213, 232, 241)'}}
+                      style={{backgroundColor: 'rgb(213, 232, 241)', overflow: 'hidden'}}
                     >
                     </ListItem>
                   </List>

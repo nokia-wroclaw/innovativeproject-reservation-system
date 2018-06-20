@@ -16,6 +16,7 @@ const style = {
   },
   deviceBox: {
     margin: '0 auto',
+    overflow: 'auto'
   },
   deviceList: {
     border: '1px solid #f1f1f1',
